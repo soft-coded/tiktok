@@ -1,0 +1,40 @@
+@import "../global-variables/variables.scss";
+
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html,
+body {
+	overflow-x: hidden;
+}
+
+body {
+	font-family: $default-fonts;
+}
+
+button,
+a {
+	all: inherit;
+	cursor: pointer;
+}
+
+img {
+	object-fit: cover;
+	object-position: center;
+}
+
+/* 
+Base light theme class for the website. Define everything 
+light-theme related in this class and *nowhere* else
+and the related variables in variables.scss. The 
+class is added to the body tag. 
+*/
+.light {
+	color: $lt-text-black;
+	background-color: $lt-background;
+}
