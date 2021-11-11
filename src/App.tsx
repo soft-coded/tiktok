@@ -1,4 +1,4 @@
-import PCLayout from "./pc-layout";
+import PCLayout from "./pc";
 
 export default function App() {
 	return <PCLayout />;
