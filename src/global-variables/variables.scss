@@ -5,10 +5,6 @@ $viewport-max-width: 1200px;
 $default-fonts: "Poppins", Arial, Tahoma, sans-serif, "Segoe UI Emoji",
 	"Noto Emoji";
 
-// colors - light theme
-$lt-text-black: rgb(22, 24, 35);
-$lt-text-grey: rgba(22, 24, 35, 0.5);
-$lt-background: #ffffff;
-
-$lt-primary: rgb(254, 44, 85);
-$lt-primary-light: rgba(254, 44, 85, 0.06);
+// spacing
+$header-height: 8.5vh;
+$btn-border-radius: 4px;

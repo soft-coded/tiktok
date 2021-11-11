@@ -1,10 +1,88 @@
+@import "../../../global-variables/variables.scss";
+
+.header-container {
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	background: var(--clr-background);
+}
+
 .header {
-	height: 10vh;
+	height: 8.5vh;
 	display: flex;
 	align-items: center;
-	padding: 2.5vh 0;
+	justify-content: space-between;
 
 	li {
+		height: 5vh;
+		display: flex;
+		align-items: center;
+	}
+
+	.logo {
 		height: 100%;
+	}
+
+	.search-bar {
+		background: rgba(22, 24, 35, 0.06);
+		min-width: 10vw;
+		border-radius: 92px;
+		display: flex;
+		align-items: center;
+		color: var(--clr-text);
+
+		input {
+			padding: 12px 16px;
+			font-size: 0.9rem;
+			caret-color: var(--clr-primary);
+			width: 90%;
+		}
+
+		span {
+			display: block;
+			background: rgba(22, 24, 35, 0.12);
+			margin: -3px 0;
+			width: 1px;
+			height: 28px;
+		}
+
+		button {
+			padding: 16px;
+			border-radius: 0 92px 92px 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			color: var(--clr-text-light);
+			cursor: pointer;
+			background: none;
+			font-size: 1rem;
+
+			&:hover {
+				background: rgba(22, 24, 35, 0.03);
+			}
+		}
+	}
+
+	.buttons {
+		display: flex;
+		gap: 16px;
+		font-weight: 600;
+		font-size: 16px;
+
+		a {
+			transition: box-shadow 0.3s ease-out;
+
+			&:hover {
+				box-shadow: 0 2px 0 rgba(0, 0, 0, 0.5);
+			}
+		}
+
+		button {
+			background: var(--clr-primary);
+			color: #fff;
+			padding: 8px 20px;
+			border-radius: $btn-border-radius;
+		}
 	}
 }

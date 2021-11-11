@@ -8,19 +8,55 @@
 	box-sizing: border-box;
 }
 
-html,
-body {
-	overflow-x: hidden;
+/* 
+Base light theme class for the website. Define everything 
+light-theme related in this class and *nowhere* else. The 
+class is added to the root (html) tag. 
+*/
+
+:root.light {
+	--clr-background: #ffffff;
+	--clr-text: rgb(22, 24, 35);
+	--clr-text-light: rgba(22, 24, 35, 0.5);
+	--clr-primary: rgb(254, 44, 85);
+	--clr-primary-light: rgba(254, 44, 85, 0.06);
 }
+
+/* light theme end */
+
+// makes position: sticky not work, handle with caution
+// html,
+// body {
+// 	overflow-x: hidden;
+// }
 
 body {
 	font-family: $default-fonts;
 }
 
-button,
-a {
-	all: inherit;
+button {
+	background: none;
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: inherit;
+	border: none;
+	color: inherit;
 	cursor: pointer;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+	cursor: pointer;
+	font-size: inherit;
+}
+
+input {
+	font-family: inherit;
+	border: none;
+	background: none;
+	color: inherit;
+	outline: none;
 }
 
 ul,
@@ -33,21 +69,10 @@ img {
 	object-position: center;
 }
 
-/* 
-Base light theme class for the website. Define everything 
-light-theme related in this class and *nowhere* else
-and the related variables in variables.scss. The 
-class is added to the body tag. 
-*/
-.light {
-	color: $lt-text-black;
-	background-color: $lt-background;
-}
-
-/* light theme end */
-
 .image-container {
 	height: 100%;
+	display: flex;
+	align-items: center;
 
 	img {
 		height: 100%;
