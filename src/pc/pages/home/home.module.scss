@@ -1,0 +1,12 @@
+.home-container {
+	display: flex;
+	justify-content: space-between;
+	gap: 5vw;
+	min-height: 100%;
+}
+
+.cards-container {
+	display: flex;
+	flex-direction: column;
+	width: 60%;
+}

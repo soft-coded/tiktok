@@ -20,6 +20,7 @@ class is added to the root (html) tag.
 	--clr-text-light: rgba(22, 24, 35, 0.5);
 	--clr-primary: rgb(254, 44, 85);
 	--clr-primary-light: rgba(254, 44, 85, 0.06);
+	--clr-border: #e5e6e7;
 }
 
 /* light theme end */
@@ -64,9 +65,19 @@ ol {
 	list-style: none;
 }
 
-img {
+img,
+video {
 	object-fit: cover;
 	object-position: center;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: inherit;
 }
 
 .image-container {

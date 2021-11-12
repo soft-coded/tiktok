@@ -2,6 +2,12 @@
 $btn-border-radius: 4px;
 $header-height: 8.5vh;
 
+html,
+body,
+.page-container {
+	scrollbar-width: thin;
+}
+
 .page-container {
 	min-height: 100vh;
 	background: var(--clr-background);
