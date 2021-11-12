@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 import "./video-card.scss";
+import ActionButton from "./ActionButton";
 
 export interface CardProps {
 	userId: string;
@@ -10,6 +11,9 @@ export interface CardProps {
 	caption: string;
 	music: string;
 	video: string;
+	likesNum: string;
+	commentsNum: string;
+	sharesNum: string;
 }
 
 export default function VideoCard({
@@ -19,7 +23,10 @@ export default function VideoCard({
 	name,
 	caption,
 	music,
-	video
+	video,
+	likesNum,
+	commentsNum,
+	sharesNum
 }: CardProps) {
 	return (
 		<div className="app-video-card">
@@ -43,7 +50,24 @@ export default function VideoCard({
 							Your browser does not support videos.
 						</video>
 					</div>
+					<div className="action-buttons">
+						<ActionButton
+							icon={<i className="fas fa-heart" />}
+							number={likesNum}
+						/>
+						<ActionButton
+							icon={<i className="fas fa-comment-dots" />}
+							number={commentsNum}
+						/>
+						<ActionButton
+							icon={<i className="fas fa-share" />}
+							number={sharesNum}
+						/>
+					</div>
 				</div>
+			</div>
+			<div className="follow-btn">
+				<button>Follow</button>
 			</div>
 		</div>
 	);
