@@ -1,4 +1,4 @@
-@import "../../../global-variables/variables.scss";
+@import "../../index.scss";
 
 .header-container {
 	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);
@@ -9,13 +9,13 @@
 }
 
 .header {
-	height: 8.5vh;
+	height: $header-height;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 
 	li {
-		height: 5vh;
+		height: calc(#{$header-height} / 1.75);
 		display: flex;
 		align-items: center;
 	}
@@ -71,7 +71,7 @@
 		font-size: 16px;
 
 		a {
-			transition: box-shadow 0.3s ease-out;
+			transition: box-shadow 0.2s ease-out;
 
 			&:hover {
 				box-shadow: 0 2px 0 rgba(0, 0, 0, 0.5);
@@ -81,8 +81,17 @@
 		button {
 			background: var(--clr-primary);
 			color: #fff;
-			padding: 8px 20px;
+			padding: 8px 28px;
 			border-radius: $btn-border-radius;
+
+			&:hover {
+				background: linear-gradient(
+						0deg,
+						rgba(0, 0, 0, 0.06),
+						rgba(0, 0, 0, 0.06)
+					),
+					var(--clr-primary);
+			}
 		}
 	}
 }

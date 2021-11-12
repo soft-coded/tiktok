@@ -24,7 +24,7 @@ class is added to the root (html) tag.
 
 /* light theme end */
 
-// makes position: sticky not work, handle with caution
+// breaks position: sticky, handle with caution
 // html,
 // body {
 // 	overflow-x: hidden;
