@@ -12,6 +12,8 @@ $action-btn-size: 48px;
 	border-bottom: 2px solid var(--clr-border);
 
 	.profile-pic {
+		align-self: flex-start;
+
 		.image-container {
 			width: $profile-pic-size;
 			height: $profile-pic-size;
@@ -89,7 +91,7 @@ $action-btn-size: 48px;
 					span {
 						font-size: 0.72rem;
 						font-weight: 600;
-						color: rgba(22, 24, 35, 0.75);
+						color: rgba(var(--clr-secondary-values), 0.75);
 					}
 				}
 
@@ -100,13 +102,13 @@ $action-btn-size: 48px;
 					width: $action-btn-size;
 					height: $action-btn-size;
 					border-radius: 50%;
-					background-color: rgba(22, 24, 35, 0.06);
+					background-color: rgba(var(--clr-secondary-values), 0.06);
 					font-size: 1.3rem;
 					cursor: pointer;
 					transition: background-color 0.25s ease-out;
 
 					&:hover {
-						background-color: rgba(22, 24, 35, 0.1);
+						background-color: rgba(var(--clr-secondary-values), 0.1);
 					}
 				}
 			}

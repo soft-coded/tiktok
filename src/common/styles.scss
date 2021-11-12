@@ -16,20 +16,26 @@ class is added to the root (html) tag.
 
 :root.light {
 	--clr-background: #ffffff;
-	--clr-text: rgb(22, 24, 35);
-	--clr-text-light: rgba(22, 24, 35, 0.5);
-	--clr-primary: rgb(254, 44, 85);
-	--clr-primary-light: rgba(254, 44, 85, 0.06);
+	--clr-shadow-values: 0, 0, 0;
+	--clr-shadow: rgba(var(--clr-shadow-values), 0.12);
 	--clr-border: #e5e6e7;
+
+	--clr-primary-values: 254, 44, 85;
+	--clr-primary: rgb(var(--clr-primary-values));
+
+	--clr-secondary-values: 22, 24, 35;
+	--clr-secondary: rgb(var(--clr-secondary-values));
+
+	--clr-text: rgb(var(--clr-secondary-values));
 }
 
 /* light theme end */
 
-// breaks position: sticky, handle with caution
-// html,
-// body {
-// 	overflow-x: hidden;
-// }
+html,
+body {
+	scroll-behavior: smooth;
+	overflow-x: hidden;
+}
 
 body {
 	font-family: $default-fonts;

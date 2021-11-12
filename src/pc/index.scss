@@ -1,11 +1,33 @@
 // pc specific variables
 $btn-border-radius: 4px;
 $header-height: 8.5vh;
+$scrollbar-width: 8px;
+$scrollbar-thumb-color: rgba(var(--clr-primary-values), 0.85);
+$scrollbar-track-color: rgba(var(--clr-secondary-values), 0.25);
 
 html,
 body,
 .page-container {
 	scrollbar-width: thin;
+	scrollbar-color: $scrollbar-thumb-color $scrollbar-track-color;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+.page-container::-webkit-scrollbar {
+	width: $scrollbar-width;
+}
+
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb,
+.page-container::-webkit-scrollbar-thumb {
+	background-color: $scrollbar-thumb-color;
+}
+
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track,
+.page-container::-webkit-scrollbar-track {
+	background-color: $scrollbar-track-color;
 }
 
 .page-container {

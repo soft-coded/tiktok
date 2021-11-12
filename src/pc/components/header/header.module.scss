@@ -5,7 +5,7 @@
 }
 
 .header-container {
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);
+	box-shadow: 0 1px 1px var(--clr-shadow);
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -31,7 +31,7 @@
 	}
 
 	.search-bar {
-		background: rgba(22, 24, 35, 0.06);
+		background: rgba(var(--clr-secondary-values), 0.06);
 		min-width: 10vw;
 		border-radius: 92px;
 		display: flex;
@@ -47,7 +47,7 @@
 
 		span {
 			display: block;
-			background: rgba(22, 24, 35, 0.12);
+			background: rgba(var(--clr-secondary-values), 0.12);
 			margin: -3px 0;
 			width: 1px;
 			height: 28px;
@@ -59,13 +59,13 @@
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			color: var(--clr-text-light);
+			color: rgba(var(--clr-secondary-values), 0.5);
 			cursor: pointer;
 			background: none;
 			font-size: 1rem;
 
 			&:hover {
-				background: rgba(22, 24, 35, 0.03);
+				background: rgba(var(--clr-secondary-values), 0.03);
 			}
 		}
 	}
@@ -80,7 +80,7 @@
 			transition: box-shadow 0.2s ease-out;
 
 			&:hover {
-				box-shadow: 0 2px 0 rgba(0, 0, 0, 0.5);
+				box-shadow: 0 2px 0 rgba(var(--clr-shadow-values), 0.5);
 			}
 		}
 
