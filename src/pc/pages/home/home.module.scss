@@ -1,3 +1,5 @@
+$cards-container-width: 700px;
+
 .home-container {
 	display: flex;
 	justify-content: space-between;
@@ -8,5 +10,5 @@
 .cards-container {
 	display: flex;
 	flex-direction: column;
-	width: 60%;
+	width: $cards-container-width;
 }

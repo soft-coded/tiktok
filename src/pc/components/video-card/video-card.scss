@@ -126,6 +126,10 @@ $action-btn-size: 48px;
 			color: var(--clr-primary);
 			font-size: 0.9rem;
 			font-weight: 500;
+
+			&:hover {
+				background-color: rgba(var(--clr-primary-values), 0.06);
+			}
 		}
 	}
 }

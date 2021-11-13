@@ -4,6 +4,12 @@ $header-height: 8.5vh;
 $scrollbar-width: 8px;
 $scrollbar-thumb-color: rgba(var(--clr-primary-values), 0.85);
 $scrollbar-track-color: rgba(var(--clr-secondary-values), 0.25);
+/* this variable just keeps track of the current
+maximum z-index. It is not used anywhere. Change this 
+variable if a need for even greater z-index arrives,
+and update the comment next to it with the component that 
+will have the higher z-index. Preferably a multiple of 10. */
+$cur-max-z-index: 21; // close video-modal button
 
 html,
 body,

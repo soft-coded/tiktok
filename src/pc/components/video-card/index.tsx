@@ -1,7 +1,9 @@
+import { useState, MouseEvent } from "react";
 import { Link } from "react-router-dom";
 
 import "./video-card.scss";
 import ActionButton from "./ActionButton";
+import VideoModal from "../video-modal";
 
 export interface CardProps {
 	userId: string;
@@ -14,6 +16,7 @@ export interface CardProps {
 	likesNum: string;
 	commentsNum: string;
 	sharesNum: string;
+	uploadTime: string;
 }
 
 export default function VideoCard({
@@ -26,10 +29,36 @@ export default function VideoCard({
 	video,
 	likesNum,
 	commentsNum,
-	sharesNum
+	sharesNum,
+	uploadTime
 }: CardProps) {
+	const [showModal, setShowModal] = useState(false);
+
+	function handleModalOpen(e: MouseEvent) {
+		e.preventDefault();
+		setShowModal(true);
+	}
+
 	return (
 		<div className="app-video-card">
+			{showModal && (
+				<VideoModal
+					setShowModal={setShowModal}
+					{...{
+						userId,
+						profilePhoto,
+						name,
+						username,
+						caption,
+						music,
+						video,
+						likesNum,
+						sharesNum,
+						commentsNum,
+						uploadTime
+					}}
+				/>
+			)}
 			<Link to={"/user/" + userId} className="profile-pic">
 				<div className="image-container">
 					<img src={profilePhoto} alt={name} />
@@ -38,7 +67,9 @@ export default function VideoCard({
 			<div className="card-content">
 				<header>
 					<h4>{username}</h4>
-					<h5>{name}</h5>
+					<h5>
+						{name} | <span>{uploadTime}</span>
+					</h5>
 				</header>
 				<p className="caption">{caption}</p>
 				<p className="music">
@@ -46,7 +77,13 @@ export default function VideoCard({
 				</p>
 				<div className="card-video">
 					<div className="video-container">
-						<video src={video} playsInline muted autoPlay loop controls>
+						<video
+							src={video}
+							playsInline
+							muted
+							autoPlay
+							onClick={handleModalOpen}
+						>
 							Your browser does not support videos.
 						</video>
 					</div>
