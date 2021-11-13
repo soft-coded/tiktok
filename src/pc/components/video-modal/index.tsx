@@ -8,27 +8,21 @@ interface ModalProps extends CardProps {
 	setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function VideoModal({
-	profilePhoto,
-	name,
-	username,
-	caption,
-	music,
-	likesNum,
-	commentsNum,
-	video,
-	uploadTime,
-	setShowModal
-}: ModalProps) {
+export default function VideoModal(props: ModalProps) {
+	function handleModalClose() {
+		document.documentElement.style.overflowY = "auto";
+		props.setShowModal(false);
+	}
+
 	return (
 		<div className="app-video-modal">
 			<div className="video-container-wrapper">
-				<button className="close-btn" onClick={() => setShowModal(false)}>
+				<button className="close-btn" onClick={handleModalClose}>
 					<i className="fas fa-times" />
 				</button>
 				<div className="poster-container" />
 				<div className="video-container">
-					<video src={video} playsInline autoPlay controls>
+					<video src={props.video} playsInline autoPlay controls>
 						Your browser does not support videos.
 					</video>
 				</div>
@@ -36,30 +30,30 @@ export default function VideoModal({
 			<div className="modal-content">
 				<header>
 					<div className="image-container">
-						<img src={profilePhoto} alt={name} />
+						<img src={props.profilePhoto} alt={props.name} />
 					</div>
 					<div className="names">
-						<h3>{username}</h3>
+						<h3>{props.username}</h3>
 						<h4>
-							{name} | <span>{uploadTime}</span>
+							{props.name} | <span>{props.uploadTime}</span>
 						</h4>
 					</div>
 					<div className="follow-btn">
 						<button>Follow</button>
 					</div>
 				</header>
-				<p className="caption">{caption}</p>
+				<p className="caption">{props.caption}</p>
 				<h5 className="music">
-					<i className="fas fa-music" /> {music}
+					<i className="fas fa-music" /> {props.music}
 				</h5>
 				<div className="action-buttons">
 					<ActionButton
 						icon={<i className="fas fa-heart" />}
-						number={likesNum}
+						number={props.likesNum}
 					/>
 					<ActionButton
 						icon={<i className="fas fa-comment-dots" />}
-						number={commentsNum}
+						number={props.commentsNum}
 					/>
 				</div>
 				<div className="comments">

@@ -1,4 +1,4 @@
-import { useState, MouseEvent } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import "./video-card.scss";
@@ -19,66 +19,37 @@ export interface CardProps {
 	uploadTime: string;
 }
 
-export default function VideoCard({
-	userId,
-	profilePhoto,
-	username,
-	name,
-	caption,
-	music,
-	video,
-	likesNum,
-	commentsNum,
-	sharesNum,
-	uploadTime
-}: CardProps) {
+export default function VideoCard(props: CardProps) {
 	const [showModal, setShowModal] = useState(false);
 
-	function handleModalOpen(e: MouseEvent) {
-		e.preventDefault();
+	function handleModalOpen() {
+		document.documentElement.style.overflowY = "hidden";
 		setShowModal(true);
 	}
 
 	return (
 		<div className="app-video-card">
-			{showModal && (
-				<VideoModal
-					setShowModal={setShowModal}
-					{...{
-						userId,
-						profilePhoto,
-						name,
-						username,
-						caption,
-						music,
-						video,
-						likesNum,
-						sharesNum,
-						commentsNum,
-						uploadTime
-					}}
-				/>
-			)}
-			<Link to={"/user/" + userId} className="profile-pic">
+			{showModal && <VideoModal setShowModal={setShowModal} {...props} />}
+			<Link to={"/user/" + props.userId} className="profile-pic">
 				<div className="image-container">
-					<img src={profilePhoto} alt={name} />
+					<img src={props.profilePhoto} alt={props.name} />
 				</div>
 			</Link>
 			<div className="card-content">
 				<header>
-					<h4>{username}</h4>
+					<h4>{props.username}</h4>
 					<h5>
-						{name} | <span>{uploadTime}</span>
+						{props.name} | <span>{props.uploadTime}</span>
 					</h5>
 				</header>
-				<p className="caption">{caption}</p>
+				<p className="caption">{props.caption}</p>
 				<p className="music">
-					<i className="fas fa-music" /> {music}
+					<i className="fas fa-music" /> {props.music}
 				</p>
 				<div className="card-video">
 					<div className="video-container">
 						<video
-							src={video}
+							src={props.video}
 							playsInline
 							muted
 							autoPlay
@@ -90,15 +61,15 @@ export default function VideoCard({
 					<div className="action-buttons">
 						<ActionButton
 							icon={<i className="fas fa-heart" />}
-							number={likesNum}
+							number={props.likesNum}
 						/>
 						<ActionButton
 							icon={<i className="fas fa-comment-dots" />}
-							number={commentsNum}
+							number={props.commentsNum}
 						/>
 						<ActionButton
 							icon={<i className="fas fa-share" />}
-							number={sharesNum}
+							number={props.sharesNum}
 						/>
 					</div>
 				</div>
