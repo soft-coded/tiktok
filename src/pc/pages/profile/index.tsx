@@ -3,6 +3,7 @@
 import "./profile.scss";
 import Container from "../../components/container";
 import Sidebar, { suggestedAccounts } from "../../components/sidebar";
+import ProfileButtons from "../../components/profile-buttons";
 
 const user = {
 	userId: "1",
@@ -26,7 +27,6 @@ const user = {
 
 export default function Profile() {
 	// const {username} = useParams();
-	console.log("here");
 
 	return (
 		<Container className="profile-page-container">
@@ -45,13 +45,13 @@ export default function Profile() {
 				<div className="user-details">
 					<div className="counts">
 						<p>
-							<h4>{user.followingNum}</h4> Following
+							<strong>{user.followingNum}</strong> Following
 						</p>
 						<p>
-							<h4>{user.followersNum}</h4> Followers
+							<strong>{user.followersNum}</strong> Followers
 						</p>
 						<p>
-							<h4>{user.totalLikes}</h4> Likes
+							<strong>{user.totalLikes}</strong> Likes
 						</p>
 					</div>
 					<p className="description">{user.description}</p>
@@ -72,6 +72,7 @@ export default function Profile() {
 						))}
 					</div>
 				</div>
+				<ProfileButtons />
 			</div>
 		</Container>
 	);

@@ -1,0 +1,35 @@
+.profile-category-buttons {
+	margin-top: 12px;
+
+	.btns {
+		display: flex;
+
+		button {
+			width: 50%;
+			font-weight: 600;
+			font-size: 1.1rem;
+			color: rgba(var(--clr-secondary-values), 0.5);
+
+			&.active {
+				color: #000000;
+			}
+		}
+	}
+
+	.button-underbar {
+		margin-top: 8px;
+		height: 1px;
+		width: 100%;
+		background-color: rgba(var(--clr-secondary-values), 0.3);
+		position: relative;
+
+		span {
+			height: 2px;
+			background-color: var(--clr-secondary);
+			width: 50%;
+			position: absolute;
+			top: -50%;
+			transition: left 0.25s ease-out;
+		}
+	}
+}
