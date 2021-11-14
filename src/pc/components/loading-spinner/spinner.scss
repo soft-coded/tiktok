@@ -1,0 +1,83 @@
+$circle-red: #fe2c55;
+$circle-blue: #3af2ff;
+$initial-transform: translateX(-50%);
+$small-scale: 0.7;
+$big-scale: 1.3;
+
+.spinner-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 25px;
+	--circle-size: 25px; // use this variable when overriding spinner size
+}
+
+.spinner-container {
+	width: var(--circle-size);
+	height: var(--circle-size);
+	position: relative;
+}
+
+.spinner-circle {
+	position: absolute;
+	display: block;
+	width: 50%;
+	padding: 50%;
+	border-radius: 50%;
+	mix-blend-mode: darken;
+}
+
+.spinner-circle-red {
+	background: $circle-red;
+	animation: spinner-animation-red 2s ease-in-out infinite;
+}
+
+.spinner-circle-blue {
+	background: $circle-blue;
+	animation: spinner-animation-blue 2s ease-in-out infinite;
+}
+
+@keyframes spinner-animation-red {
+	0% {
+		transform: $initial-transform scale(1);
+		left: 0;
+	}
+	25% {
+		transform: $initial-transform scale($big-scale);
+		left: 50%;
+	}
+	50% {
+		transform: $initial-transform scale(1);
+		left: 100%;
+	}
+	75% {
+		transform: $initial-transform scale($small-scale);
+		left: 50%;
+	}
+	100% {
+		transform: $initial-transform scale(1);
+		left: 0;
+	}
+}
+@keyframes spinner-animation-blue {
+	0% {
+		transform: $initial-transform scale(1);
+		left: 100%;
+	}
+	25% {
+		transform: $initial-transform scale($small-scale);
+		left: 50%;
+	}
+	50% {
+		transform: $initial-transform scale(1);
+		left: 0;
+	}
+	75% {
+		transform: $initial-transform scale($big-scale);
+		left: 50%;
+	}
+	100% {
+		transform: $initial-transform scale(1);
+		left: 100%;
+	}
+}

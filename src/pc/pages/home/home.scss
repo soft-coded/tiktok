@@ -1,0 +1,14 @@
+$cards-container-width: 700px;
+
+.homepage-container {
+	display: flex;
+	justify-content: space-between;
+	gap: 5vw;
+	min-height: 100%;
+
+	.cards-container {
+		display: flex;
+		flex-direction: column;
+		width: $cards-container-width;
+	}
+}

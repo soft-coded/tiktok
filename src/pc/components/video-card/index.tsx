@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { Suspense, lazy, useState } from "react";
 import { Link } from "react-router-dom";
 
 import "./video-card.scss";
 import ActionButton from "./ActionButton";
-import VideoModal from "../video-modal";
+import LoadingSpinner from "../loading-spinner";
+// ! needs error handling !
+const VideoModal = lazy(() => import("../video-modal/index"));
 
 export interface CardProps {
 	userId: string;
@@ -29,8 +31,10 @@ export default function VideoCard(props: CardProps) {
 
 	return (
 		<div className="app-video-card">
-			{showModal && <VideoModal setShowModal={setShowModal} {...props} />}
-			<Link to={"/user/" + props.userId} className="profile-pic">
+			<Suspense fallback={<LoadingSpinner />}>
+				{showModal && <VideoModal setShowModal={setShowModal} {...props} />}
+			</Suspense>
+			<Link to={"/user/" + props.username} className="profile-pic">
 				<div className="image-container">
 					<img src={props.profilePhoto} alt={props.name} />
 				</div>
