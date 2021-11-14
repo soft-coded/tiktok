@@ -26,7 +26,7 @@ export default function Header() {
 						<div>
 							<a href="/">Upload</a>
 						</div>
-						<button>Log In</button>
+						<button className="primary-button">Log In</button>
 					</li>
 				</Container>
 			</header>

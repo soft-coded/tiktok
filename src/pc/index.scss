@@ -39,3 +39,16 @@ body::-webkit-scrollbar-track,
 	color: var(--clr-text);
 	position: relative;
 }
+
+.primary-button {
+	color: #ffffff;
+	background-color: var(--clr-primary);
+	border-radius: $btn-border-radius;
+	padding: 8px;
+	font-weight: 600;
+
+	&:hover {
+		background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)),
+			var(--clr-primary);
+	}
+}

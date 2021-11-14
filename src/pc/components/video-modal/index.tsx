@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 import "./video-modal.scss";
-import { CardProps } from "../video-card";
+import { PostData as CardProps } from "../../../common/utils";
 import ActionButton from "../action-button";
 
 interface ModalProps extends CardProps {
@@ -29,7 +29,7 @@ export default function VideoModal(props: ModalProps) {
 			</div>
 			<div className="modal-content">
 				<header>
-					<div className="image-container">
+					<div className="rounded-photo">
 						<img src={props.profilePhoto} alt={props.name} />
 					</div>
 					<div className="names">

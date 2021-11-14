@@ -73,7 +73,7 @@ export default function Sidebar() {
 					<div className="accounts">
 						{suggestedAccounts.map((acc, i) => (
 							<div key={i} className="account-details">
-								<div className="image-container">
+								<div className="rounded-photo">
 									<img src={acc.photo} alt={acc.name} />
 								</div>
 								<div className="name-container">

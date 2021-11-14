@@ -94,5 +94,16 @@ h6 {
 
 	img {
 		height: 100%;
+		width: 100%;
+	}
+}
+
+.rounded-photo {
+	border-radius: 50%;
+	overflow: hidden;
+
+	img {
+		height: 100%;
+		width: 100%;
 	}
 }

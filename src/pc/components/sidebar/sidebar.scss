@@ -135,16 +135,9 @@ $bg-transition: background-color 0.25s ease-out;
 				}
 			}
 
-			.image-container {
-				overflow: hidden;
+			.rounded-photo {
 				height: $account-pfp-size;
 				width: $account-pfp-size;
-				border-radius: 50%;
-
-				img {
-					width: 100%;
-					height: 100%;
-				}
 			}
 
 			.name-container {

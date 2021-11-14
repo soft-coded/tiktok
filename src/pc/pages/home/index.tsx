@@ -13,7 +13,7 @@ const posts = [
 		caption: "Welcome to India. Hope you enjoy your stay. 😊😂❤️😒😘",
 		music: "Rabindranath Tagore - 🏁Jana Gana Mana🏁",
 		video:
-			"https://v77.tiktokcdn.com/1562e2d25d6c4e73d02c11c4ab9f1a9a/61910b2a/video/tos/useast2a/tos-useast2a-pve-0037-aiso/548f08d94664485190c0baeaf5850473/?a=1180&br=1066&bt=533&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=3&ds=3&er=&ft=wZ~RfFhRkag3-I&l=2021111407113901018806122705C127A1&lr=tiktok&mime_type=video_mp4&net=0&pl=0&qs=0&rc=anllOjM6ZnZuODMzZjgzM0ApZDU8NzdpNTxmN2ZnPDY0NWdyanJocjRfazBgLS1kL2Nzc2I1XjVgNi1gNjU0LzM1LWI6Yw%3D%3D&vl=&vr=",
+			"https://v39-us.tiktokcdn.com/0d76007ad8643dedae27bd49a993f7f0/6191682d/video/tos/useast5/tos-useast5-ve-0068c001-tx/74ff18fbd6fb487f9f7e4e2c6e5157f9/?a=1233&br=1136&bt=568&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=wZ~ROFGgkag3-I&l=2021111413485201018904922518DFDABE&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=M3VyaTs6ZnduOTMzZzczNEApNWZlZWY1MzxpNztlOWlnOGdicDFucjRnNDJgLS1kMS9zczBeNS80YTQvMDQzY15hL2E6Yw%3D%3D&vl=&vr=",
 		likesNum: "3.9M",
 		commentsNum: "45K",
 		sharesNum: "88K",
@@ -29,7 +29,7 @@ const posts = [
 			"Certified freak, seven days a week. Wet ass pussy, make that pullout game weak. 😘😘😘😘❤️💕",
 		music: "Cardi B - WAP",
 		video:
-			"https://v77.tiktokcdn.com/1562e2d25d6c4e73d02c11c4ab9f1a9a/61910b2a/video/tos/useast2a/tos-useast2a-pve-0037-aiso/548f08d94664485190c0baeaf5850473/?a=1180&br=1066&bt=533&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=3&ds=3&er=&ft=wZ~RfFhRkag3-I&l=2021111407113901018806122705C127A1&lr=tiktok&mime_type=video_mp4&net=0&pl=0&qs=0&rc=anllOjM6ZnZuODMzZjgzM0ApZDU8NzdpNTxmN2ZnPDY0NWdyanJocjRfazBgLS1kL2Nzc2I1XjVgNi1gNjU0LzM1LWI6Yw%3D%3D&vl=&vr=",
+			"https://v39-us.tiktokcdn.com/0d76007ad8643dedae27bd49a993f7f0/6191682d/video/tos/useast5/tos-useast5-ve-0068c001-tx/74ff18fbd6fb487f9f7e4e2c6e5157f9/?a=1233&br=1136&bt=568&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=wZ~ROFGgkag3-I&l=2021111413485201018904922518DFDABE&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=M3VyaTs6ZnduOTMzZzczNEApNWZlZWY1MzxpNztlOWlnOGdicDFucjRnNDJgLS1kMS9zczBeNS80YTQvMDQzY15hL2E6Yw%3D%3D&vl=&vr=",
 		likesNum: "3.9M",
 		commentsNum: "45K",
 		sharesNum: "88K",
@@ -41,7 +41,7 @@ export default function Home() {
 	return (
 		<Container className="homepage-container">
 			<Sidebar />
-			<div className="cards-container">
+			<div className="content-container">
 				{posts.map(post => (
 					<VideoCard key={post.userId} {...post} />
 				))}

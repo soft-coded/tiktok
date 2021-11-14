@@ -1,0 +1,43 @@
+@import "../../index.scss";
+
+$container-width: 596px;
+$profile-pic-size: 116px;
+
+.profile-page-container {
+	display: flex;
+	justify-content: space-between;
+	gap: 36px;
+
+	.profile-container {
+		display: flex;
+		flex-direction: column;
+		width: $container-width;
+		padding: 36px 0;
+
+		header {
+			display: flex;
+			gap: 16px;
+
+			.rounded-photo {
+				width: $profile-pic-size;
+				height: $profile-pic-size;
+			}
+
+			h1 {
+				font-weight: 700;
+				font-size: 1.7rem;
+			}
+
+			h4 {
+				font-weight: 500;
+				font-size: 1rem;
+			}
+
+			button {
+				padding: 8px;
+				margin: 12px 0;
+				width: 100%;
+			}
+		}
+	}
+}

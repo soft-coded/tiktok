@@ -77,11 +77,9 @@ $profile-photo-size: 48px;
 			align-items: center;
 			gap: 12px;
 
-			.image-container {
+			.rounded-photo {
 				width: $profile-photo-size;
 				height: $profile-photo-size;
-				border-radius: 50%;
-				overflow: hidden;
 			}
 
 			h3 {

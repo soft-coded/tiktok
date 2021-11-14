@@ -4,22 +4,9 @@ import { Link } from "react-router-dom";
 import "./video-card.scss";
 import ActionButton from "../action-button";
 import FullscreenSpinner from "../fullscreen-spinner";
+import { PostData as CardProps } from "../../../common/utils";
 // ! needs error handling !
 const VideoModal = lazy(() => import("../video-modal/index"));
-
-export interface CardProps {
-	userId: string;
-	profilePhoto: string;
-	username: string;
-	name: string;
-	caption: string;
-	music: string;
-	video: string;
-	likesNum: string;
-	commentsNum: string;
-	sharesNum: string;
-	uploadTime: string;
-}
 
 export default function VideoCard(props: CardProps) {
 	const [showModal, setShowModal] = useState(false);
@@ -35,7 +22,7 @@ export default function VideoCard(props: CardProps) {
 				{showModal && <VideoModal setShowModal={setShowModal} {...props} />}
 			</Suspense>
 			<Link to={"/user/" + props.username} className="profile-pic">
-				<div className="image-container">
+				<div className="rounded-photo">
 					<img src={props.profilePhoto} alt={props.name} />
 				</div>
 			</Link>
