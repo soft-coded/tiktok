@@ -2,7 +2,7 @@
 
 import "./profile.scss";
 import Container from "../../components/container";
-import Sidebar from "../../components/sidebar";
+import Sidebar, { suggestedAccounts } from "../../components/sidebar";
 
 const user = {
 	userId: "1",
@@ -54,7 +54,23 @@ export default function Profile() {
 							<h4>{user.totalLikes}</h4> Likes
 						</p>
 					</div>
-					<p>{user.description}</p>
+					<p className="description">{user.description}</p>
+				</div>
+				<div className="suggested">
+					<h5>
+						<span>Suggested accounts</span>
+						<span className="see-all">See all</span>
+					</h5>
+					<div className="account-buttons">
+						{suggestedAccounts.slice(0, 3).map((acc, i) => (
+							<div key={i} className="acc-btn">
+								<div className="rounded-photo">
+									<img src={acc.photo} alt={acc.name} />
+								</div>
+								<h4>{acc.username}</h4>
+							</div>
+						))}
+					</div>
 				</div>
 			</div>
 		</Container>

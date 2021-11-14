@@ -2,6 +2,7 @@
 
 $container-width: 596px;
 $profile-pic-size: 116px;
+$suggested-pfp-size: 32px;
 
 .profile-page-container {
 	display: flex;
@@ -11,6 +12,7 @@ $profile-pic-size: 116px;
 	.profile-container {
 		display: flex;
 		flex-direction: column;
+		gap: 28px;
 		width: $container-width;
 		padding: 36px 0;
 
@@ -35,8 +37,73 @@ $profile-pic-size: 116px;
 
 			button {
 				padding: 8px;
-				margin: 12px 0;
+				margin-top: 12px;
 				width: 100%;
+			}
+		}
+
+		.user-details {
+			display: flex;
+			flex-direction: column;
+			gap: 12px;
+			color: rgba(var(--clr-secondary-values), 0.8);
+
+			.counts {
+				display: flex;
+				gap: 20px;
+
+				p {
+					display: flex;
+					align-items: baseline;
+					gap: 5px;
+					font-weight: 300;
+					font-size: 0.95rem;
+
+					h4 {
+						font-weight: 600;
+						font-size: 1rem;
+					}
+				}
+			}
+
+			.description {
+				font-size: 0.9rem;
+			}
+		}
+
+		.suggested {
+			h5 {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				color: rgba(var(--clr-secondary-values), 0.75);
+				font-weight: 600;
+				font-size: 0.75rem;
+			}
+
+			.account-buttons {
+				display: flex;
+				gap: 24px;
+				margin-top: 16px;
+			}
+
+			.acc-btn {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				padding: 2px 12px 1.5px 2px;
+				border: 2px solid var(--clr-border);
+				border-radius: 20px;
+
+				.rounded-photo {
+					width: $suggested-pfp-size;
+					height: $suggested-pfp-size;
+				}
+
+				h4 {
+					font-weight: 500;
+					font-size: 0.88rem;
+				}
 			}
 		}
 	}

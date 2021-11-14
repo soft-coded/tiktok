@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 import "./sidebar.scss";
 
-const suggestedAccounts = [
+export const suggestedAccounts = [
 	{
 		username: "kanye",
 		name: "Kanye West",
