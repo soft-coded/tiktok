@@ -2,8 +2,8 @@ import { Suspense, lazy, useState } from "react";
 import { Link } from "react-router-dom";
 
 import "./video-card.scss";
-import ActionButton from "./ActionButton";
-import LoadingSpinner from "../loading-spinner";
+import ActionButton from "../action-button";
+import FullscreenSpinner from "../fullscreen-spinner";
 // ! needs error handling !
 const VideoModal = lazy(() => import("../video-modal/index"));
 
@@ -31,7 +31,7 @@ export default function VideoCard(props: CardProps) {
 
 	return (
 		<div className="app-video-card">
-			<Suspense fallback={<LoadingSpinner />}>
+			<Suspense fallback={<FullscreenSpinner />}>
 				{showModal && <VideoModal setShowModal={setShowModal} {...props} />}
 			</Suspense>
 			<Link to={"/user/" + props.username} className="profile-pic">
@@ -66,14 +66,17 @@ export default function VideoCard(props: CardProps) {
 						<ActionButton
 							icon={<i className="fas fa-heart" />}
 							number={props.likesNum}
+							className="action-btn-container"
 						/>
 						<ActionButton
 							icon={<i className="fas fa-comment-dots" />}
 							number={props.commentsNum}
+							className="action-btn-container"
 						/>
 						<ActionButton
 							icon={<i className="fas fa-share" />}
 							number={props.sharesNum}
+							className="action-btn-container"
 						/>
 					</div>
 				</div>

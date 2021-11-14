@@ -1,0 +1,9 @@
+.fsspinner {
+	position: fixed;
+	inset: 0;
+	z-index: 15;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(0, 0, 0, 0.85);
+}

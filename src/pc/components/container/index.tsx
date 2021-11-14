@@ -1,11 +1,11 @@
 import { ReactNode, createElement } from "react";
 
 import classes from "./container.module.scss";
+import { ComponentProps, joinClasses } from "../../../common/utils";
 
-interface ContainerProps {
+interface ContainerProps extends ComponentProps {
 	children: ReactNode;
 	component?: string;
-	className?: string;
 }
 
 export default function Container({
@@ -16,9 +16,7 @@ export default function Container({
 	return createElement(
 		component ? component : "div",
 		{
-			className: className
-				? `${classes.container} ${className}`
-				: classes.container
+			className: joinClasses(classes.container, className)
 		},
 		children
 	);

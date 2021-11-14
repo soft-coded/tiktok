@@ -2,7 +2,6 @@ import "./home.scss";
 import Container from "../../components/container";
 import Sidebar from "../../components/sidebar";
 import VideoCard from "../../components/video-card";
-import LoadingSpinner from "../../components/loading-spinner";
 
 const posts = [
 	{
@@ -43,9 +42,8 @@ export default function Home() {
 		<Container className="homepage-container">
 			<Sidebar />
 			<div className="cards-container">
-				<LoadingSpinner />
 				{posts.map(post => (
-					<VideoCard {...post} key={post.userId} />
+					<VideoCard key={post.userId} {...post} />
 				))}
 			</div>
 		</Container>

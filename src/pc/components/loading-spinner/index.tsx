@@ -1,13 +1,22 @@
-import "./spinner.scss";
+import classes from "./spinner.module.scss";
+import { ComponentProps, joinClasses } from "../../../common/utils";
 
-export default function LoadingSpinner({ className }: { className?: string }) {
+export default function LoadingSpinner({ className }: ComponentProps) {
 	return (
-		<div
-			className={className ? `spinner-wrapper ${className}` : "spinner-wrapper"}
-		>
-			<div className="spinner-container">
-				<span className="spinner-circle spinner-circle-red" />
-				<span className="spinner-circle spinner-circle-blue" />
+		<div className={joinClasses(classes["spinner-wrapper"], className)}>
+			<div className={classes["spinner-container"]}>
+				<span
+					className={joinClasses(
+						classes["spinner-circle"],
+						classes["spinner-circle-red"]
+					)}
+				/>
+				<span
+					className={joinClasses(
+						classes["spinner-circle"],
+						classes["spinner-circle-blue"]
+					)}
+				/>
 			</div>
 		</div>
 	);

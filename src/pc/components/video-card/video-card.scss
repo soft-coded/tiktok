@@ -3,7 +3,6 @@
 $profile-pic-size: 56px;
 $video-player-height: calc(450px + (100vw - 768px) / 1152 * 100);
 $vid-aspect-ratio: 9 / 16;
-$action-btn-size: 48px;
 
 .app-video-card {
 	display: flex;
@@ -105,35 +104,6 @@ $action-btn-size: 48px;
 			&:hover {
 				background-color: rgba(var(--clr-primary-values), 0.06);
 			}
-		}
-	}
-}
-
-.action-btn-container {
-	display: flex;
-	align-items: center;
-	gap: 4px;
-
-	span {
-		font-size: 0.72rem;
-		font-weight: 600;
-		color: rgba(var(--clr-secondary-values), 0.75);
-	}
-
-	.action-btn {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: $action-btn-size;
-		height: $action-btn-size;
-		border-radius: 50%;
-		background-color: rgba(var(--clr-secondary-values), 0.06);
-		font-size: 1.3rem;
-		cursor: pointer;
-		transition: background-color 0.25s ease-out;
-
-		&:hover {
-			background-color: rgba(var(--clr-secondary-values), 0.1);
 		}
 	}
 }

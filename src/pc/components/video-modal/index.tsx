@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 import "./video-modal.scss";
 import { CardProps } from "../video-card";
-import ActionButton from "../video-card/ActionButton";
+import ActionButton from "../action-button";
 
 interface ModalProps extends CardProps {
 	setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -50,10 +50,12 @@ export default function VideoModal(props: ModalProps) {
 					<ActionButton
 						icon={<i className="fas fa-heart" />}
 						number={props.likesNum}
+						className="action-btn-container"
 					/>
 					<ActionButton
 						icon={<i className="fas fa-comment-dots" />}
 						number={props.commentsNum}
+						className="action-btn-container"
 					/>
 				</div>
 				<div className="comments">

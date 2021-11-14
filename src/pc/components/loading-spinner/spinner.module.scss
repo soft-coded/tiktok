@@ -5,17 +5,19 @@ $small-scale: 0.7;
 $big-scale: 1.3;
 
 .spinner-wrapper {
+	--circle-size: 25px; // use this variable to override spinner size
+	--wrapper-padding: 25px; // use this variable to override padding
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	padding: 25px;
-	--circle-size: 25px; // use this variable when overriding spinner size
+	padding: var(--wrapper-padding);
 }
 
 .spinner-container {
 	width: var(--circle-size);
 	height: var(--circle-size);
 	position: relative;
+	z-index: 5;
 }
 
 .spinner-circle {
