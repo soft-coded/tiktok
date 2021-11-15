@@ -4,7 +4,7 @@ import "./video-modal.scss";
 import { PostData as CardProps } from "../../../common/utils";
 import ActionButton from "../action-button";
 
-interface ModalProps extends CardProps {
+export interface ModalProps extends CardProps {
 	setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 

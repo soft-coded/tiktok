@@ -1,9 +1,12 @@
+import { useState } from "react";
 // import { useParams } from "react-router-dom";
 
 import "./profile.scss";
 import Container from "../../components/container";
 import Sidebar, { suggestedAccounts } from "../../components/sidebar";
 import ProfileButtons from "../../components/profile-buttons";
+import ProfileCard from "../../components/profile-card";
+import LazyModal from "../../components/video-modal/LazyModal";
 
 const user = {
 	userId: "1",
@@ -17,20 +20,41 @@ const user = {
 	description:
 		"The absolute throat goat and I mean that shit. No one can come close to me when it comes to gulping down a fat one. Oh, and also the PM of India or whatever who cares lol bye",
 	videos: [
-		"https://v39-us.tiktokcdn.com/0d76007ad8643dedae27bd49a993f7f0/6191682d/video/tos/useast5/tos-useast5-ve-0068c001-tx/74ff18fbd6fb487f9f7e4e2c6e5157f9/?a=1233&br=1136&bt=568&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=wZ~ROFGgkag3-I&l=2021111413485201018904922518DFDABE&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=M3VyaTs6ZnduOTMzZzczNEApNWZlZWY1MzxpNztlOWlnOGdicDFucjRnNDJgLS1kMS9zczBeNS80YTQvMDQzY15hL2E6Yw%3D%3D&vl=&vr=",
-		"https://v39-us.tiktokcdn.com/0d76007ad8643dedae27bd49a993f7f0/6191682d/video/tos/useast5/tos-useast5-ve-0068c001-tx/74ff18fbd6fb487f9f7e4e2c6e5157f9/?a=1233&br=1136&bt=568&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=wZ~ROFGgkag3-I&l=2021111413485201018904922518DFDABE&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=M3VyaTs6ZnduOTMzZzczNEApNWZlZWY1MzxpNztlOWlnOGdicDFucjRnNDJgLS1kMS9zczBeNS80YTQvMDQzY15hL2E6Yw%3D%3D&vl=&vr=",
-		"https://v39-us.tiktokcdn.com/0d76007ad8643dedae27bd49a993f7f0/6191682d/video/tos/useast5/tos-useast5-ve-0068c001-tx/74ff18fbd6fb487f9f7e4e2c6e5157f9/?a=1233&br=1136&bt=568&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=wZ~ROFGgkag3-I&l=2021111413485201018904922518DFDABE&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=M3VyaTs6ZnduOTMzZzczNEApNWZlZWY1MzxpNztlOWlnOGdicDFucjRnNDJgLS1kMS9zczBeNS80YTQvMDQzY15hL2E6Yw%3D%3D&vl=&vr=",
-		"https://v39-us.tiktokcdn.com/0d76007ad8643dedae27bd49a993f7f0/6191682d/video/tos/useast5/tos-useast5-ve-0068c001-tx/74ff18fbd6fb487f9f7e4e2c6e5157f9/?a=1233&br=1136&bt=568&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=wZ~ROFGgkag3-I&l=2021111413485201018904922518DFDABE&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=M3VyaTs6ZnduOTMzZzczNEApNWZlZWY1MzxpNztlOWlnOGdicDFucjRnNDJgLS1kMS9zczBeNS80YTQvMDQzY15hL2E6Yw%3D%3D&vl=&vr=",
-		"https://v39-us.tiktokcdn.com/0d76007ad8643dedae27bd49a993f7f0/6191682d/video/tos/useast5/tos-useast5-ve-0068c001-tx/74ff18fbd6fb487f9f7e4e2c6e5157f9/?a=1233&br=1136&bt=568&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=wZ~ROFGgkag3-I&l=2021111413485201018904922518DFDABE&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=M3VyaTs6ZnduOTMzZzczNEApNWZlZWY1MzxpNztlOWlnOGdicDFucjRnNDJgLS1kMS9zczBeNS80YTQvMDQzY15hL2E6Yw%3D%3D&vl=&vr="
-	]
+		"https://v39-eu.tiktokcdn.com/67c569b77da2a2697a8f0ea141f46eb2/6192973e/video/tos/useast2a/tos-useast2a-ve-0068c002/16ec2693dd73454692f17a8cc39c7532/?a=1233&br=2708&bt=1354&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=wZ~R8F8rkag3-I&l=202111151121530101890501594C0982E8&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=ajZwbmk6ZjlvOTMzNzczM0ApPDNmNDk1OjtmN2c0OzY4aWdwMl5gcjRnNDVgLS1kMTZzczRfNTUtMmAvLWEuXi1gNTU6Yw%3D%3D&vl=&vr=",
+		"https://v39-eu.tiktokcdn.com/67c569b77da2a2697a8f0ea141f46eb2/6192973e/video/tos/useast2a/tos-useast2a-ve-0068c002/16ec2693dd73454692f17a8cc39c7532/?a=1233&br=2708&bt=1354&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=wZ~R8F8rkag3-I&l=202111151121530101890501594C0982E8&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=ajZwbmk6ZjlvOTMzNzczM0ApPDNmNDk1OjtmN2c0OzY4aWdwMl5gcjRnNDVgLS1kMTZzczRfNTUtMmAvLWEuXi1gNTU6Yw%3D%3D&vl=&vr=",
+		"https://v39-eu.tiktokcdn.com/67c569b77da2a2697a8f0ea141f46eb2/6192973e/video/tos/useast2a/tos-useast2a-ve-0068c002/16ec2693dd73454692f17a8cc39c7532/?a=1233&br=2708&bt=1354&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=wZ~R8F8rkag3-I&l=202111151121530101890501594C0982E8&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=ajZwbmk6ZjlvOTMzNzczM0ApPDNmNDk1OjtmN2c0OzY4aWdwMl5gcjRnNDVgLS1kMTZzczRfNTUtMmAvLWEuXi1gNTU6Yw%3D%3D&vl=&vr=",
+		"https://v39-eu.tiktokcdn.com/67c569b77da2a2697a8f0ea141f46eb2/6192973e/video/tos/useast2a/tos-useast2a-ve-0068c002/16ec2693dd73454692f17a8cc39c7532/?a=1233&br=2708&bt=1354&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=wZ~R8F8rkag3-I&l=202111151121530101890501594C0982E8&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=ajZwbmk6ZjlvOTMzNzczM0ApPDNmNDk1OjtmN2c0OzY4aWdwMl5gcjRnNDVgLS1kMTZzczRfNTUtMmAvLWEuXi1gNTU6Yw%3D%3D&vl=&vr=",
+		"https://v39-eu.tiktokcdn.com/67c569b77da2a2697a8f0ea141f46eb2/6192973e/video/tos/useast2a/tos-useast2a-ve-0068c002/16ec2693dd73454692f17a8cc39c7532/?a=1233&br=2708&bt=1354&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=wZ~R8F8rkag3-I&l=202111151121530101890501594C0982E8&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=ajZwbmk6ZjlvOTMzNzczM0ApPDNmNDk1OjtmN2c0OzY4aWdwMl5gcjRnNDVgLS1kMTZzczRfNTUtMmAvLWEuXi1gNTU6Yw%3D%3D&vl=&vr="
+	],
+	caption: "hello",
+	likesNum: "11K",
+	commentsNum: "11K",
+	sharesNum: "11K",
+	music: "PAW - Bardi C",
+	uploadTime: "20h ago"
 };
+
+let videoInd: number;
 
 export default function Profile() {
 	// const {username} = useParams();
+	const [showModal, setShowModal] = useState(false);
+
+	function handleModalOpen(ind: number) {
+		document.documentElement.style.overflowY = "hidden";
+		videoInd = ind;
+		setShowModal(true);
+	}
 
 	return (
 		<Container className="profile-page-container">
 			<Sidebar />
+			<LazyModal
+				showModal={showModal}
+				setShowModal={setShowModal}
+				{...user}
+				video={user.videos[videoInd]}
+			/>
 			<div className="profile-container">
 				<header>
 					<div className="rounded-photo">
@@ -73,6 +97,16 @@ export default function Profile() {
 					</div>
 				</div>
 				<ProfileButtons />
+				<div className="profile-cards-container">
+					{user.videos.map((video, i) => (
+						<ProfileCard
+							key={i}
+							index={i}
+							video={video}
+							handleModalOpen={handleModalOpen}
+						/>
+					))}
+				</div>
 			</div>
 		</Container>
 	);

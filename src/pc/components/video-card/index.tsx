@@ -1,12 +1,10 @@
-import { Suspense, lazy, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import "./video-card.scss";
 import ActionButton from "../action-button";
-import FullscreenSpinner from "../fullscreen-spinner";
 import { PostData as CardProps } from "../../../common/utils";
-// ! needs error handling !
-const VideoModal = lazy(() => import("../video-modal/index"));
+import LazyModal from "../video-modal/LazyModal";
 
 export default function VideoCard(props: CardProps) {
 	const [showModal, setShowModal] = useState(false);
@@ -18,9 +16,7 @@ export default function VideoCard(props: CardProps) {
 
 	return (
 		<div className="app-video-card">
-			<Suspense fallback={<FullscreenSpinner />}>
-				{showModal && <VideoModal setShowModal={setShowModal} {...props} />}
-			</Suspense>
+			<LazyModal setShowModal={setShowModal} showModal={showModal} {...props} />
 			<Link to={"/user/" + props.username} className="profile-pic">
 				<div className="rounded-photo">
 					<img src={props.profilePhoto} alt={props.name} />
