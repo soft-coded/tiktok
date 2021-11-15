@@ -28,8 +28,13 @@ $vid-aspect-ratio: 9 / 16;
 			align-items: baseline;
 			gap: 6px;
 
-			h4 {
+			.username {
 				font-weight: 700;
+				cursor: pointer;
+
+				&:hover {
+					text-decoration: underline;
+				}
 			}
 
 			h5 {

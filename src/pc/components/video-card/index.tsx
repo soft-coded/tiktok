@@ -24,7 +24,9 @@ export default function VideoCard(props: CardProps) {
 			</Link>
 			<div className="card-content">
 				<header>
-					<h4>{props.username}</h4>
+					<Link to={"/user/" + props.username} className="username">
+						<h4>{props.username}</h4>
+					</Link>
 					<h5>
 						{props.name} | <span>{props.uploadTime}</span>
 					</h5>

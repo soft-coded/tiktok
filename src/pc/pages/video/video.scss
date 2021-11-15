@@ -1,0 +1,10 @@
+$container-width: 692px;
+
+.video-page-container {
+	display: flex;
+	justify-content: space-between;
+
+	.content-container {
+		width: $container-width;
+	}
+}

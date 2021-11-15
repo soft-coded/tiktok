@@ -3,7 +3,7 @@ import Container from "../../components/container";
 import Sidebar from "../../components/sidebar";
 import VideoCard from "../../components/video-card";
 
-const posts = [
+export const posts = [
 	{
 		userId: "1",
 		profilePhoto:
@@ -13,7 +13,7 @@ const posts = [
 		caption: "Welcome to India. Hope you enjoy your stay. 😊😂❤️😒😘",
 		music: "Rabindranath Tagore - 🏁Jana Gana Mana🏁",
 		video:
-			"https://v39-eu.tiktokcdn.com/67c569b77da2a2697a8f0ea141f46eb2/6192973e/video/tos/useast2a/tos-useast2a-ve-0068c002/16ec2693dd73454692f17a8cc39c7532/?a=1233&br=2708&bt=1354&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=wZ~R8F8rkag3-I&l=202111151121530101890501594C0982E8&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=ajZwbmk6ZjlvOTMzNzczM0ApPDNmNDk1OjtmN2c0OzY4aWdwMl5gcjRnNDVgLS1kMTZzczRfNTUtMmAvLWEuXi1gNTU6Yw%3D%3D&vl=&vr=",
+			"https://v19.tiktokcdn.com/0a943c190046c710dbfe6b8ff8389b30/619314cd/video/tos/useast2a/tos-useast2a-pve-0068/3fbabf74e7c4437a8218aacb95ff4f44/?a=1233&br=5264&bt=2632&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=wZ~AOFFnkag3-I&l=202111152017270101890660323538583C&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=Mzs6ZjQ6ZjtnOTMzNzczM0ApO2Y4aWRmaDs1N2hkNDw3Z2dfZF5lcjQwMTRgLS1kMTZzcy1fLy0yXmE2Mi1gYi40M146Yw%3D%3D&vl=&vr=",
 		likesNum: "3.9M",
 		commentsNum: "45K",
 		sharesNum: "88K",
@@ -29,7 +29,7 @@ const posts = [
 			"Certified freak, seven days a week. Wet ass pussy, make that pullout game weak. 😘😘😘😘❤️💕",
 		music: "Cardi B - WAP",
 		video:
-			"https://v39-eu.tiktokcdn.com/67c569b77da2a2697a8f0ea141f46eb2/6192973e/video/tos/useast2a/tos-useast2a-ve-0068c002/16ec2693dd73454692f17a8cc39c7532/?a=1233&br=2708&bt=1354&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=wZ~R8F8rkag3-I&l=202111151121530101890501594C0982E8&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=ajZwbmk6ZjlvOTMzNzczM0ApPDNmNDk1OjtmN2c0OzY4aWdwMl5gcjRnNDVgLS1kMTZzczRfNTUtMmAvLWEuXi1gNTU6Yw%3D%3D&vl=&vr=",
+			"https://v19.tiktokcdn.com/0a943c190046c710dbfe6b8ff8389b30/619314cd/video/tos/useast2a/tos-useast2a-pve-0068/3fbabf74e7c4437a8218aacb95ff4f44/?a=1233&br=5264&bt=2632&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=wZ~AOFFnkag3-I&l=202111152017270101890660323538583C&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=Mzs6ZjQ6ZjtnOTMzNzczM0ApO2Y4aWRmaDs1N2hkNDw3Z2dfZF5lcjQwMTRgLS1kMTZzcy1fLy0yXmE2Mi1gYi40M146Yw%3D%3D&vl=&vr=",
 		likesNum: "3.9M",
 		commentsNum: "45K",
 		sharesNum: "88K",
