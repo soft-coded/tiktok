@@ -8,6 +8,7 @@ import FullscreenSpinner from "./components/fullscreen-spinner";
 import Header from "./components/header";
 import Home from "./pages/home";
 import Notification from "./components/notification";
+import AuthModal from "./components/auth-modal";
 const VideoModal = lazy(() => import("./components/video-modal"));
 const Profile = lazy(() => import("./pages/profile"));
 const Video = lazy(() => import("./pages/video"));
@@ -25,6 +26,7 @@ export default function PCLayout() {
 	return (
 		<main className="page-container">
 			<Header />
+			<AuthModal />
 			{notification.show && (
 				<Notification message={notification.message} type={notification.type} />
 			)}

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import "./video-modal.scss";
-import { PostData as CardProps } from "../../../common/utils";
+import { PostData as CardProps, modifyScrollbar } from "../../../common/utils";
 import ActionButton from "../action-button";
 import { modalActions } from "../../store/slices/modal-slice";
 
@@ -14,7 +14,7 @@ export default function VideoModal(props: ModalProps) {
 	const dispatch = useDispatch();
 
 	function handleModalClose() {
-		document.documentElement.style.overflowY = "auto";
+		modifyScrollbar("show");
 		dispatch(modalActions.hideModal());
 	}
 

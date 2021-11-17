@@ -3,14 +3,14 @@ import { useDispatch } from "react-redux";
 
 import "./video-card.scss";
 import ActionButton from "../action-button";
-import { PostData as CardProps } from "../../../common/utils";
+import { PostData as CardProps, modifyScrollbar } from "../../../common/utils";
 import { modalActions } from "../../store/slices/modal-slice";
 
 export default function VideoCard(props: CardProps) {
 	const dispatch = useDispatch();
 
 	function handleModalOpen() {
-		document.documentElement.style.overflowY = "hidden";
+		modifyScrollbar("hide");
 		dispatch(modalActions.showModal(props));
 	}
 

@@ -7,6 +7,7 @@ import Sidebar, { suggestedAccounts } from "../../components/sidebar";
 import ProfileButtons from "../../components/profile-buttons";
 import ProfileCard from "../../components/profile-card";
 import { modalActions } from "../../store/slices/modal-slice";
+import { modifyScrollbar } from "../../../common/utils";
 
 const user = {
 	userId: "1",
@@ -20,11 +21,13 @@ const user = {
 	description:
 		"The absolute throat goat and I mean that shit. No one can come close to me when it comes to gulping down a fat one. Oh, and also the PM of India or whatever who cares lol bye",
 	videos: [
-		"https://v39-eu.tiktokcdn.com/67c569b77da2a2697a8f0ea141f46eb2/6192973e/video/tos/useast2a/tos-useast2a-ve-0068c002/16ec2693dd73454692f17a8cc39c7532/?a=1233&br=2708&bt=1354&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=wZ~R8F8rkag3-I&l=202111151121530101890501594C0982E8&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=ajZwbmk6ZjlvOTMzNzczM0ApPDNmNDk1OjtmN2c0OzY4aWdwMl5gcjRnNDVgLS1kMTZzczRfNTUtMmAvLWEuXi1gNTU6Yw%3D%3D&vl=&vr=",
-		"https://v39-eu.tiktokcdn.com/67c569b77da2a2697a8f0ea141f46eb2/6192973e/video/tos/useast2a/tos-useast2a-ve-0068c002/16ec2693dd73454692f17a8cc39c7532/?a=1233&br=2708&bt=1354&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=wZ~R8F8rkag3-I&l=202111151121530101890501594C0982E8&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=ajZwbmk6ZjlvOTMzNzczM0ApPDNmNDk1OjtmN2c0OzY4aWdwMl5gcjRnNDVgLS1kMTZzczRfNTUtMmAvLWEuXi1gNTU6Yw%3D%3D&vl=&vr=",
-		"https://v39-eu.tiktokcdn.com/67c569b77da2a2697a8f0ea141f46eb2/6192973e/video/tos/useast2a/tos-useast2a-ve-0068c002/16ec2693dd73454692f17a8cc39c7532/?a=1233&br=2708&bt=1354&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=wZ~R8F8rkag3-I&l=202111151121530101890501594C0982E8&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=ajZwbmk6ZjlvOTMzNzczM0ApPDNmNDk1OjtmN2c0OzY4aWdwMl5gcjRnNDVgLS1kMTZzczRfNTUtMmAvLWEuXi1gNTU6Yw%3D%3D&vl=&vr=",
-		"https://v39-eu.tiktokcdn.com/67c569b77da2a2697a8f0ea141f46eb2/6192973e/video/tos/useast2a/tos-useast2a-ve-0068c002/16ec2693dd73454692f17a8cc39c7532/?a=1233&br=2708&bt=1354&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=wZ~R8F8rkag3-I&l=202111151121530101890501594C0982E8&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=ajZwbmk6ZjlvOTMzNzczM0ApPDNmNDk1OjtmN2c0OzY4aWdwMl5gcjRnNDVgLS1kMTZzczRfNTUtMmAvLWEuXi1gNTU6Yw%3D%3D&vl=&vr=",
-		"https://v39-eu.tiktokcdn.com/67c569b77da2a2697a8f0ea141f46eb2/6192973e/video/tos/useast2a/tos-useast2a-ve-0068c002/16ec2693dd73454692f17a8cc39c7532/?a=1233&br=2708&bt=1354&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=wZ~R8F8rkag3-I&l=202111151121530101890501594C0982E8&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=ajZwbmk6ZjlvOTMzNzczM0ApPDNmNDk1OjtmN2c0OzY4aWdwMl5gcjRnNDVgLS1kMTZzczRfNTUtMmAvLWEuXi1gNTU6Yw%3D%3D&vl=&vr="
+		"https://v16m.tiktokcdn.com/2285f99a5ac406410057713251d123a8/6195a1e5/video/tos/alisg/tos-alisg-pve-0037c001/2dae7eda105a44c7a8be7204f1b3f22e/?a=1233&br=5350&bt=2675&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=wZ~A5FLbkag3-I&l=202111171844120101910471404F17B001&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=anI8djg6ZmZ2OTMzODczNEApZzdpZzZlOTw0NzVkZzY1Z2djZTEwcjQwbzZgLS1kMS1zczMwNTRjYV5hYjBeLjNiYjA6Yw%3D%3D&vl=&vr=",
+		"https://v16m.tiktokcdn.com/2285f99a5ac406410057713251d123a8/6195a1e5/video/tos/alisg/tos-alisg-pve-0037c001/2dae7eda105a44c7a8be7204f1b3f22e/?a=1233&br=5350&bt=2675&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=wZ~A5FLbkag3-I&l=202111171844120101910471404F17B001&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=anI8djg6ZmZ2OTMzODczNEApZzdpZzZlOTw0NzVkZzY1Z2djZTEwcjQwbzZgLS1kMS1zczMwNTRjYV5hYjBeLjNiYjA6Yw%3D%3D&vl=&vr=",
+		"https://v16m.tiktokcdn.com/2285f99a5ac406410057713251d123a8/6195a1e5/video/tos/alisg/tos-alisg-pve-0037c001/2dae7eda105a44c7a8be7204f1b3f22e/?a=1233&br=5350&bt=2675&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=wZ~A5FLbkag3-I&l=202111171844120101910471404F17B001&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=anI8djg6ZmZ2OTMzODczNEApZzdpZzZlOTw0NzVkZzY1Z2djZTEwcjQwbzZgLS1kMS1zczMwNTRjYV5hYjBeLjNiYjA6Yw%3D%3D&vl=&vr=",
+		"https://v16m.tiktokcdn.com/2285f99a5ac406410057713251d123a8/6195a1e5/video/tos/alisg/tos-alisg-pve-0037c001/2dae7eda105a44c7a8be7204f1b3f22e/?a=1233&br=5350&bt=2675&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=wZ~A5FLbkag3-I&l=202111171844120101910471404F17B001&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=anI8djg6ZmZ2OTMzODczNEApZzdpZzZlOTw0NzVkZzY1Z2djZTEwcjQwbzZgLS1kMS1zczMwNTRjYV5hYjBeLjNiYjA6Yw%3D%3D&vl=&vr=",
+		"https://v16m.tiktokcdn.com/2285f99a5ac406410057713251d123a8/6195a1e5/video/tos/alisg/tos-alisg-pve-0037c001/2dae7eda105a44c7a8be7204f1b3f22e/?a=1233&br=5350&bt=2675&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=wZ~A5FLbkag3-I&l=202111171844120101910471404F17B001&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=anI8djg6ZmZ2OTMzODczNEApZzdpZzZlOTw0NzVkZzY1Z2djZTEwcjQwbzZgLS1kMS1zczMwNTRjYV5hYjBeLjNiYjA6Yw%3D%3D&vl=&vr=",
+		"https://v16m.tiktokcdn.com/2285f99a5ac406410057713251d123a8/6195a1e5/video/tos/alisg/tos-alisg-pve-0037c001/2dae7eda105a44c7a8be7204f1b3f22e/?a=1233&br=5350&bt=2675&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=wZ~A5FLbkag3-I&l=202111171844120101910471404F17B001&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=anI8djg6ZmZ2OTMzODczNEApZzdpZzZlOTw0NzVkZzY1Z2djZTEwcjQwbzZgLS1kMS1zczMwNTRjYV5hYjBeLjNiYjA6Yw%3D%3D&vl=&vr=",
+		"https://v16m.tiktokcdn.com/2285f99a5ac406410057713251d123a8/6195a1e5/video/tos/alisg/tos-alisg-pve-0037c001/2dae7eda105a44c7a8be7204f1b3f22e/?a=1233&br=5350&bt=2675&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=wZ~A5FLbkag3-I&l=202111171844120101910471404F17B001&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=anI8djg6ZmZ2OTMzODczNEApZzdpZzZlOTw0NzVkZzY1Z2djZTEwcjQwbzZgLS1kMS1zczMwNTRjYV5hYjBeLjNiYjA6Yw%3D%3D&vl=&vr="
 	],
 	caption: "hello",
 	likesNum: "11K",
@@ -41,7 +44,7 @@ export default function Profile() {
 	const dispatch = useDispatch();
 
 	function handleModalOpen(ind: number) {
-		document.documentElement.style.overflowY = "hidden";
+		modifyScrollbar("hide");
 		videoInd = ind;
 		dispatch(modalActions.showModal({ ...user, video: user.videos[videoInd] }));
 	}

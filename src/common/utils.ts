@@ -35,3 +35,23 @@ export function joinClasses(...classes: Array<string | undefined>) {
 	if (classes[classes.length - 1]) res += classes[classes.length - 1];
 	return res;
 }
+
+export function modifyScrollbar(fn: "hide" | "show") {
+	if (fn === "hide") {
+		document.documentElement.style.overflowY = "hidden";
+	} else {
+		document.documentElement.style.overflowY = "auto";
+	}
+}
+
+export function handleClickOutside(
+	element: HTMLElement | null,
+	cb: (...args: any) => any
+) {
+	function listener(event: MouseEvent) {
+		if (element == null || element.contains(event.target as Node)) return;
+		cb();
+	}
+	document.addEventListener("click", listener);
+	return () => document.removeEventListener("click", listener);
+}

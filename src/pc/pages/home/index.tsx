@@ -13,7 +13,7 @@ export const posts = [
 		caption: "Welcome to India. Hope you enjoy your stay. 😊😂❤️😒😘",
 		music: "Rabindranath Tagore - 🏁Jana Gana Mana🏁",
 		video:
-			"https://v19.tiktokcdn.com/0a943c190046c710dbfe6b8ff8389b30/619314cd/video/tos/useast2a/tos-useast2a-pve-0068/3fbabf74e7c4437a8218aacb95ff4f44/?a=1233&br=5264&bt=2632&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=wZ~AOFFnkag3-I&l=202111152017270101890660323538583C&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=Mzs6ZjQ6ZjtnOTMzNzczM0ApO2Y4aWRmaDs1N2hkNDw3Z2dfZF5lcjQwMTRgLS1kMTZzcy1fLy0yXmE2Mi1gYi40M146Yw%3D%3D&vl=&vr=",
+			"https://v16m.tiktokcdn.com/2285f99a5ac406410057713251d123a8/6195a1e5/video/tos/alisg/tos-alisg-pve-0037c001/2dae7eda105a44c7a8be7204f1b3f22e/?a=1233&br=5350&bt=2675&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=wZ~A5FLbkag3-I&l=202111171844120101910471404F17B001&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=anI8djg6ZmZ2OTMzODczNEApZzdpZzZlOTw0NzVkZzY1Z2djZTEwcjQwbzZgLS1kMS1zczMwNTRjYV5hYjBeLjNiYjA6Yw%3D%3D&vl=&vr=",
 		likesNum: "3.9M",
 		commentsNum: "45K",
 		sharesNum: "88K",
@@ -29,7 +29,7 @@ export const posts = [
 			"Certified freak, seven days a week. Wet ass pussy, make that pullout game weak. 😘😘😘😘❤️💕",
 		music: "Cardi B - WAP",
 		video:
-			"https://v19.tiktokcdn.com/0a943c190046c710dbfe6b8ff8389b30/619314cd/video/tos/useast2a/tos-useast2a-pve-0068/3fbabf74e7c4437a8218aacb95ff4f44/?a=1233&br=5264&bt=2632&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=wZ~AOFFnkag3-I&l=202111152017270101890660323538583C&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=Mzs6ZjQ6ZjtnOTMzNzczM0ApO2Y4aWRmaDs1N2hkNDw3Z2dfZF5lcjQwMTRgLS1kMTZzcy1fLy0yXmE2Mi1gYi40M146Yw%3D%3D&vl=&vr=",
+			"https://v16m.tiktokcdn.com/2285f99a5ac406410057713251d123a8/6195a1e5/video/tos/alisg/tos-alisg-pve-0037c001/2dae7eda105a44c7a8be7204f1b3f22e/?a=1233&br=5350&bt=2675&cd=0%7C0%7C1&ch=0&cr=0&cs=0&cv=1&dr=0&ds=3&er=&ft=wZ~A5FLbkag3-I&l=202111171844120101910471404F17B001&lr=tiktok_m&mime_type=video_mp4&net=0&pl=0&qs=0&rc=anI8djg6ZmZ2OTMzODczNEApZzdpZzZlOTw0NzVkZzY1Z2djZTEwcjQwbzZgLS1kMS1zczMwNTRjYV5hYjBeLjNiYjA6Yw%3D%3D&vl=&vr=",
 		likesNum: "3.9M",
 		commentsNum: "45K",
 		sharesNum: "88K",

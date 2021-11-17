@@ -28,7 +28,7 @@ export default function Notification({ type, message }: NotificationProps) {
 			clearTimeout(hideTimeout);
 			clearTimeout(removeTimeout);
 		};
-	}, []);
+	}, [dispatch]);
 
 	return (
 		<Container
