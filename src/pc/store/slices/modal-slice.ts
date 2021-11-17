@@ -7,11 +7,11 @@ const modalSlice = createSlice({
 		data: null
 	},
 	reducers: {
-		showNotification(state, action) {
+		showModal(state, action) {
 			state.show = true;
 			state.data = action.payload;
 		},
-		hideNotification(state) {
+		hideModal(state) {
 			state.show = false;
 			state.data = null;
 		}

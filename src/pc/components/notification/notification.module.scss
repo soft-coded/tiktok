@@ -1,6 +1,6 @@
 .notif-container {
 	position: fixed;
-	top: 0;
+	top: 30px;
 	left: 50%;
 	transform: translateX(-50%);
 	z-index: 25;
@@ -13,23 +13,37 @@
 	border-radius: 8px;
 	color: #ffffff;
 	width: 1100px;
-	transition: top 0.25s ease-out;
+	animation: notif-anim 1s ease-in-out;
+	transition: top 1s ease-in-out;
 
 	&.error {
-		background: rgb(255, 36, 36);
+		background: rgb(241, 62, 62);
 	}
 
 	&.success {
-		background: rgb(10, 182, 10);
+		background: rgb(49, 202, 49);
 	}
 
 	&.warning {
-		background: rgb(243, 243, 0);
-		color: #353b11;
+		background: rgb(238, 238, 19);
+		color: #666666;
 	}
 
 	&.info {
 		background: rgb(184, 184, 184);
-		color: #3a3939;
+		color: #424242;
+	}
+
+	&.hide {
+		top: -50%;
+	}
+}
+
+@keyframes notif-anim {
+	from {
+		top: -50%;
+	}
+	to {
+		top: 30px;
 	}
 }

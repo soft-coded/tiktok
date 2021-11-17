@@ -1,22 +1,21 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import "./video-card.scss";
 import ActionButton from "../action-button";
 import { PostData as CardProps } from "../../../common/utils";
-import LazyModal from "../video-modal/LazyModal";
+import { modalActions } from "../../store/slices/modal-slice";
 
 export default function VideoCard(props: CardProps) {
-	const [showModal, setShowModal] = useState(false);
+	const dispatch = useDispatch();
 
 	function handleModalOpen() {
 		document.documentElement.style.overflowY = "hidden";
-		setShowModal(true);
+		dispatch(modalActions.showModal(props));
 	}
 
 	return (
 		<div className="app-video-card">
-			<LazyModal setShowModal={setShowModal} showModal={showModal} {...props} />
 			<Link to={"/user/" + props.username} className="profile-pic">
 				<div className="rounded-photo">
 					<img src={props.profilePhoto} alt={props.name} />

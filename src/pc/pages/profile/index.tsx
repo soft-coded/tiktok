@@ -1,12 +1,12 @@
-import { useState } from "react";
 // import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import "./profile.scss";
 import Container from "../../components/container";
 import Sidebar, { suggestedAccounts } from "../../components/sidebar";
 import ProfileButtons from "../../components/profile-buttons";
 import ProfileCard from "../../components/profile-card";
-import LazyModal from "../../components/video-modal/LazyModal";
+import { modalActions } from "../../store/slices/modal-slice";
 
 const user = {
 	userId: "1",
@@ -38,23 +38,17 @@ let videoInd: number;
 
 export default function Profile() {
 	// const {username} = useParams();
-	const [showModal, setShowModal] = useState(false);
+	const dispatch = useDispatch();
 
 	function handleModalOpen(ind: number) {
 		document.documentElement.style.overflowY = "hidden";
 		videoInd = ind;
-		setShowModal(true);
+		dispatch(modalActions.showModal({ ...user, video: user.videos[videoInd] }));
 	}
 
 	return (
 		<Container className="profile-page-container">
 			<Sidebar />
-			<LazyModal
-				showModal={showModal}
-				setShowModal={setShowModal}
-				{...user}
-				video={user.videos[videoInd]}
-			/>
 			<div className="profile-container">
 				<header>
 					<div className="rounded-photo">

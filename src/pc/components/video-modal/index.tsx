@@ -1,17 +1,21 @@
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import "./video-modal.scss";
 import { PostData as CardProps } from "../../../common/utils";
 import ActionButton from "../action-button";
+import { modalActions } from "../../store/slices/modal-slice";
 
 export interface ModalProps extends CardProps {
 	setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function VideoModal(props: ModalProps) {
+	const dispatch = useDispatch();
+
 	function handleModalClose() {
 		document.documentElement.style.overflowY = "auto";
-		props.setShowModal(false);
+		dispatch(modalActions.hideModal());
 	}
 
 	return (
