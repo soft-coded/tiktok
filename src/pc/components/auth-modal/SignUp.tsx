@@ -78,7 +78,7 @@ export default function SignUp({ setAuthType }: FormProps) {
 					className="primary-button"
 					disabled={!formik.dirty || !formik.isValid}
 				>
-					Log In
+					Sign Up
 				</button>
 			</form>
 			<div className="switch-state">
