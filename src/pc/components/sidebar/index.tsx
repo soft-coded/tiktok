@@ -1,6 +1,8 @@
 import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import "./sidebar.scss";
+import { authModalActions } from "../../store/slices/auth-modal-slice";
 
 export const suggestedAccounts = [
 	{
@@ -36,6 +38,12 @@ export const suggestedAccounts = [
 ];
 
 export default function Sidebar() {
+	const dispatch = useDispatch();
+
+	function handleClick() {
+		dispatch(authModalActions.showModal());
+	}
+
 	return (
 		<div className="sidebar-wrapper">
 			<aside className="app-sidebar">
@@ -63,7 +71,7 @@ export default function Sidebar() {
 					<span>
 						Log in to follow creators, like videos, and view comments.
 					</span>
-					<button>Log In</button>
+					<button onClick={handleClick}>Log In</button>
 				</div>
 				<div className="suggested">
 					<header>

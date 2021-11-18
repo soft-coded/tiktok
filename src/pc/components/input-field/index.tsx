@@ -8,18 +8,44 @@ interface InputProps {
 	placeholder?: string;
 	className?: string;
 	icon?: ReactNode;
+	onChange?: (a: any) => void;
+	onBlur?: (a: any) => void;
+	value?: string;
+	name?: string;
+	error?: string | false;
 }
 
 export default function Input({
 	type,
 	placeholder,
 	className,
-	icon
+	icon,
+	onChange,
+	onBlur,
+	value,
+	name,
+	error
 }: InputProps) {
 	return (
-		<div className={joinClasses(classes["app-input-field"], className)}>
-			{icon}
-			<input type={type ? type : "text"} placeholder={placeholder} />
+		<div>
+			<div
+				className={joinClasses(
+					classes["app-input-field"],
+					error ? classes["error"] : "",
+					className
+				)}
+			>
+				{icon}
+				<input
+					type={type ? type : "text"}
+					placeholder={placeholder}
+					onChange={onChange}
+					onBlur={onBlur}
+					value={value}
+					name={name}
+				/>
+			</div>
+			{error && <div className={classes["form-error-container"]}>{error}</div>}
 		</div>
 	);
 }

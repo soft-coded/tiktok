@@ -5,6 +5,7 @@ import "./video-modal.scss";
 import { PostData as CardProps, modifyScrollbar } from "../../../common/utils";
 import ActionButton from "../action-button";
 import { videoModalActions } from "../../store/slices/video-modal-slice";
+import { authModalActions } from "../../store/slices/auth-modal-slice";
 
 export interface ModalProps extends CardProps {
 	setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -16,6 +17,10 @@ export default function VideoModal(props: ModalProps) {
 	function handleModalClose() {
 		modifyScrollbar("show");
 		dispatch(videoModalActions.hideModal());
+	}
+
+	function handleAuthModalOpen() {
+		dispatch(authModalActions.showModal());
 	}
 
 	return (
@@ -66,7 +71,9 @@ export default function VideoModal(props: ModalProps) {
 					<div className="unauthed">
 						<h1>Log in to see comments</h1>
 						<h5>Log in to see comments and like the video.</h5>
-						<button>Log In</button>
+						<button className="primary-button" onClick={handleAuthModalOpen}>
+							Log In
+						</button>
 						<p>
 							Don't have an account? <Link to="/signup">Sign up</Link>
 						</p>

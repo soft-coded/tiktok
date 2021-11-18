@@ -37,10 +37,18 @@ export function joinClasses(...classes: Array<string | undefined>) {
 }
 
 export function modifyScrollbar(fn: "hide" | "show") {
+	const scrollbarWidth =
+		window.innerWidth - document.documentElement.clientWidth;
+	const styleObj = document.documentElement.style;
+	const header = document.querySelector(".app-header header") as HTMLElement;
 	if (fn === "hide") {
-		document.documentElement.style.overflowY = "hidden";
+		styleObj.overflowY = "hidden";
+		styleObj.paddingRight = scrollbarWidth + "px";
+		header.style.paddingRight = scrollbarWidth + "px";
 	} else {
-		document.documentElement.style.overflowY = "auto";
+		styleObj.overflowY = "auto";
+		styleObj.paddingRight = "unset";
+		header.style.paddingRight = "unset";
 	}
 }
 
