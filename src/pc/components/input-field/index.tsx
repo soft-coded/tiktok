@@ -40,6 +40,7 @@ export default function Input({
 					type={type ? type : "text"}
 					placeholder={placeholder}
 					onChange={onChange}
+					onKeyUp={onBlur}
 					onBlur={onBlur}
 					value={value}
 					name={name}
