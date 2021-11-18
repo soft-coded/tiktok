@@ -6,7 +6,7 @@ import Container from "../../components/container";
 import Sidebar, { suggestedAccounts } from "../../components/sidebar";
 import ProfileButtons from "../../components/profile-buttons";
 import ProfileCard from "../../components/profile-card";
-import { modalActions } from "../../store/slices/modal-slice";
+import { videoModalActions } from "../../store/slices/video-modal-slice";
 import { modifyScrollbar } from "../../../common/utils";
 
 const user = {
@@ -46,7 +46,9 @@ export default function Profile() {
 	function handleModalOpen(ind: number) {
 		modifyScrollbar("hide");
 		videoInd = ind;
-		dispatch(modalActions.showModal({ ...user, video: user.videos[videoInd] }));
+		dispatch(
+			videoModalActions.showModal({ ...user, video: user.videos[videoInd] })
+		);
 	}
 
 	return (

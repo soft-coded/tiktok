@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import "./video-modal.scss";
 import { PostData as CardProps, modifyScrollbar } from "../../../common/utils";
 import ActionButton from "../action-button";
-import { modalActions } from "../../store/slices/modal-slice";
+import { videoModalActions } from "../../store/slices/video-modal-slice";
 
 export interface ModalProps extends CardProps {
 	setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,7 +15,7 @@ export default function VideoModal(props: ModalProps) {
 
 	function handleModalClose() {
 		modifyScrollbar("show");
-		dispatch(modalActions.hideModal());
+		dispatch(videoModalActions.hideModal());
 	}
 
 	return (

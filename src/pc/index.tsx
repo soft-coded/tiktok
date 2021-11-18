@@ -15,7 +15,7 @@ const Video = lazy(() => import("./pages/video"));
 
 export default function PCLayout() {
 	const { pathname } = useLocation();
-	const { notification, modal } = useSelector<RootState, any>(
+	const { notification, videoModal, authModal } = useSelector<RootState, any>(
 		state => state.pc
 	);
 
@@ -26,13 +26,13 @@ export default function PCLayout() {
 	return (
 		<main className="page-container">
 			<Header />
-			<AuthModal />
+			{authModal.show && <AuthModal />}
 			{notification.show && (
 				<Notification message={notification.message} type={notification.type} />
 			)}
-			{modal.show && (
+			{videoModal.show && (
 				<Suspense fallback={<FullscreenSpinner />}>
-					<VideoModal {...modal.data} />
+					<VideoModal {...videoModal.data} />
 				</Suspense>
 			)}
 			<Suspense fallback={<FullscreenSpinner />}>

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const modalSlice = createSlice({
-	name: "modal",
+const videoModalSlice = createSlice({
+	name: "videoModal",
 	initialState: {
 		show: false,
 		data: null
@@ -18,5 +18,5 @@ const modalSlice = createSlice({
 	}
 });
 
-export default modalSlice.reducer;
-export const modalActions = modalSlice.actions;
+export default videoModalSlice.reducer;
+export const videoModalActions = videoModalSlice.actions;

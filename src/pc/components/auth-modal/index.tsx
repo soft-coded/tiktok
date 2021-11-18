@@ -1,18 +1,23 @@
 import { useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
 
 import "./auth-modal.scss";
 import { modifyScrollbar } from "../../../common/utils";
 import Input from "../input-field";
 import { handleClickOutside } from "../../../common/utils";
+import { authModalActions } from "../../store/slices/auth-modal-slice";
 
 export default function AuthModal() {
 	const modalRef = useRef<HTMLDivElement | null>(null);
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		modifyScrollbar("hide");
 		// returns the event remover
-		return handleClickOutside(modalRef.current, () => console.log("clicked"));
-	}, []);
+		return handleClickOutside(modalRef.current, () =>
+			dispatch(authModalActions.hideModal())
+		);
+	}, [dispatch]);
 
 	return (
 		<>
