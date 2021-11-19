@@ -1,0 +1,30 @@
+$dropdown-width: 223px;
+$animation-time: 0.1s;
+
+.dropdown {
+	position: absolute;
+	bottom: 0;
+	display: flex;
+	flex-direction: column;
+	width: $dropdown-width;
+	padding: 8px 0;
+	background: var(--clr-background);
+	box-shadow: 0 0 32px 0 var(--clr-shadow);
+	border-radius: 8px;
+	font-size: 0.9rem;
+	font-weight: 500;
+	transition: opacity $animation-time ease-in-out;
+	animation: dropdown-anim $animation-time ease-in-out;
+
+	&.hide {
+		opacity: 0;
+	}
+}
+@keyframes dropdown-anim {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}

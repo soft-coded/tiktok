@@ -1,5 +1,8 @@
 @import "../../index.scss";
 
+$sidebar-width: 356px;
+$profile-icon-size: 32px;
+
 .header-wrapper {
 	height: $header-height;
 }
@@ -32,7 +35,7 @@
 
 	.search-bar {
 		background: rgba(var(--clr-secondary-values), 0.06);
-		min-width: 10vw;
+		width: $sidebar-width;
 		border-radius: 92px;
 		display: flex;
 		align-items: center;
@@ -76,8 +79,10 @@
 		font-weight: 600;
 		font-size: 16px;
 
-		a {
+		span {
 			transition: box-shadow 0.2s ease-out;
+			cursor: pointer;
+			user-select: none;
 
 			&:hover {
 				box-shadow: 0 2px 0 rgba(var(--clr-shadow-values), 0.5);
@@ -86,6 +91,37 @@
 
 		button {
 			padding: 8px 28px;
+		}
+	}
+	.icons {
+		display: flex;
+		gap: 24px;
+		font-weight: 600;
+		font-size: 1.2rem;
+		position: relative;
+
+		.icon {
+			cursor: pointer;
+		}
+
+		.profile-icon {
+			width: $profile-icon-size;
+			height: $profile-icon-size;
+			background: grey;
+		}
+	}
+
+	.options-dropdown {
+		position: absolute;
+		right: 0;
+		z-index: 11;
+		transform: translateY(110%);
+
+		& > div {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			padding: 8px 16px;
 		}
 	}
 }

@@ -1,14 +1,26 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import classes from "./header.module.scss";
 import Container from "../container";
 import SearchBar from "./SearchBar";
+import Dropdown from "../dropdown";
 import { authModalActions } from "../../store/slices/auth-modal-slice";
 import { joinClasses } from "../../../common/utils";
+import { RootState } from "../../../common/store";
+
+const options = [
+	{ icon: <i className="fas fa-user" />, label: "View profile" },
+	{ icon: <i className="fas fa-sign-out-alt" />, label: "Log out" }
+];
 
 export default function Header() {
+	const [showOptions, setShowOptions] = useState(false);
 	const dispatch = useDispatch();
+	const isAuthed = useSelector<RootState, any>(
+		state => state.auth.isAuthenticated
+	);
 
 	function handleClick() {
 		dispatch(authModalActions.showModal());
@@ -31,14 +43,43 @@ export default function Header() {
 					<li>
 						<SearchBar />
 					</li>
-					<li className={classes["buttons"]}>
-						<div>
-							<a href="/">Upload</a>
-						</div>
-						<button className="primary-button" onClick={handleClick}>
-							Log In
-						</button>
-					</li>
+					{isAuthed ? (
+						<li className={classes["icons"]}>
+							<div className={classes["icon"]}>
+								<i className="fas fa-video" />
+							</div>
+							<div
+								className={joinClasses(
+									"rounded-photo",
+									classes["icon"],
+									classes["profile-icon"]
+								)}
+								onClick={() => setShowOptions(true)}
+							></div>
+							{showOptions && (
+								<Dropdown
+									className={classes["options-dropdown"]}
+									setShowDropdown={setShowOptions}
+								>
+									{options.map((option, i) => (
+										<div key={i} className="hoverable">
+											{option.icon}
+											<span>{option.label}</span>
+										</div>
+									))}
+								</Dropdown>
+							)}
+						</li>
+					) : (
+						<li className={classes["buttons"]}>
+							<div onClick={handleClick}>
+								<span>Upload</span>
+							</div>
+							<button className="primary-button" onClick={handleClick}>
+								Log In
+							</button>
+						</li>
+					)}
 				</Container>
 			</header>
 		</div>

@@ -1,8 +1,10 @@
+import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
 import { FormProps } from ".";
 import Input from "../input-field";
+import { authActions } from "../../../common/store/slices/auth";
 
 const validationSchema = yup.object().shape({
 	username: yup
@@ -17,7 +19,9 @@ const validationSchema = yup.object().shape({
 		.min(6, "At least 6 characters")
 });
 
-export default function LogIn({ setAuthType }: FormProps) {
+export default function LogIn({ setAuthType, handleModalClose }: FormProps) {
+	const dispatch = useDispatch();
+
 	const formik = useFormik({
 		initialValues: {
 			username: "",
@@ -25,7 +29,8 @@ export default function LogIn({ setAuthType }: FormProps) {
 		},
 		validationSchema,
 		onSubmit: values => {
-			console.log(values);
+			dispatch(authActions.login({ username: values.username }));
+			handleModalClose();
 		}
 	});
 

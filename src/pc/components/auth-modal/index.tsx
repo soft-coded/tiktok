@@ -9,6 +9,7 @@ import { authModalActions } from "../../store/slices/auth-modal-slice";
 
 export interface FormProps {
 	setAuthType: React.Dispatch<React.SetStateAction<"login" | "signup">>;
+	handleModalClose: () => void;
 }
 
 export default function AuthModal() {
@@ -29,9 +30,15 @@ export default function AuthModal() {
 			<div className="backdrop auth-backdrop" onClick={handleModalClose} />
 			<div className="auth-modal-container">
 				{authType === "login" ? (
-					<LogIn setAuthType={setAuthType} />
+					<LogIn
+						setAuthType={setAuthType}
+						handleModalClose={handleModalClose}
+					/>
 				) : (
-					<SignUp setAuthType={setAuthType} />
+					<SignUp
+						setAuthType={setAuthType}
+						handleModalClose={handleModalClose}
+					/>
 				)}
 			</div>
 		</>

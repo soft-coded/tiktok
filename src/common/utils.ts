@@ -54,7 +54,7 @@ export function modifyScrollbar(fn: "hide" | "show") {
 
 export function handleClickOutside(
 	element: HTMLElement | null,
-	cb: (...args: any) => any
+	cb: () => void
 ) {
 	function listener(event: MouseEvent) {
 		if (element == null || element.contains(event.target as Node)) return;

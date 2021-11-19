@@ -1,16 +1,17 @@
-import { Provider as ReduxProvider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 import PCLayout from "./pc";
-import store from "./common/store";
 import "./common/styles.scss";
+import { authActions } from "./common/store/slices/auth";
 
 export default function App() {
-	return (
-		<BrowserRouter>
-			<ReduxProvider store={store}>
-				<PCLayout />
-			</ReduxProvider>
-		</BrowserRouter>
-	);
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		const username = localStorage.getItem("username");
+		if (username) dispatch(authActions.login({ username }));
+	}, [dispatch]);
+
+	return <PCLayout />;
 }

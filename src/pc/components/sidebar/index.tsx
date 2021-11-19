@@ -1,8 +1,10 @@
-import { NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { NavLink, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./sidebar.scss";
 import { authModalActions } from "../../store/slices/auth-modal-slice";
+import { RootState } from "../../../common/store";
+import { joinClasses } from "../../../common/utils";
 
 export const suggestedAccounts = [
 	{
@@ -39,6 +41,9 @@ export const suggestedAccounts = [
 
 export default function Sidebar() {
 	const dispatch = useDispatch();
+	const isAuthed = useSelector<RootState, any>(
+		state => state.auth.isAuthenticated
+	);
 
 	function handleClick() {
 		dispatch(authModalActions.showModal());
@@ -51,7 +56,7 @@ export default function Sidebar() {
 					<NavLink
 						to="/"
 						className={({ isActive }) =>
-							isActive ? "nav-link active" : "nav-link"
+							joinClasses("hoverable", "nav-link", isActive ? "active" : "")
 						}
 					>
 						<i className="fas fa-home" />
@@ -60,19 +65,21 @@ export default function Sidebar() {
 					<NavLink
 						to="/following"
 						className={({ isActive }) =>
-							isActive ? "nav-link active" : "nav-link"
+							joinClasses("hoverable", "nav-link", isActive ? "active" : "")
 						}
 					>
 						<i className="fas fa-user-friends" />
 						<span>Following</span>
 					</NavLink>
 				</nav>
-				<div className="log-in">
-					<span>
-						Log in to follow creators, like videos, and view comments.
-					</span>
-					<button onClick={handleClick}>Log In</button>
-				</div>
+				{!isAuthed && (
+					<div className="log-in">
+						<span>
+							Log in to follow creators, like videos, and view comments.
+						</span>
+						<button onClick={handleClick}>Log In</button>
+					</div>
+				)}
 				<div className="suggested">
 					<header>
 						<h5>Suggested accounts</h5>
@@ -80,18 +87,43 @@ export default function Sidebar() {
 					</header>
 					<div className="accounts">
 						{suggestedAccounts.map((acc, i) => (
-							<div key={i} className="account-details">
-								<div className="rounded-photo">
-									<img src={acc.photo} alt={acc.name} />
+							<Link key={i} to={"/user/" + acc.username}>
+								<div className={joinClasses("hoverable", "account-details")}>
+									<div className="rounded-photo">
+										<img src={acc.photo} alt={acc.name} />
+									</div>
+									<div className="name-container">
+										<h5>{acc.username}</h5>
+										<h6>{acc.name}</h6>
+									</div>
 								</div>
-								<div className="name-container">
-									<h5>{acc.username}</h5>
-									<h6>{acc.name}</h6>
-								</div>
-							</div>
+							</Link>
 						))}
 					</div>
 				</div>
+				{isAuthed && (
+					<div className="following">
+						<header>
+							<h5>Following</h5>
+							<h5 className="see-all">See all</h5>
+						</header>
+						<div className="accounts">
+							{suggestedAccounts.map((acc, i) => (
+								<Link key={i} to={"/user/" + acc.username}>
+									<div className={joinClasses("hoverable", "account-details")}>
+										<div className="rounded-photo">
+											<img src={acc.photo} alt={acc.name} />
+										</div>
+										<div className="name-container">
+											<h5>{acc.username}</h5>
+											<h6>{acc.name}</h6>
+										</div>
+									</div>
+								</Link>
+							))}
+						</div>
+					</div>
+				)}
 			</aside>
 		</div>
 	);

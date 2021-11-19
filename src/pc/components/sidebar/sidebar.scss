@@ -56,14 +56,9 @@ $bg-transition: background-color 0.25s ease-out;
 			gap: 12px;
 			padding: 12px 8px;
 			border-radius: $btn-border-radius;
-			transition: $bg-transition;
 
 			&.active {
 				color: var(--clr-primary);
-			}
-
-			&:hover {
-				background-color: rgba(var(--clr-secondary-values), 0.03);
 			}
 
 			i {
@@ -96,7 +91,8 @@ $bg-transition: background-color 0.25s ease-out;
 		}
 	}
 
-	.suggested {
+	.suggested,
+	.following {
 		padding: $box-padding;
 		display: flex;
 		flex-direction: column;
@@ -114,7 +110,6 @@ $bg-transition: background-color 0.25s ease-out;
 			display: flex;
 			flex-direction: column;
 			height: $account-box-height;
-			cursor: pointer;
 			height: 100%;
 
 			.account-details {
@@ -124,11 +119,6 @@ $bg-transition: background-color 0.25s ease-out;
 				gap: 12px;
 				height: 100%;
 				border-radius: $btn-border-radius;
-				transition: $bg-transition;
-
-				&:hover {
-					background-color: rgba(var(--clr-secondary-values), 0.03);
-				}
 			}
 
 			.rounded-photo {
@@ -142,5 +132,9 @@ $bg-transition: background-color 0.25s ease-out;
 				}
 			}
 		}
+	}
+
+	.following {
+		border-top: 2px solid var(--clr-border);
 	}
 }
