@@ -3,6 +3,8 @@
 $profile-pic-size: 56px;
 $video-player-height: calc(450px + (100vw - 768px) / 1152 * 100);
 $vid-aspect-ratio: 9 / 16;
+$dropdown-width: 296px;
+$dropdown-pfp-size: 42px;
 
 .app-video-card {
 	display: flex;
@@ -11,11 +13,82 @@ $vid-aspect-ratio: 9 / 16;
 	border-bottom: 2px solid var(--clr-border);
 
 	.profile-pic {
+		display: block;
+		position: relative;
 		align-self: flex-start;
 
 		.rounded-photo {
 			width: $profile-pic-size;
 			height: $profile-pic-size;
+		}
+
+		.video-card-dropdown {
+			z-index: 9;
+			transform: translateY(calc(100% + 10px));
+			padding: 24px;
+			width: $dropdown-width;
+
+			&.hide {
+				opacity: 0;
+			}
+
+			.top {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+			}
+
+			.follow-btn {
+				margin: 0;
+			}
+
+			.rounded-photo {
+				width: $dropdown-pfp-size;
+				height: $dropdown-pfp-size;
+			}
+
+			.dd-card-names {
+				header {
+					flex-direction: column;
+					gap: 0;
+					align-items: stretch;
+					margin-top: 8px;
+
+					.username {
+						font-size: 1rem;
+						cursor: unset;
+
+						&:hover {
+							text-decoration: none;
+						}
+					}
+
+					h5 {
+						font-weight: 400;
+					}
+				}
+			}
+
+			.counts {
+				display: flex;
+				gap: 12px;
+				border-bottom: 2px solid var(--clr-border);
+				padding: 16px 0;
+
+				p {
+					font-weight: 400;
+
+					span {
+						font-weight: 600;
+					}
+				}
+			}
+
+			.description {
+				font-weight: 400;
+				font-size: 0.8rem;
+				padding-top: 16px;
+			}
 		}
 	}
 

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
@@ -5,8 +6,16 @@ import "./video-card.scss";
 import ActionButton from "../action-button";
 import { PostData as CardProps, modifyScrollbar } from "../../../common/utils";
 import { videoModalActions } from "../../store/slices/video-modal-slice";
+import CardDropdown from "./CardDropdown";
+import { DDAnimationTime } from "../dropdown";
+
+const DDTimeThreshold = 600; // time after which dropdown gets unmounted
+let DDMountTimeout: NodeJS.Timeout,
+	DDHideTimeout: NodeJS.Timeout,
+	DDUnmountTimeout: NodeJS.Timeout;
 
 export default function VideoCard(props: CardProps) {
+	const [showProfileDD, setShowProfileDD] = useState(false);
 	const dispatch = useDispatch();
 
 	function handleModalOpen() {
@@ -14,17 +23,56 @@ export default function VideoCard(props: CardProps) {
 		dispatch(videoModalActions.showModal(props));
 	}
 
+	function handleMouseOver() {
+		DDMountTimeout = setTimeout(() => setShowProfileDD(true), DDTimeThreshold);
+	}
+
+	function handleMouseOut() {
+		clearTimeout(DDMountTimeout);
+		const card = document.querySelector(".video-card-dropdown");
+		// hide timeout
+		DDHideTimeout = setTimeout(
+			() => card?.classList.add("hide"),
+			DDTimeThreshold
+		);
+		// remove timeout
+		DDUnmountTimeout = setTimeout(
+			() => setShowProfileDD(false),
+			DDAnimationTime + DDTimeThreshold
+		);
+	}
+
+	function handleDDMouseOver() {
+		clearTimeout(DDHideTimeout);
+		clearTimeout(DDUnmountTimeout);
+	}
+
 	return (
 		<div className="app-video-card">
-			<Link to={"/user/" + props.username} className="profile-pic">
-				<div className="rounded-photo">
-					<img src={props.profilePhoto} alt={props.name} />
-				</div>
-			</Link>
+			<div className="profile-pic">
+				<Link to={"/user/" + props.username}>
+					<div
+						className="rounded-photo"
+						onMouseOver={handleMouseOver}
+						onMouseOut={handleMouseOut}
+					>
+						<img src={props.profilePhoto} alt={props.name} />
+					</div>
+				</Link>
+				{showProfileDD && (
+					<CardDropdown
+						{...props}
+						onMouseOver={handleDDMouseOver}
+						onMouseOut={handleMouseOut}
+					/>
+				)}
+			</div>
 			<div className="card-content">
 				<header>
 					<Link to={"/user/" + props.username} className="username">
-						<h4>{props.username}</h4>
+						<h4 onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+							{props.username}
+						</h4>
 					</Link>
 					<h5>
 						{props.name} | <span>{props.uploadTime}</span>

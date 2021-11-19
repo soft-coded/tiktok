@@ -55,7 +55,12 @@ export default function Header() {
 									classes["profile-icon"]
 								)}
 								onClick={() => setShowOptions(true)}
-							></div>
+							>
+								<img
+									src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Narendra_Modi_2021.jpg/1200px-Narendra_Modi_2021.jpg"
+									alt="pfp"
+								/>
+							</div>
 							{showOptions && (
 								<Dropdown
 									className={classes["options-dropdown"]}

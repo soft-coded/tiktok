@@ -6,15 +6,21 @@ import { handleClickOutside } from "../../../common/utils";
 
 export interface DropdownProps extends ComponentProps {
 	children: ReactNode;
-	setShowDropdown: React.Dispatch<React.SetStateAction<boolean>>;
+	setShowDropdown?: React.Dispatch<React.SetStateAction<boolean>>;
 	trigger?: "click" | "hover";
+	onMouseOver?: () => void;
+	onMouseOut?: () => void;
 }
+
+export const DDAnimationTime = 100;
 
 export default function Dropdown({
 	className,
 	children,
 	setShowDropdown,
-	trigger = "click"
+	trigger = "click",
+	onMouseOver,
+	onMouseOut
 }: DropdownProps) {
 	const dropdownRef = useRef<HTMLDivElement | null>(null);
 
@@ -25,7 +31,7 @@ export default function Dropdown({
 
 			const eventRemover = handleClickOutside(dropdown, () => {
 				dropdown.classList.add(classes["hide"]);
-				timeOut = setTimeout(() => setShowDropdown(false), 99);
+				timeOut = setTimeout(() => setShowDropdown!(false), DDAnimationTime);
 			});
 
 			return () => {
@@ -33,12 +39,14 @@ export default function Dropdown({
 				clearTimeout(timeOut);
 			};
 		}
-	}, [setShowDropdown]);
+	}, [setShowDropdown, trigger]);
 
 	return (
 		<div
 			className={joinClasses(classes["dropdown"], className)}
 			ref={dropdownRef}
+			onMouseOver={onMouseOver}
+			onMouseOut={onMouseOut}
 		>
 			{children}
 		</div>
