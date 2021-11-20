@@ -30,16 +30,18 @@ export default function VideoCard(props: CardProps) {
 	function handleMouseOut() {
 		clearTimeout(DDMountTimeout);
 		const card = document.querySelector(".video-card-dropdown");
-		// hide timeout
-		DDHideTimeout = setTimeout(
-			() => card?.classList.add("hide"),
-			DDTimeThreshold
-		);
-		// remove timeout
-		DDUnmountTimeout = setTimeout(
-			() => setShowProfileDD(false),
-			DDAnimationTime + DDTimeThreshold
-		);
+		if (card) {
+			// hide timeout
+			DDHideTimeout = setTimeout(
+				() => card.classList.add("hide"),
+				DDTimeThreshold
+			);
+			// remove timeout
+			DDUnmountTimeout = setTimeout(
+				() => setShowProfileDD(false),
+				DDAnimationTime + DDTimeThreshold
+			);
+		}
 	}
 
 	function handleDDMouseOver() {
