@@ -1,7 +1,8 @@
 import { ReactNode } from "react";
 
 import classes from "./action-button.module.scss";
-import { ComponentProps, joinClasses } from "../../../common/utils";
+import { joinClasses } from "../../../common/utils";
+import { ComponentProps } from "../../../common/types";
 
 interface ABProps extends ComponentProps {
 	number: string;

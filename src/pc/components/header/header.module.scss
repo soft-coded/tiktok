@@ -116,7 +116,7 @@ $profile-icon-size: 32px;
 		z-index: 11;
 		transform: translateY(110%);
 
-		& > div {
+		& > * {
 			display: flex;
 			align-items: center;
 			gap: 12px;

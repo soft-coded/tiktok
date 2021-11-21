@@ -1,6 +1,7 @@
 import classes from "./fullscreen-spinner.module.scss";
 import LoadingSpinner from "../loading-spinner";
-import { ComponentProps, joinClasses } from "../../../common/utils";
+import { joinClasses } from "../../../common/utils";
+import { ComponentProps } from "../../../common/types";
 
 export default function FullscreenSpinner({ className }: ComponentProps) {
 	return (

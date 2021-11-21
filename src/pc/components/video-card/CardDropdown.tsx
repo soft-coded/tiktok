@@ -1,5 +1,5 @@
 import Dropdown from "../dropdown";
-import { PostData as CardProps } from "../../../common/utils";
+import { PostData as CardProps } from "../../../common/types";
 
 interface Props extends CardProps {
 	onMouseOver: () => void;

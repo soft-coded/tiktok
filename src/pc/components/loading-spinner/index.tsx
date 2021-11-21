@@ -1,5 +1,6 @@
 import classes from "./spinner.module.scss";
-import { ComponentProps, joinClasses } from "../../../common/utils";
+import { joinClasses } from "../../../common/utils";
+import { ComponentProps } from "../../../common/types";
 
 export default function LoadingSpinner({ className }: ComponentProps) {
 	return (

@@ -10,7 +10,8 @@ const validationSchema = yup.object().shape({
 		.string()
 		.trim()
 		.required("Required")
-		.max(10, "At most 10 characters"),
+		.min(4, "At least 4 characters")
+		.max(15, "At most 15 characters"),
 	password: yup
 		.string()
 		.trim()

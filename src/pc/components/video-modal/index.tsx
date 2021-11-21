@@ -1,18 +1,36 @@
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./video-modal.scss";
-import { PostData as CardProps, modifyScrollbar } from "../../../common/utils";
+import { PostData as CardProps } from "../../../common/types";
+import { modifyScrollbar } from "../../../common/utils";
 import ActionButton from "../action-button";
 import { videoModalActions } from "../../store/slices/video-modal-slice";
 import { authModalActions } from "../../store/slices/auth-modal-slice";
+import { RootState } from "../../../common/store";
 
 export interface ModalProps extends CardProps {
 	setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+const comments = [
+	{
+		userId: "1",
+		profilePhoto:
+			"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Narendra_Modi_2021.jpg/1200px-Narendra_Modi_2021.jpg",
+		username: "narendramodi",
+		name: "Narendra Modi",
+		comment:
+			"Great video. Had tons of fun watching it. Keep up the good work mom. I love you 😘😘😘😘😘😘😘😘😘😘😘",
+		postedTime: "16h ago"
+	}
+];
+
 export default function VideoModal(props: ModalProps) {
 	const dispatch = useDispatch();
+	const isAuthed = useSelector<RootState, any>(
+		state => state.auth.isAuthenticated
+	);
 
 	function handleModalClose() {
 		modifyScrollbar("show");
@@ -68,16 +86,20 @@ export default function VideoModal(props: ModalProps) {
 					/>
 				</div>
 				<div className="comments">
-					<div className="unauthed">
-						<h1>Log in to see comments</h1>
-						<h5>Log in to see comments and like the video.</h5>
-						<button className="primary-button" onClick={handleAuthModalOpen}>
-							Log In
-						</button>
-						<p>
-							Don't have an account? <Link to="/signup">Sign up</Link>
-						</p>
-					</div>
+					{isAuthed ? (
+						"yay"
+					) : (
+						<div className="unauthed">
+							<h1>Log in to see comments</h1>
+							<h5>Log in to see comments and like the video.</h5>
+							<button className="primary-button" onClick={handleAuthModalOpen}>
+								Log In
+							</button>
+							<p>
+								Don't have an account? <Link to="/signup">Sign up</Link>
+							</p>
+						</div>
+					)}
 				</div>
 			</div>
 		</div>

@@ -7,23 +7,24 @@ import Container from "../container";
 import SearchBar from "./SearchBar";
 import Dropdown from "../dropdown";
 import { authModalActions } from "../../store/slices/auth-modal-slice";
+import { authActions } from "../../../common/store/slices/auth";
 import { joinClasses } from "../../../common/utils";
 import { RootState } from "../../../common/store";
-
-const options = [
-	{ icon: <i className="fas fa-user" />, label: "View profile" },
-	{ icon: <i className="fas fa-sign-out-alt" />, label: "Log out" }
-];
 
 export default function Header() {
 	const [showOptions, setShowOptions] = useState(false);
 	const dispatch = useDispatch();
-	const isAuthed = useSelector<RootState, any>(
-		state => state.auth.isAuthenticated
+	const { isAuthenticated: isAuthed, username } = useSelector<RootState, any>(
+		state => state.auth
 	);
 
-	function handleClick() {
+	function handleShowModal() {
 		dispatch(authModalActions.showModal());
+	}
+
+	function handleLogOut() {
+		setShowOptions(false);
+		dispatch(authActions.logout());
 	}
 
 	return (
@@ -66,21 +67,27 @@ export default function Header() {
 									className={classes["options-dropdown"]}
 									setShowDropdown={setShowOptions}
 								>
-									{options.map((option, i) => (
-										<div key={i} className="hoverable">
-											{option.icon}
-											<span>{option.label}</span>
-										</div>
-									))}
+									<Link
+										to={"/user/" + username}
+										className="hoverable"
+										onClick={() => setShowOptions(false)}
+									>
+										<i className="fas fa-user" />
+										<span>View profile</span>
+									</Link>
+									<div className="hoverable" onClick={handleLogOut}>
+										<i className="fas fa-sign-out-alt" />
+										<span>Log out</span>
+									</div>
 								</Dropdown>
 							)}
 						</li>
 					) : (
 						<li className={classes["buttons"]}>
-							<div onClick={handleClick}>
+							<div onClick={handleShowModal}>
 								<span>Upload</span>
 							</div>
-							<button className="primary-button" onClick={handleClick}>
+							<button className="primary-button" onClick={handleShowModal}>
 								Log In
 							</button>
 						</li>

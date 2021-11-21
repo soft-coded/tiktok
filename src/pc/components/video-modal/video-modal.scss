@@ -133,6 +133,8 @@ $profile-photo-size: 48px;
 
 		.comments {
 			height: 100%;
+			display: flex;
+			flex-direction: column;
 
 			.unauthed {
 				height: 100%;

@@ -1,7 +1,8 @@
 import { ReactNode, createElement } from "react";
 
 import classes from "./container.module.scss";
-import { ComponentProps, joinClasses } from "../../../common/utils";
+import { joinClasses } from "../../../common/utils";
+import { ComponentProps } from "../../../common/types";
 
 interface ContainerProps extends ComponentProps {
 	children: ReactNode;
