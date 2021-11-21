@@ -3,17 +3,18 @@ import { useDispatch, useSelector } from "react-redux";
 
 import "./video-modal.scss";
 import { PostData as CardProps } from "../../../common/types";
-import { modifyScrollbar } from "../../../common/utils";
+import { joinClasses, modifyScrollbar } from "../../../common/utils";
 import ActionButton from "../action-button";
 import { videoModalActions } from "../../store/slices/video-modal-slice";
 import { authModalActions } from "../../store/slices/auth-modal-slice";
 import { RootState } from "../../../common/store";
+import Comment from "./Comment";
 
 export interface ModalProps extends CardProps {
 	setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const comments = [
+export const comments = [
 	{
 		userId: "1",
 		profilePhoto:
@@ -22,7 +23,96 @@ const comments = [
 		name: "Narendra Modi",
 		comment:
 			"Great video. Had tons of fun watching it. Keep up the good work mom. I love you 😘😘😘😘😘😘😘😘😘😘😘",
-		postedTime: "16h ago"
+		postedTime: "16h ago",
+		likesNum: "1M"
+	},
+	{
+		userId: "1",
+		profilePhoto:
+			"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Narendra_Modi_2021.jpg/1200px-Narendra_Modi_2021.jpg",
+		username: "narendramodi",
+		name: "Narendra Modi",
+		comment:
+			"Great video. Had tons of fun watching it. Keep up the good work mom. I love you 😘😘😘😘😘😘😘😘😘😘😘",
+		postedTime: "16h ago",
+		likesNum: "1M"
+	},
+	{
+		userId: "1",
+		profilePhoto:
+			"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Narendra_Modi_2021.jpg/1200px-Narendra_Modi_2021.jpg",
+		username: "narendramodi",
+		name: "Narendra Modi",
+		comment:
+			"Great video. Had tons of fun watching it. Keep up the good work mom. I love you 😘😘😘😘😘😘😘😘😘😘😘",
+		postedTime: "16h ago",
+		likesNum: "1M"
+	},
+	{
+		userId: "1",
+		profilePhoto:
+			"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Narendra_Modi_2021.jpg/1200px-Narendra_Modi_2021.jpg",
+		username: "narendramodi",
+		name: "Narendra Modi",
+		comment:
+			"Great video. Had tons of fun watching it. Keep up the good work mom. I love you 😘😘😘😘😘😘😘😘😘😘😘",
+		postedTime: "16h ago",
+		likesNum: "1M"
+	},
+	{
+		userId: "1",
+		profilePhoto:
+			"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Narendra_Modi_2021.jpg/1200px-Narendra_Modi_2021.jpg",
+		username: "narendramodi",
+		name: "Narendra Modi",
+		comment:
+			"Great video. Had tons of fun watching it. Keep up the good work mom. I love you 😘😘😘😘😘😘😘😘😘😘😘",
+		postedTime: "16h ago",
+		likesNum: "1M"
+	},
+	{
+		userId: "1",
+		profilePhoto:
+			"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Narendra_Modi_2021.jpg/1200px-Narendra_Modi_2021.jpg",
+		username: "narendramodi",
+		name: "Narendra Modi",
+		comment:
+			"Great video. Had tons of fun watching it. Keep up the good work mom. I love you 😘😘😘😘😘😘😘😘😘😘😘",
+		postedTime: "16h ago",
+		likesNum: "1M"
+	},
+	{
+		userId: "1",
+		profilePhoto:
+			"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Narendra_Modi_2021.jpg/1200px-Narendra_Modi_2021.jpg",
+		username: "narendramodi",
+		name: "Narendra Modi",
+		comment:
+			"Great video. Had tons of fun watching it. Keep up the good work mom. I love you 😘😘😘😘😘😘😘😘😘😘😘",
+		postedTime: "16h ago",
+		likesNum: "1M"
+	},
+	{
+		userId: "1",
+		profilePhoto:
+			"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Narendra_Modi_2021.jpg/1200px-Narendra_Modi_2021.jpg",
+		username: "narendramodi",
+		name: "Narendra Modi",
+		comment:
+			"Great video. Had tons of fun watching it. Keep up the good work mom. I love you 😘😘😘😘😘😘😘😘😘😘😘",
+		postedTime: "16h ago",
+		likesNum: "1M"
+	},
+	{
+		userId: "1",
+		profilePhoto:
+			"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Narendra_Modi_2021.jpg/1200px-Narendra_Modi_2021.jpg",
+		username: "narendramodi",
+		name: "Narendra Modi",
+		comment:
+			"Great video. Had tons of fun watching it. Keep up the good work mom. I love you 😘😘😘😘😘😘😘😘😘😘😘",
+		postedTime: "16h ago",
+		likesNum: "1M"
 	}
 ];
 
@@ -55,39 +145,41 @@ export default function VideoModal(props: ModalProps) {
 				</div>
 			</div>
 			<div className="modal-content">
-				<header>
-					<div className="rounded-photo">
-						<img src={props.profilePhoto} alt={props.name} />
+				<div className="modal-top">
+					<header>
+						<div className="rounded-photo">
+							<img src={props.profilePhoto} alt={props.name} />
+						</div>
+						<div className="names">
+							<h3>{props.username}</h3>
+							<h4>
+								{props.name} | <span>{props.uploadTime}</span>
+							</h4>
+						</div>
+						<div className="follow-btn">
+							<button>Follow</button>
+						</div>
+					</header>
+					<p className="caption">{props.caption}</p>
+					<h5 className="music">
+						<i className="fas fa-music" /> {props.music}
+					</h5>
+					<div className="action-buttons">
+						<ActionButton
+							icon={<i className="fas fa-heart" />}
+							number={props.likesNum}
+							className="action-btn-container"
+						/>
+						<ActionButton
+							icon={<i className="fas fa-comment-dots" />}
+							number={props.commentsNum}
+							className="action-btn-container"
+						/>
 					</div>
-					<div className="names">
-						<h3>{props.username}</h3>
-						<h4>
-							{props.name} | <span>{props.uploadTime}</span>
-						</h4>
-					</div>
-					<div className="follow-btn">
-						<button>Follow</button>
-					</div>
-				</header>
-				<p className="caption">{props.caption}</p>
-				<h5 className="music">
-					<i className="fas fa-music" /> {props.music}
-				</h5>
-				<div className="action-buttons">
-					<ActionButton
-						icon={<i className="fas fa-heart" />}
-						number={props.likesNum}
-						className="action-btn-container"
-					/>
-					<ActionButton
-						icon={<i className="fas fa-comment-dots" />}
-						number={props.commentsNum}
-						className="action-btn-container"
-					/>
 				</div>
-				<div className="comments">
+				<div className={joinClasses("comments", isAuthed ? "container" : "")}>
 					{isAuthed ? (
-						"yay"
+						comments.map((comment, i) => <Comment key={i} {...comment} />)
 					) : (
 						<div className="unauthed">
 							<h1>Log in to see comments</h1>
@@ -101,6 +193,12 @@ export default function VideoModal(props: ModalProps) {
 						</div>
 					)}
 				</div>
+				{isAuthed && (
+					<div className="post-comment">
+						<input type="text" placeholder="Add a comment" />
+						<button>Post</button>
+					</div>
+				)}
 			</div>
 		</div>
 	);

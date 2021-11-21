@@ -23,23 +23,9 @@ $bg-transition: background-color 0.25s ease-out;
 	flex-direction: column;
 	background: var(--clr-background);
 	width: $sidebar-width;
-	scrollbar-width: thin;
-	scrollbar-color: $scrollbar-thumb-color $scrollbar-track-color;
 	padding-right: 8px;
 	padding-bottom: 100px;
 	margin: 4px 0;
-
-	&::-webkit-scrollbar {
-		width: $scrollbar-width;
-	}
-
-	&::-webkit-scrollbar-thumb {
-		background-color: $scrollbar-thumb-color;
-	}
-
-	&::-webkit-scrollbar-track {
-		background-color: $scrollbar-track-color;
-	}
 
 	nav {
 		display: flex;

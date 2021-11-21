@@ -4,7 +4,8 @@ import { useDispatch } from "react-redux";
 
 import "./video-card.scss";
 import ActionButton from "../action-button";
-import { PostData as CardProps, modifyScrollbar } from "../../../common/utils";
+import { modifyScrollbar } from "../../../common/utils";
+import { PostData as CardProps } from "../../../common/types";
 import { videoModalActions } from "../../store/slices/video-modal-slice";
 import CardDropdown from "./CardDropdown";
 import { DDAnimationTime } from "../dropdown";

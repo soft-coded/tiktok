@@ -1,6 +1,7 @@
 @import "../../index.scss";
 
 $profile-photo-size: 48px;
+$modal-content-width: 544px;
 
 .app-video-modal {
 	display: flex;
@@ -65,12 +66,17 @@ $profile-photo-size: 48px;
 	}
 
 	.modal-content {
-		flex: 0 0 544px;
-		width: 544px;
+		flex: 0 0 $modal-content-width;
+		width: $modal-content-width;
 		display: flex;
 		flex-direction: column;
-		gap: 12px;
-		padding: 32px;
+
+		.modal-top {
+			display: flex;
+			flex-direction: column;
+			gap: 12px;
+			padding: 32px 32px 8px 32px;
+		}
 
 		header {
 			display: flex;
@@ -91,10 +97,10 @@ $profile-photo-size: 48px;
 				font-weight: 300;
 				font-size: 0.8rem;
 			}
+		}
 
-			.follow-btn {
-				margin-top: 0;
-			}
+		.follow-btn {
+			margin-left: auto;
 		}
 
 		.caption {
@@ -114,7 +120,7 @@ $profile-photo-size: 48px;
 		.action-buttons {
 			display: flex;
 			gap: 16px;
-			margin-top: 20px;
+			margin: 20px 0 12px;
 
 			.action-btn-container {
 				flex-direction: row;
@@ -133,8 +139,6 @@ $profile-photo-size: 48px;
 
 		.comments {
 			height: 100%;
-			display: flex;
-			flex-direction: column;
 
 			.unauthed {
 				height: 100%;
@@ -173,6 +177,72 @@ $profile-photo-size: 48px;
 						}
 					}
 				}
+			}
+
+			&.container {
+				position: relative;
+				display: flex;
+				flex-direction: column;
+				border-top: 2px solid var(--clr-border);
+				overflow: auto;
+				padding: 8px 32px;
+				background: rgba(var(--clr-secondary-values), 0.04);
+			}
+
+			.comment {
+				display: flex;
+				gap: 12px;
+				padding: 12px 0;
+
+				.rounded-photo {
+					flex-shrink: 0;
+					width: calc(#{$profile-photo-size} - 8px);
+					height: calc(#{$profile-photo-size} - 8px);
+				}
+
+				.comment-content {
+					display: flex;
+					flex-direction: column;
+					gap: 6px;
+				}
+
+				h4 {
+					font-weight: 500;
+					line-height: 1rem;
+				}
+
+				p {
+					font-size: 0.88rem;
+					font-weight: 400;
+				}
+
+				h5 {
+					font-size: 0.75rem;
+					color: rgba(var(--clr-secondary-values), 0.75);
+				}
+			}
+		}
+		.post-comment {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			background: var(--clr-background);
+			padding: 12px;
+			border-top: 2px solid var(--clr-border);
+
+			input {
+				background: rgba(var(--clr-secondary-values), 0.06);
+				border-radius: 8px;
+				padding: 10px;
+				font-size: 0.9rem;
+				caret-color: var(--clr-primary);
+				width: 90%;
+			}
+
+			button {
+				width: 10%;
+				font-weight: 500;
+				color: var(--clr-primary);
 			}
 		}
 	}

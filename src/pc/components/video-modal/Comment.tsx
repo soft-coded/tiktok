@@ -3,7 +3,7 @@ import { CommentData } from "../../../common/types";
 export default function Comment(props: CommentData) {
 	return (
 		<div className="comment">
-			<div className="rounded-image">
+			<div className="rounded-photo">
 				<img src={props.profilePhoto} alt={props.name} />
 			</div>
 			<div className="comment-content">

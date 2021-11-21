@@ -161,20 +161,6 @@ $dropdown-pfp-size: 42px;
 	}
 
 	.follow-btn {
-		margin-top: 8px;
 		margin-left: auto;
-
-		button {
-			border: 1px solid var(--clr-primary);
-			border-radius: $btn-border-radius;
-			padding: 2px 16px;
-			color: var(--clr-primary);
-			font-size: 0.9rem;
-			font-weight: 500;
-
-			&:hover {
-				background-color: rgba(var(--clr-primary-values), 0.06);
-			}
-		}
 	}
 }

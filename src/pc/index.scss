@@ -8,28 +8,20 @@ $scrollbar-track-color: rgba(var(--clr-secondary-values), 0.25);
 /* this comment keeps track of the current maximum z-index. Change this comment if a need for even greater z-index arrives, and update the component next to it with the one that will have the higher z-index. ! Do not set it to an absurdly high value that gets difficult to keep track of (like 99999) ! */
 // cur-max-z-index: 25; notification
 
-html,
-body,
-.page-container {
+* {
 	scrollbar-width: thin;
 	scrollbar-color: $scrollbar-thumb-color $scrollbar-track-color;
 }
 
-html::-webkit-scrollbar,
-body::-webkit-scrollbar,
-.page-container::-webkit-scrollbar {
+*::-webkit-scrollbar {
 	width: $scrollbar-width;
 }
 
-html::-webkit-scrollbar-thumb,
-body::-webkit-scrollbar-thumb,
-.page-container::-webkit-scrollbar-thumb {
+*::-webkit-scrollbar-thumb {
 	background-color: $scrollbar-thumb-color;
 }
 
-html::-webkit-scrollbar-track,
-body::-webkit-scrollbar-track,
-.page-container::-webkit-scrollbar-track {
+*::-webkit-scrollbar-track {
 	background-color: $scrollbar-track-color;
 }
 
@@ -72,5 +64,20 @@ body::-webkit-scrollbar-track,
 
 	&:hover {
 		background-color: rgba(var(--clr-secondary-values), 0.03);
+	}
+}
+
+.follow-btn {
+	button {
+		border: 1px solid var(--clr-primary);
+		border-radius: $btn-border-radius;
+		padding: 2px 16px;
+		color: var(--clr-primary);
+		font-size: 0.9rem;
+		font-weight: 500;
+
+		&:hover {
+			background-color: rgba(var(--clr-primary-values), 0.06);
+		}
 	}
 }
