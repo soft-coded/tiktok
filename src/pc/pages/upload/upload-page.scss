@@ -39,10 +39,17 @@ $preview-width: 260px;
 				height: $preview-height;
 				cursor: pointer;
 				transition: border-color 0.25s ease-out, background-color 0.25s ease-out;
+				overflow: hidden;
 
 				&:hover {
 					border-color: var(--clr-primary);
 					background: rgba(var(--clr-secondary-values), 0.03);
+				}
+
+				video {
+					width: 100%;
+					height: 100%;
+					object-fit: contain;
 				}
 
 				input {
@@ -90,6 +97,10 @@ $preview-width: 260px;
 					.input {
 						background: none;
 						border: 1px solid var(--clr-border);
+
+						&.error {
+							border: 1px solid red;
+						}
 					}
 				}
 

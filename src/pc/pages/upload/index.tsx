@@ -1,8 +1,39 @@
+import { useState } from "react";
+import { useFormik } from "formik";
+import * as yup from "yup";
+
 import "./upload-page.scss";
 import Container from "../../components/container";
 import Input from "../../components/input-field";
 
+const validationSchema = yup.object().shape({
+	caption: yup.string().required("Required").max(150, "At most 150 characters"),
+	music: yup.string().max(30, "At most 30 characters"),
+	tags: yup.string().required("Required").max(100, "At most 100 characters")
+});
+
+const sizeLimit = 20971520; // 20MB
+
 export default function UploadPage() {
+	const [videoFile, setVideoFile] = useState<File>();
+
+	const formik = useFormik({
+		initialValues: {
+			caption: "",
+			music: "",
+			tags: ""
+		},
+		validationSchema,
+		onSubmit: () => {
+			if (
+				!videoFile ||
+				videoFile.type !== "video/mp4" ||
+				videoFile.size > sizeLimit
+			)
+				return;
+		}
+	});
+
 	return (
 		<Container className="upload-page-container">
 			<div className="card">
@@ -13,30 +44,68 @@ export default function UploadPage() {
 				<div className="card-body">
 					<label htmlFor="video">
 						<div className="video-portion">
-							<i className="fas fa-video" />
-							<h4>Select video to upload</h4>
-							<input type="file" accept="video/mp4" id="video" />
-							<p>
-								<span>MP4 format</span>
-								<span>9 / 16 aspect ratio (preferred)</span>
-								<span>Less than 20 MB</span>
-							</p>
+							{videoFile?.type === "video/mp4" ? (
+								<video src={URL.createObjectURL(videoFile)} autoPlay muted>
+									Your browser does not support videos.
+								</video>
+							) : (
+								<>
+									<i className="fas fa-video" />
+									<h4>Select video to upload</h4>
+									<p>
+										<span>MP4 format</span>
+										<span>9 / 16 aspect ratio (preferred)</span>
+										<span>Less than 20 MB</span>
+									</p>
+								</>
+							)}
+							<input
+								type="file"
+								accept="video/mp4"
+								id="video"
+								onChange={e => setVideoFile(e.target.files?.[0])}
+							/>
 						</div>
 					</label>
-					<form className="description-portion">
+					<form className="description-portion" onSubmit={formik.handleSubmit}>
 						<div className="form-group">
 							<label htmlFor="caption">Caption</label>
-							<Input id="caption" className="input" />
+							<Input
+								id="caption"
+								className="input"
+								name="caption"
+								onChange={formik.handleChange}
+								onBlur={formik.handleBlur}
+								error={formik.touched.caption && formik.errors.caption}
+							/>
 						</div>
 						<div className="form-group">
 							<label htmlFor="tags">Tags</label>
-							<Input id="tags" className="input" />
+							<Input
+								id="tags"
+								className="input"
+								name="tags"
+								onChange={formik.handleChange}
+								onBlur={formik.handleBlur}
+								error={formik.touched.tags && formik.errors.tags}
+							/>
 						</div>
 						<div className="form-group">
 							<label htmlFor="music">Music</label>
-							<Input id="music" className="input" />
+							<Input
+								id="music"
+								className="input"
+								name="music"
+								onChange={formik.handleChange}
+								onBlur={formik.handleBlur}
+								error={formik.touched.music && formik.errors.music}
+							/>
 						</div>
-						<button type="submit" className="primary-button" disabled>
+						<button
+							type="submit"
+							className="primary-button"
+							disabled={!formik.dirty || !formik.isValid || !videoFile}
+						>
 							Post
 						</button>
 					</form>

@@ -33,7 +33,7 @@ export default function Input({
 			<div
 				className={joinClasses(
 					classes["app-input-field"],
-					error ? classes["error"] : "",
+					error ? joinClasses(classes["error"], "error") : "",
 					className
 				)}
 			>
