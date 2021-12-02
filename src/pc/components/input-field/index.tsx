@@ -6,6 +6,7 @@ import { joinClasses } from "../../../common/utils";
 interface InputProps {
 	type?: "text" | "password" | "email" | "number";
 	placeholder?: string;
+	id?: string;
 	className?: string;
 	icon?: ReactNode;
 	onChange?: (a: any) => void;
@@ -18,6 +19,7 @@ interface InputProps {
 export default function Input({
 	type,
 	placeholder,
+	id,
 	className,
 	icon,
 	onChange,
@@ -37,6 +39,7 @@ export default function Input({
 			>
 				{icon}
 				<input
+					id={id}
 					type={type ? type : "text"}
 					placeholder={placeholder}
 					onChange={onChange}

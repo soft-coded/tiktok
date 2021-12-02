@@ -43,6 +43,12 @@ $scrollbar-track-color: rgba(var(--clr-secondary-values), 0.25);
 		background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)),
 			var(--clr-primary);
 	}
+
+	&:disabled {
+		background: rgba(var(--clr-secondary-values), 0.06);
+		color: rgba(var(--clr-secondary-values), 0.34);
+		cursor: not-allowed;
+	}
 }
 
 .see-all {

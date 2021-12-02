@@ -35,12 +35,6 @@ $modal-width: 464px;
 
 		button {
 			margin-top: 16px;
-
-			&:disabled {
-				background: rgba(var(--clr-secondary-values), 0.06);
-				color: rgba(var(--clr-secondary-values), 0.3);
-				cursor: not-allowed;
-			}
 		}
 	}
 

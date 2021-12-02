@@ -12,6 +12,7 @@ import AuthModal from "./components/auth-modal";
 const VideoModal = lazy(() => import("./components/video-modal"));
 const Profile = lazy(() => import("./pages/profile"));
 const Video = lazy(() => import("./pages/video"));
+const Upload = lazy(() => import("./pages/upload"));
 
 export default function PCLayout() {
 	const { pathname } = useLocation();
@@ -40,6 +41,7 @@ export default function PCLayout() {
 					<Route path="/" element={<Home />} />
 					<Route path="/user/:username" element={<Profile />} />
 					<Route path="/video/:videoId" element={<Video />} />
+					<Route path="/upload" element={<Upload />} />
 				</Routes>
 			</Suspense>
 		</main>

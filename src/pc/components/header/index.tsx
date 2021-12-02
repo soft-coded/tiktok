@@ -46,9 +46,11 @@ export default function Header() {
 					</li>
 					{isAuthed ? (
 						<li className={classes["icons"]}>
-							<div className={classes["icon"]}>
-								<i className="fas fa-video" />
-							</div>
+							<Link to="/upload">
+								<div className={classes["icon"]}>
+									<i className="fas fa-video" />
+								</div>
+							</Link>
 							<div
 								className={joinClasses(
 									"rounded-photo",
