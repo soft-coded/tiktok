@@ -12,7 +12,7 @@ export default function App() {
 	const authStatus = useSelector<RootState, any>(state => state.auth.status);
 
 	useEffect(() => {
-		dispatch(authActions.loginOnLoad());
+		dispatch(authActions.loginOnLoad(null));
 	}, [dispatch]);
 
 	return authStatus === "fetching" ? <FullscreenSpinner /> : <PCLayout />;

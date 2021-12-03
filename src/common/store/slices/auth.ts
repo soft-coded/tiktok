@@ -19,7 +19,7 @@ const initialState: InitState = {
 	error: null
 };
 
-const loginThunk = createAsyncThunk(
+export const loginThunk = createAsyncThunk(
 	"auth/login",
 	async (payload: LoginData) => {
 		const res = await authApi.login(payload);
@@ -27,7 +27,7 @@ const loginThunk = createAsyncThunk(
 	}
 );
 
-const signupThunk = createAsyncThunk(
+export const signupThunk = createAsyncThunk(
 	"auth/signup",
 	async (payload: SignupData) => {
 		const res = await authApi.signup(payload);
@@ -44,6 +44,8 @@ const authSlice = createSlice({
 			state.token = action.payload.token;
 			state.isAuthenticated = true;
 			state.status = null;
+			state.error = null;
+
 			localStorage.setItem(
 				"userData",
 				JSON.stringify({
@@ -54,20 +56,23 @@ const authSlice = createSlice({
 		},
 		logout(state) {
 			state.username = null;
-			state.isAuthenticated = false;
 			state.token = null;
+			state.isAuthenticated = false;
+			state.error = null;
+			state.status = null;
+
 			localStorage.removeItem("userData");
 		},
-		loginOnLoad(state) {
+		loginOnLoad(state, action) {
 			const userData = localStorage.getItem("userData");
 			if (userData) {
-				authSlice.caseReducers.login(state, JSON.parse(userData));
+				action.payload = JSON.parse(userData);
+				authSlice.caseReducers.login(state, action);
 			} else state.status = null;
 		}
 	},
 	extraReducers: builder => {
 		builder.addCase(loginThunk.fulfilled, (state, action) => {
-			state.error = null;
 			authSlice.caseReducers.login(state, action);
 		});
 
@@ -82,7 +87,6 @@ const authSlice = createSlice({
 		});
 
 		builder.addCase(signupThunk.fulfilled, (state, action) => {
-			state.error = null;
 			authSlice.caseReducers.login(state, action);
 		});
 
@@ -100,4 +104,3 @@ const authSlice = createSlice({
 
 export default authSlice.reducer;
 export const authActions = authSlice.actions;
-export { signupThunk, loginThunk };

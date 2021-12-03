@@ -1,12 +1,11 @@
-import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
 import { FormProps } from ".";
 import Input from "../input-field";
-import { authActions } from "../../../common/store/slices/auth";
+import { useAppDispatch } from "../../../common/store";
+import { signupThunk } from "../../../common/store/slices/auth";
 import { notificationActions } from "../../store/slices/notification-slice";
-import { apiClient } from "../../../common/api";
 import constants from "../../../common/constants";
 
 const validationSchema = yup.object().shape({
@@ -39,7 +38,7 @@ const validationSchema = yup.object().shape({
 });
 
 export default function SignUp({ setAuthType, handleModalClose }: FormProps) {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 
 	const formik = useFormik({
 		initialValues: {
@@ -52,13 +51,8 @@ export default function SignUp({ setAuthType, handleModalClose }: FormProps) {
 		validationSchema,
 		onSubmit: async values => {
 			try {
-				const res = await apiClient.post("/auth/signup", values);
-				dispatch(
-					authActions.login({
-						username: res.data.username,
-						token: res.data.token
-					})
-				);
+				await dispatch(signupThunk(values)).unwrap();
+				handleModalClose();
 			} catch (err: any) {
 				dispatch(
 					notificationActions.showNotification({

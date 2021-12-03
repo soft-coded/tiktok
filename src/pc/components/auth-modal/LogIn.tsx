@@ -1,10 +1,11 @@
-import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
 import { FormProps } from ".";
 import Input from "../input-field";
-import { authActions } from "../../../common/store/slices/auth";
+import { useAppDispatch } from "../../../common/store";
+import { loginThunk } from "../../../common/store/slices/auth";
+import { notificationActions } from "../../store/slices/notification-slice";
 
 const validationSchema = yup.object().shape({
 	username: yup
@@ -21,7 +22,7 @@ const validationSchema = yup.object().shape({
 });
 
 export default function LogIn({ setAuthType, handleModalClose }: FormProps) {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 
 	const formik = useFormik({
 		initialValues: {
@@ -29,9 +30,18 @@ export default function LogIn({ setAuthType, handleModalClose }: FormProps) {
 			password: ""
 		},
 		validationSchema,
-		onSubmit: values => {
-			dispatch(authActions.login({ username: values.username }));
-			handleModalClose();
+		onSubmit: async values => {
+			try {
+				await dispatch(loginThunk(values)).unwrap();
+				handleModalClose();
+			} catch (err: any) {
+				dispatch(
+					notificationActions.showNotification({
+						type: "error",
+						message: err.message
+					})
+				);
+			}
 		}
 	});
 
