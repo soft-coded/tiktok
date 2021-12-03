@@ -1,9 +1,8 @@
 import { NavLink, Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 
 import "./sidebar.scss";
+import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { authModalActions } from "../../store/slices/auth-modal-slice";
-import { RootState } from "../../../common/store";
 import { joinClasses } from "../../../common/utils";
 
 export const suggestedAccounts = [
@@ -40,10 +39,8 @@ export const suggestedAccounts = [
 ];
 
 export default function Sidebar() {
-	const dispatch = useDispatch();
-	const isAuthed = useSelector<RootState, any>(
-		state => state.auth.isAuthenticated
-	);
+	const dispatch = useAppDispatch();
+	const isAuthed = useAppSelector(state => state.auth.isAuthenticated);
 
 	function handleClick() {
 		dispatch(authModalActions.showModal());

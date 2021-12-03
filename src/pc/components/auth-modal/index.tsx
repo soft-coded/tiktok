@@ -1,9 +1,9 @@
 import { useState, useLayoutEffect } from "react";
-import { useDispatch } from "react-redux";
 
 import "./auth-modal.scss";
 import LogIn from "./LogIn";
 import SignUp from "./SignUp";
+import { useAppDispatch } from "../../../common/store";
 import { modifyScrollbar } from "../../../common/utils";
 import { authModalActions } from "../../store/slices/auth-modal-slice";
 
@@ -14,7 +14,7 @@ export interface FormProps {
 
 export default function AuthModal() {
 	const [authType, setAuthType] = useState<"login" | "signup">("login");
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 
 	useLayoutEffect(() => {
 		modifyScrollbar("hide");

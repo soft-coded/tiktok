@@ -1,13 +1,12 @@
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 
 import "./video-modal.scss";
+import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { PostData as CardProps } from "../../../common/types";
 import { joinClasses, modifyScrollbar } from "../../../common/utils";
 import ActionButton from "../action-button";
 import { videoModalActions } from "../../store/slices/video-modal-slice";
 import { authModalActions } from "../../store/slices/auth-modal-slice";
-import { RootState } from "../../../common/store";
 import Comment from "./Comment";
 
 export interface ModalProps extends CardProps {
@@ -117,10 +116,8 @@ export const comments = [
 ];
 
 export default function VideoModal(props: ModalProps) {
-	const dispatch = useDispatch();
-	const isAuthed = useSelector<RootState, any>(
-		state => state.auth.isAuthenticated
-	);
+	const dispatch = useAppDispatch();
+	const isAuthed = useAppSelector(state => state.auth.isAuthenticated);
 
 	function handleModalClose() {
 		modifyScrollbar("show");

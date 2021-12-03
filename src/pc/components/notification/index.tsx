@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 
 import classes from "./notification.module.scss";
+import { useAppDispatch } from "../../../common/store";
 import { joinClasses } from "../../../common/utils";
 import Container from "../container";
 import { notificationActions } from "../../store/slices/notification-slice";
@@ -12,7 +12,7 @@ export interface NotificationProps {
 }
 
 export default function Notification({ type, message }: NotificationProps) {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 
 	useEffect(() => {
 		const container = document.querySelector("." + classes["notif-container"])!;

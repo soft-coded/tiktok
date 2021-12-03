@@ -1,14 +1,13 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
 import "./upload-page.scss";
 import Container from "../../components/container";
 import Input from "../../components/input-field";
+import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { apiClient } from "../../../common/api";
 import { notificationActions } from "../../store/slices/notification-slice";
-import { RootState } from "../../../common/store";
 
 const validationSchema = yup.object().shape({
 	caption: yup.string().required("Required").max(150, "At most 150 characters"),
@@ -20,8 +19,8 @@ const sizeLimit = 20971520; // 20MB
 
 export default function UploadPage() {
 	const [videoFile, setVideoFile] = useState<File>();
-	const dispatch = useDispatch();
-	const { username, token } = useSelector<RootState, any>(state => state.auth);
+	const dispatch = useAppDispatch();
+	const { username, token } = useAppSelector(state => state.auth);
 
 	const formik = useFormik({
 		initialValues: {
@@ -53,8 +52,8 @@ export default function UploadPage() {
 				formData.append("tags", values.tags);
 				formData.append("music", values.music);
 				formData.append("video", videoFile);
-				formData.append("username", username);
-				formData.append("token", token);
+				formData.append("username", username as string);
+				formData.append("token", token as string);
 
 				const res = await apiClient.post("/video/create", formData, {
 					headers: {

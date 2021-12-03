@@ -1,11 +1,11 @@
 // import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
 import "./profile.scss";
 import Container from "../../components/container";
 import Sidebar, { suggestedAccounts } from "../../components/sidebar";
 import ProfileButtons from "../../components/profile-buttons";
 import ProfileCard from "../../components/profile-card";
+import { useAppDispatch } from "../../../common/store";
 import { videoModalActions } from "../../store/slices/video-modal-slice";
 import { modifyScrollbar } from "../../../common/utils";
 
@@ -41,7 +41,7 @@ let videoInd: number;
 
 export default function Profile() {
 	// const {username} = useParams();
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 
 	function handleModalOpen(ind: number) {
 		modifyScrollbar("hide");

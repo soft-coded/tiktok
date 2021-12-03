@@ -1,20 +1,19 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 
 import classes from "./header.module.scss";
 import Container from "../container";
 import SearchBar from "./SearchBar";
 import Dropdown from "../dropdown";
+import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { authModalActions } from "../../store/slices/auth-modal-slice";
 import { authActions } from "../../../common/store/slices/auth";
 import { joinClasses } from "../../../common/utils";
-import { RootState } from "../../../common/store";
 
 export default function Header() {
 	const [showOptions, setShowOptions] = useState(false);
-	const dispatch = useDispatch();
-	const { isAuthenticated: isAuthed, username } = useSelector<RootState, any>(
+	const dispatch = useAppDispatch();
+	const { isAuthenticated: isAuthed, username } = useAppSelector(
 		state => state.auth
 	);
 

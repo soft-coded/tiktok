@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
 import "./video-card.scss";
 import ActionButton from "../action-button";
+import { useAppDispatch } from "../../../common/store";
 import { modifyScrollbar } from "../../../common/utils";
 import { PostData as CardProps } from "../../../common/types";
 import { videoModalActions } from "../../store/slices/video-modal-slice";
@@ -17,7 +17,7 @@ let DDMountTimeout: NodeJS.Timeout,
 
 export default function VideoCard(props: CardProps) {
 	const [showProfileDD, setShowProfileDD] = useState(false);
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 
 	function handleModalOpen() {
 		modifyScrollbar("hide");
