@@ -14,8 +14,14 @@ const validationSchema = yup.object().shape({
 		.string()
 		.trim()
 		.required("Required")
-		.min(constants.usernameMinLen, "At least 4 characters")
-		.max(constants.usernameMaxLen, "At most 15 characters")
+		.min(
+			constants.usernameMinLen,
+			`At least ${constants.usernameMinLen} characters`
+		)
+		.max(
+			constants.usernameMaxLen,
+			`At most ${constants.usernameMaxLen} characters`
+		)
 		.matches(
 			constants.usernameRegex,
 			"Only English letters, digits and underscores allowed."
@@ -24,12 +30,15 @@ const validationSchema = yup.object().shape({
 		.string()
 		.trim()
 		.required("Required")
-		.max(constants.nameMaxLen, "At most 30 characters"),
+		.max(constants.nameMaxLen, `At most ${constants.nameMaxLen} characters`),
 	password: yup
 		.string()
 		.trim()
 		.required("Required")
-		.min(constants.passwordMinLen, "At least 6 characters"),
+		.min(
+			constants.passwordMinLen,
+			`At least ${constants.passwordMinLen} characters`
+		),
 	confpass: yup
 		.string()
 		.trim()

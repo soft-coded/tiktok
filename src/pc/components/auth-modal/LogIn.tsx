@@ -6,19 +6,29 @@ import Input from "../input-field";
 import { useAppDispatch } from "../../../common/store";
 import { loginThunk } from "../../../common/store/slices/auth";
 import { notificationActions } from "../../store/slices/notification-slice";
+import constants from "../../../common/constants";
 
 const validationSchema = yup.object().shape({
 	username: yup
 		.string()
 		.trim()
 		.required("Required")
-		.min(4, "At least 4 characters")
-		.max(15, "At most 15 characters"),
+		.min(
+			constants.usernameMinLen,
+			`At least ${constants.usernameMinLen} characters`
+		)
+		.max(
+			constants.usernameMaxLen,
+			`At most ${constants.usernameMaxLen} characters`
+		),
 	password: yup
 		.string()
 		.trim()
 		.required("Required")
-		.min(6, "At least 6 characters")
+		.min(
+			constants.passwordMinLen,
+			`At least ${constants.passwordMinLen} characters`
+		)
 });
 
 export default function LogIn({ setAuthType, handleModalClose }: FormProps) {
