@@ -1,12 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+interface InitState {
+	show: boolean;
+	type: "error" | "warning" | "success" | "info" | null;
+	message: string | null;
+}
+
+const initialState: InitState = {
+	show: false,
+	type: null,
+	message: null
+};
+
 const notifSlice = createSlice({
 	name: "notification",
-	initialState: {
-		show: false,
-		type: null,
-		message: null
-	},
+	initialState,
 	reducers: {
 		showNotification(state, action) {
 			state.show = true;

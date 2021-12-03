@@ -1,10 +1,14 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
 import "./upload-page.scss";
 import Container from "../../components/container";
 import Input from "../../components/input-field";
+import { apiClient } from "../../../common/api";
+import { notificationActions } from "../../store/slices/notification-slice";
+import { RootState } from "../../../common/store";
 
 const validationSchema = yup.object().shape({
 	caption: yup.string().required("Required").max(150, "At most 150 characters"),
@@ -16,6 +20,8 @@ const sizeLimit = 20971520; // 20MB
 
 export default function UploadPage() {
 	const [videoFile, setVideoFile] = useState<File>();
+	const dispatch = useDispatch();
+	const { username, token } = useSelector<RootState, any>(state => state.auth);
 
 	const formik = useFormik({
 		initialValues: {
@@ -24,13 +30,47 @@ export default function UploadPage() {
 			tags: ""
 		},
 		validationSchema,
-		onSubmit: () => {
-			if (
-				!videoFile ||
-				videoFile.type !== "video/mp4" ||
-				videoFile.size > sizeLimit
-			)
-				return;
+		onSubmit: async values => {
+			try {
+				if (!videoFile || videoFile.type !== "video/mp4")
+					return dispatch(
+						notificationActions.showNotification({
+							type: "error",
+							message: "Invalid video."
+						})
+					);
+
+				if (videoFile.size > sizeLimit)
+					return dispatch(
+						notificationActions.showNotification({
+							type: "error",
+							message: "File too large"
+						})
+					);
+
+				const formData = new FormData();
+				formData.append("caption", values.caption);
+				formData.append("tags", values.tags);
+				formData.append("music", values.music);
+				formData.append("video", videoFile);
+				formData.append("username", username);
+				formData.append("token", token);
+
+				const res = await apiClient.post("/video/create", formData, {
+					headers: {
+						"Content-Type": "multipart/form-data"
+					}
+				});
+
+				console.log("in submit", res);
+			} catch (err: any) {
+				dispatch(
+					notificationActions.showNotification({
+						type: "error",
+						message: err.message
+					})
+				);
+			}
 		}
 	});
 

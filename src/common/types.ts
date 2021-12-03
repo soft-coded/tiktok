@@ -33,3 +33,16 @@ export interface CommentData extends CommonData {
 	likesNum: string;
 	replies?: CommentData[];
 }
+
+export interface LoginData {
+	username: string;
+	password: string;
+}
+
+export interface SignupData {
+	email: string;
+	username: string;
+	name: string;
+	password: string;
+	confpass: string;
+}

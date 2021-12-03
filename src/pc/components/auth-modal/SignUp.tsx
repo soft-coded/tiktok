@@ -1,8 +1,13 @@
+import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
 import { FormProps } from ".";
 import Input from "../input-field";
+import { authActions } from "../../../common/store/slices/auth";
+import { notificationActions } from "../../store/slices/notification-slice";
+import { apiClient } from "../../../common/api";
+import constants from "../../../common/constants";
 
 const validationSchema = yup.object().shape({
 	email: yup.string().trim().required("Required").email("Invalid email"),
@@ -10,13 +15,22 @@ const validationSchema = yup.object().shape({
 		.string()
 		.trim()
 		.required("Required")
-		.min(4, "At least 4 characters")
-		.max(15, "At most 15 characters"),
+		.min(constants.usernameMinLen, "At least 4 characters")
+		.max(constants.usernameMaxLen, "At most 15 characters")
+		.matches(
+			constants.usernameRegex,
+			"Only English letters, digits and underscores allowed."
+		),
+	name: yup
+		.string()
+		.trim()
+		.required("Required")
+		.max(constants.nameMaxLen, "At most 30 characters"),
 	password: yup
 		.string()
 		.trim()
 		.required("Required")
-		.min(6, "At least 6 characters"),
+		.min(constants.passwordMinLen, "At least 6 characters"),
 	confpass: yup
 		.string()
 		.trim()
@@ -24,17 +38,35 @@ const validationSchema = yup.object().shape({
 		.oneOf([yup.ref("password"), null], "Passwords do not match")
 });
 
-export default function SignUp({ setAuthType }: FormProps) {
+export default function SignUp({ setAuthType, handleModalClose }: FormProps) {
+	const dispatch = useDispatch();
+
 	const formik = useFormik({
 		initialValues: {
 			email: "",
 			username: "",
+			name: "",
 			password: "",
 			confpass: ""
 		},
 		validationSchema,
-		onSubmit: values => {
-			console.log(values);
+		onSubmit: async values => {
+			try {
+				const res = await apiClient.post("/auth/signup", values);
+				dispatch(
+					authActions.login({
+						username: res.data.username,
+						token: res.data.token
+					})
+				);
+			} catch (err: any) {
+				dispatch(
+					notificationActions.showNotification({
+						type: "error",
+						message: err.message
+					})
+				);
+			}
 		}
 	});
 
@@ -42,7 +74,14 @@ export default function SignUp({ setAuthType }: FormProps) {
 		<>
 			<h1>Sign up</h1>
 			<form onSubmit={formik.handleSubmit}>
-				<h3>Sign up via email</h3>
+				<h3>Sign up via username</h3>
+				<Input
+					placeholder="Username"
+					name="username"
+					onChange={formik.handleChange}
+					onBlur={formik.handleBlur}
+					error={formik.touched.username && formik.errors.username}
+				/>
 				<Input
 					placeholder="Email"
 					type="email"
@@ -52,11 +91,11 @@ export default function SignUp({ setAuthType }: FormProps) {
 					error={formik.touched.email && formik.errors.email}
 				/>
 				<Input
-					placeholder="Username"
-					name="username"
+					placeholder="Display Name"
+					name="name"
 					onChange={formik.handleChange}
 					onBlur={formik.handleBlur}
-					error={formik.touched.username && formik.errors.username}
+					error={formik.touched.name && formik.errors.name}
 				/>
 				<Input
 					placeholder="Password"
