@@ -5,6 +5,7 @@ import { useAppDispatch } from "../../../common/store";
 import { joinClasses } from "../../../common/utils";
 import Container from "../container";
 import { notificationActions } from "../../store/slices/notification-slice";
+import constants from "../../../common/constants";
 
 export interface NotificationProps {
 	type: "success" | "error" | "warning" | "info";
@@ -18,11 +19,11 @@ export default function Notification({ type, message }: NotificationProps) {
 		const container = document.querySelector("." + classes["notif-container"])!;
 		const hideTimeout = setTimeout(() => {
 			container.classList.add(classes["hide"]);
-		}, 5000);
+		}, constants.notificationDuration);
 		// the hide animation plays for 1 second
 		const removeTimeout = setTimeout(() => {
 			dispatch(notificationActions.hideNotification());
-		}, 5999);
+		}, constants.notificationAnimDuration + constants.notificationDuration);
 
 		return () => {
 			clearTimeout(hideTimeout);

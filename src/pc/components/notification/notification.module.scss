@@ -21,17 +21,17 @@
 	}
 
 	&.success {
-		background: rgb(49, 202, 49);
+		background: #13b841;
 	}
 
 	&.warning {
-		background: rgb(238, 238, 19);
-		color: #666666;
+		background: hsl(60, 90%, 55%);
+		color: #3a3f3f;
 	}
 
 	&.info {
 		background: rgb(184, 184, 184);
-		color: #424242;
+		color: #3a3f3f;
 	}
 
 	&.hide {

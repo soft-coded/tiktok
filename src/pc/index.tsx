@@ -5,9 +5,10 @@ import "./index.scss";
 import { useAppSelector } from "../common/store";
 import FullscreenSpinner from "./components/fullscreen-spinner";
 import Header from "./components/header";
-import Home from "./pages/home";
 import Notification from "./components/notification";
 import AuthModal from "./components/auth-modal";
+import PrivateRoute from "./components/private-route";
+const Home = lazy(() => import("./pages/home"));
 const VideoModal = lazy(() => import("./components/video-modal"));
 const Profile = lazy(() => import("./pages/profile"));
 const Video = lazy(() => import("./pages/video"));
@@ -33,17 +34,15 @@ export default function PCLayout() {
 					type={notification.type!}
 				/>
 			)}
-			{videoModal.show && (
-				<Suspense fallback={<FullscreenSpinner />}>
-					<VideoModal {...videoModal.data!} />
-				</Suspense>
-			)}
 			<Suspense fallback={<FullscreenSpinner />}>
+				{videoModal.show && <VideoModal {...videoModal.data!} />}
 				<Routes>
 					<Route path="/" element={<Home />} />
 					<Route path="/user/:username" element={<Profile />} />
 					<Route path="/video/:videoId" element={<Video />} />
-					<Route path="/upload" element={<Upload />} />
+					<Route element={<PrivateRoute />}>
+						<Route path="/upload" element={<Upload />} />
+					</Route>
 				</Routes>
 			</Suspense>
 		</main>

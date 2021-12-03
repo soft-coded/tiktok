@@ -9,11 +9,11 @@ export const apiClient = axios.create({
 });
 
 apiClient.interceptors.response.use(undefined, error => {
-	error.message = error.response
-		? error.response.data.message
-		: error.request
-		? error.message
-		: "Something went wrong. Try again.";
+	let msg: string;
+	if (error.response) msg = error.response.data.message;
+	else if (error.request) msg = "Network error. Check your connection.";
+	else msg = "Something went wrong. Try again.";
 
+	error.message = msg;
 	return Promise.reject(error);
 });
