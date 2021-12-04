@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
@@ -8,11 +8,23 @@ import Input from "../../components/input-field";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { apiClient } from "../../../common/api";
 import { notificationActions } from "../../store/slices/notification-slice";
+import constants from "../../../common/constants";
 
 const validationSchema = yup.object().shape({
-	caption: yup.string().required("Required").max(150, "At most 150 characters"),
-	music: yup.string().max(30, "At most 30 characters"),
-	tags: yup.string().required("Required").max(100, "At most 100 characters")
+	caption: yup
+		.string()
+		.required("Required")
+		.max(
+			constants.captionMaxLen,
+			`At most ${constants.captionMaxLen} characters`
+		),
+	music: yup
+		.string()
+		.max(constants.musicMaxLen, `At most ${constants.musicMaxLen} characters`),
+	tags: yup
+		.string()
+		.required("Required")
+		.max(constants.tagsMaxLen, `At most ${constants.tagsMaxLen} characters`)
 });
 
 const sizeLimit = 20971520; // 20MB
@@ -21,6 +33,10 @@ export default function UploadPage() {
 	const [videoFile, setVideoFile] = useState<File>();
 	const dispatch = useAppDispatch();
 	const { username, token } = useAppSelector(state => state.auth);
+	const videoURL = useMemo(
+		() => (videoFile ? URL.createObjectURL(videoFile) : undefined),
+		[videoFile]
+	);
 
 	const formik = useFormik({
 		initialValues: {
@@ -84,7 +100,7 @@ export default function UploadPage() {
 					<label htmlFor="video">
 						<div className="video-portion">
 							{videoFile?.type === "video/mp4" ? (
-								<video src={URL.createObjectURL(videoFile)} autoPlay muted>
+								<video src={videoURL} autoPlay muted>
 									Your browser does not support videos.
 								</video>
 							) : (
@@ -94,7 +110,7 @@ export default function UploadPage() {
 									<p>
 										<span>MP4 format</span>
 										<span>9 / 16 aspect ratio (preferred)</span>
-										<span>Less than 20 MB</span>
+										<span>Less than {sizeLimit / 1048576} MB</span>
 									</p>
 								</>
 							)}

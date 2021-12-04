@@ -6,6 +6,9 @@ export default {
 	passwordMinLen: 6,
 	nameMaxLen: 30,
 	descriptionMaxLen: 300,
+	musicMaxLen: 30,
+	captionMaxLen: 150,
+	tagsMaxLen: 200,
 	notificationDuration: 5000,
 	notificationAnimDuration: 1000
 };
