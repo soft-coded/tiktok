@@ -3,6 +3,7 @@ $circle-blue: #3af2ff;
 $initial-transform: translateX(-50%);
 $small-scale: 0.7;
 $big-scale: 1.3;
+$animation-time: 1.5s;
 
 .spinner-wrapper {
 	--circle-size: 25px; // use this variable to override spinner size
@@ -31,12 +32,12 @@ $big-scale: 1.3;
 
 .spinner-circle-red {
 	background: $circle-red;
-	animation: spinner-animation-red 2s ease-in-out infinite;
+	animation: spinner-animation-red $animation-time ease-in-out infinite;
 }
 
 .spinner-circle-blue {
 	background: $circle-blue;
-	animation: spinner-animation-blue 2s ease-in-out infinite;
+	animation: spinner-animation-blue $animation-time ease-in-out infinite;
 }
 
 @keyframes spinner-animation-red {

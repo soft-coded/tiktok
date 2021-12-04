@@ -1,4 +1,5 @@
 $modal-width: 464px;
+$button-height: 42px;
 
 .auth-modal-container {
 	position: fixed;
@@ -35,6 +36,7 @@ $modal-width: 464px;
 
 		button {
 			margin-top: 16px;
+			height: $button-height;
 		}
 	}
 
@@ -53,6 +55,11 @@ $modal-width: 464px;
 			cursor: pointer;
 			user-select: none;
 		}
+	}
+
+	.auth-spinner {
+		--circle-size: 14px;
+		--wrapper-padding: 0;
 	}
 }
 

@@ -3,7 +3,8 @@ import * as yup from "yup";
 
 import { FormProps } from ".";
 import Input from "../input-field";
-import { useAppDispatch } from "../../../common/store";
+import LoadingSpinner from "../loading-spinner";
+import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { signupThunk } from "../../../common/store/slices/auth";
 import { notificationActions } from "../../store/slices/notification-slice";
 import constants from "../../../common/constants";
@@ -48,6 +49,7 @@ const validationSchema = yup.object().shape({
 
 export default function SignUp({ setAuthType, handleModalClose }: FormProps) {
 	const dispatch = useAppDispatch();
+	const authStatus = useAppSelector(state => state.auth.status);
 
 	const formik = useFormik({
 		initialValues: {
@@ -119,9 +121,15 @@ export default function SignUp({ setAuthType, handleModalClose }: FormProps) {
 				<button
 					type="submit"
 					className="primary-button"
-					disabled={!formik.dirty || !formik.isValid}
+					disabled={
+						!formik.dirty || !formik.isValid || authStatus === "loading"
+					}
 				>
-					Sign Up
+					{authStatus === "loading" ? (
+						<LoadingSpinner className="auth-spinner" />
+					) : (
+						"Sign Up"
+					)}
 				</button>
 			</form>
 			<div className="switch-state">
