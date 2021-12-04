@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 import "./video-modal.scss";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
-import { PostData as CardProps } from "../../../common/types";
+import { VideoData as CardProps } from "../../../common/types";
 import { joinClasses, modifyScrollbar } from "../../../common/utils";
 import ActionButton from "../action-button";
 import { videoModalActions } from "../../store/slices/video-modal-slice";
@@ -145,12 +145,15 @@ export default function VideoModal(props: ModalProps) {
 				<div className="modal-top">
 					<header>
 						<div className="rounded-photo">
-							<img src={props.profilePhoto} alt={props.name} />
+							<img
+								src={props.uploader?.profilePhoto}
+								alt={props.uploader?.name}
+							/>
 						</div>
 						<div className="names">
-							<h3>{props.username}</h3>
+							<h3>{props.uploader?.username}</h3>
 							<h4>
-								{props.name} | <span>{props.uploadTime}</span>
+								{props.uploader?.name} | <span>{props.createdAt}</span>
 							</h4>
 						</div>
 						<div className="follow-btn">
@@ -164,12 +167,12 @@ export default function VideoModal(props: ModalProps) {
 					<div className="action-buttons">
 						<ActionButton
 							icon={<i className="fas fa-heart" />}
-							number={props.likesNum}
+							number={props.likes as number}
 							className="action-btn-container"
 						/>
 						<ActionButton
 							icon={<i className="fas fa-comment-dots" />}
-							number={props.commentsNum}
+							number={props.comments as number}
 							className="action-btn-container"
 						/>
 					</div>

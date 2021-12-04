@@ -19,5 +19,5 @@ export default function PrivateRoute() {
 		}
 	}, [dispatch, isAuthed]);
 
-	return isAuthed ? <Outlet /> : <Navigate to="/" />;
+	return isAuthed ? <Outlet /> : <Navigate to="/" replace />;
 }

@@ -4,12 +4,12 @@ export default function Comment(props: CommentData) {
 	return (
 		<div className="comment">
 			<div className="rounded-photo">
-				<img src={props.profilePhoto} alt={props.name} />
+				<img src={props.postedBy?.profilePhoto} alt={props.postedBy?.name} />
 			</div>
 			<div className="comment-content">
-				<h4>{props.name}</h4>
+				<h4>{props.postedBy?.name}</h4>
 				<p>{props.comment}</p>
-				<h5>{props.postedTime}</h5>
+				<h5>{props.createdAt}</h5>
 			</div>
 		</div>
 	);

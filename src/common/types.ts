@@ -3,34 +3,41 @@ export interface ComponentProps {
 }
 
 interface CommonData {
-	userId: string;
-	profilePhoto: string;
-	username: string;
-	name: string;
-}
-
-export interface PostData extends CommonData {
-	caption: string;
-	music: string;
-	video: string;
-	likesNum: string;
-	commentsNum: string;
-	sharesNum: string;
-	uploadTime: string;
+	createdAt?: Date;
 }
 
 export interface UserData extends CommonData {
-	followingNum: string;
-	followersNum: string;
-	totalLikes: string;
-	description: string;
-	videos: string[];
+	username?: string;
+	name?: string;
+	email?: string;
+	description?: string;
+	profilePhoto?: string;
+	following?: number | UserData[];
+	followers?: number | UserData[];
+	totalLikes?: number;
+	videos?: {
+		uploaded?: VideoData[];
+		liked?: VideoData[];
+	};
+}
+
+export interface VideoData extends CommonData {
+	videoId?: string;
+	uploader?: UserData;
+	caption?: string;
+	music?: string;
+	video?: string;
+	tags?: string[];
+	likes?: number | string[];
+	comments?: number | CommentData[];
+	shares?: number;
+	views?: number;
 }
 
 export interface CommentData extends CommonData {
-	comment: string;
-	postedTime: string;
-	likesNum: string;
+	postedBy?: UserData;
+	comment?: string;
+	likes?: number | any[];
 	replies?: CommentData[];
 }
 

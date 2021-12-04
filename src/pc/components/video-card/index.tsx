@@ -5,7 +5,7 @@ import "./video-card.scss";
 import ActionButton from "../action-button";
 import { useAppDispatch } from "../../../common/store";
 import { modifyScrollbar } from "../../../common/utils";
-import { PostData as CardProps } from "../../../common/types";
+import { VideoData as CardProps } from "../../../common/types";
 import { videoModalActions } from "../../store/slices/video-modal-slice";
 import CardDropdown from "./CardDropdown";
 import { DDAnimationTime } from "../dropdown";
@@ -53,13 +53,16 @@ export default function VideoCard(props: CardProps) {
 	return (
 		<div className="app-video-card">
 			<div className="profile-pic">
-				<Link to={"/user/" + props.username}>
+				<Link to={"/user/" + props.uploader?.username}>
 					<div
 						className="rounded-photo"
 						onMouseOver={handleMouseOver}
 						onMouseOut={handleMouseOut}
 					>
-						<img src={props.profilePhoto} alt={props.name} />
+						<img
+							src={props.uploader?.profilePhoto}
+							alt={props.uploader?.name}
+						/>
 					</div>
 				</Link>
 				{showProfileDD && (
@@ -72,13 +75,13 @@ export default function VideoCard(props: CardProps) {
 			</div>
 			<div className="card-content">
 				<header>
-					<Link to={"/user/" + props.username} className="username">
+					<Link to={"/user/" + props.uploader?.username} className="username">
 						<h4 onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-							{props.username}
+							{props.uploader?.username}
 						</h4>
 					</Link>
 					<h5>
-						{props.name} | <span>{props.uploadTime}</span>
+						{props.uploader?.name} | <span>{props.uploader?.createdAt}</span>
 					</h5>
 				</header>
 				<p className="caption">{props.caption}</p>
@@ -100,17 +103,17 @@ export default function VideoCard(props: CardProps) {
 					<div className="action-buttons">
 						<ActionButton
 							icon={<i className="fas fa-heart" />}
-							number={props.likesNum}
+							number={props.likes as number}
 							className="action-btn-container"
 						/>
 						<ActionButton
 							icon={<i className="fas fa-comment-dots" />}
-							number={props.commentsNum}
+							number={props.comments as number}
 							className="action-btn-container"
 						/>
 						<ActionButton
 							icon={<i className="fas fa-share" />}
-							number={props.sharesNum}
+							number={props.shares as number}
 							className="action-btn-container"
 						/>
 					</div>

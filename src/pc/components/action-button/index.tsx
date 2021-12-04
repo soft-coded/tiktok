@@ -5,7 +5,7 @@ import { joinClasses } from "../../../common/utils";
 import { ComponentProps } from "../../../common/types";
 
 interface ABProps extends ComponentProps {
-	number: string;
+	number: string | number;
 	icon: ReactNode;
 }
 
