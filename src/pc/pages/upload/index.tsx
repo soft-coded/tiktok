@@ -1,12 +1,14 @@
 import { useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
 import "./upload-page.scss";
 import Container from "../../components/container";
 import Input from "../../components/input-field";
+import LoadingSpinner from "../../components/loading-spinner";
+import { createVideo } from "../../../common/api/video";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
-import { apiClient } from "../../../common/api";
 import { notificationActions } from "../../store/slices/notification-slice";
 import constants from "../../../common/constants";
 
@@ -27,10 +29,10 @@ const validationSchema = yup.object().shape({
 		.max(constants.tagsMaxLen, `At most ${constants.tagsMaxLen} characters`)
 });
 
-const sizeLimit = 20971520; // 20MB
-
 export default function UploadPage() {
+	const [isLoading, setIsLoading] = useState(false);
 	const [videoFile, setVideoFile] = useState<File>();
+	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const { username, token } = useAppSelector(state => state.auth);
 	const videoURL = useMemo(
@@ -46,39 +48,27 @@ export default function UploadPage() {
 		},
 		validationSchema,
 		onSubmit: async values => {
+			setIsLoading(true);
 			try {
 				if (!videoFile || videoFile.type !== "video/mp4")
-					return dispatch(
-						notificationActions.showNotification({
-							type: "error",
-							message: "Invalid video."
-						})
-					);
-
-				if (videoFile.size > sizeLimit)
-					return dispatch(
-						notificationActions.showNotification({
-							type: "error",
-							message: "File too large"
-						})
-					);
+					throw new Error("Invalid video.");
+				if (videoFile.size > constants.videoSizeLimit)
+					throw new Error("File too large.");
 
 				const formData = new FormData();
 				formData.append("caption", values.caption);
 				formData.append("tags", values.tags);
 				formData.append("music", values.music);
+				formData.append("username", username!);
+				formData.append("token", token!);
+				// keep the file last or the server does not get the correct data
 				formData.append("video", videoFile);
-				formData.append("username", username as string);
-				formData.append("token", token as string);
 
-				const res = await apiClient.post("/video/create", formData, {
-					headers: {
-						"Content-Type": "multipart/form-data"
-					}
-				});
-
-				console.log("in submit", res);
+				const res = await createVideo(formData);
+				setIsLoading(false);
+				navigate("/video/" + res.data.videoId);
 			} catch (err: any) {
+				setIsLoading(false);
 				dispatch(
 					notificationActions.showNotification({
 						type: "error",
@@ -110,7 +100,9 @@ export default function UploadPage() {
 									<p>
 										<span>MP4 format</span>
 										<span>9 / 16 aspect ratio (preferred)</span>
-										<span>Less than {sizeLimit / 1048576} MB</span>
+										<span>
+											Less than {constants.videoSizeLimit / 1048576} MB
+										</span>
 									</p>
 								</>
 							)}
@@ -159,9 +151,15 @@ export default function UploadPage() {
 						<button
 							type="submit"
 							className="primary-button"
-							disabled={!formik.dirty || !formik.isValid || !videoFile}
+							disabled={
+								!formik.dirty || !formik.isValid || !videoFile || isLoading
+							}
 						>
-							Post
+							{isLoading ? (
+								<LoadingSpinner className="upload-spinner" />
+							) : (
+								"Post"
+							)}
 						</button>
 					</form>
 				</div>

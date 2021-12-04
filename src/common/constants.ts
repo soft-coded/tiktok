@@ -6,6 +6,7 @@ export default {
 	passwordMinLen: 6,
 	nameMaxLen: 30,
 	descriptionMaxLen: 300,
+	videoSizeLimit: 20971520,
 	musicMaxLen: 30,
 	captionMaxLen: 150,
 	tagsMaxLen: 200,
