@@ -19,3 +19,6 @@ const params: UserQuery = {
 };
 export const getUser = (username: string) =>
 	apiClient.get(userURL + "/" + username, { params });
+
+export const getLikedVideos = (username: string) =>
+	apiClient.get(userURL + "/" + username, { params: { videos: "liked" } });

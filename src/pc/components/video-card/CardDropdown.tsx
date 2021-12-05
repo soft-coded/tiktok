@@ -41,7 +41,7 @@ export default function CardDropdown(props: Props) {
 			onMouseOut={props.onMouseOut}
 			onMouseOver={props.onMouseOver}
 		>
-			{user == null ? (
+			{!user ? (
 				<LoadingSpinner />
 			) : (
 				<>

@@ -8,8 +8,8 @@ import ProfileButtons from "../../components/profile-buttons";
 import ProfileCard from "../../components/profile-card";
 import { useAppDispatch } from "../../../common/store";
 import { videoModalActions } from "../../store/slices/video-modal-slice";
-import { modifyScrollbar } from "../../../common/utils";
-import { getUser } from "../../../common/api/user";
+import { joinClasses, modifyScrollbar } from "../../../common/utils";
+import { getLikedVideos, getUser } from "../../../common/api/user";
 import { UserData } from "../../../common/types";
 import { notificationActions } from "../../store/slices/notification-slice";
 import constants from "../../../common/constants";
@@ -21,6 +21,10 @@ export default function Profile() {
 	const { username } = useParams();
 	const dispatch = useAppDispatch();
 	const [user, setUser] = useState<UserData | null>(null);
+	const [likedVideos, setLikesVideos] = useState<string[] | null>(null);
+	const [videosType, setVideosType] = useState<"uploaded" | "liked">(
+		"uploaded"
+	);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -50,11 +54,28 @@ export default function Profile() {
 		);
 	}
 
+	async function fetchLikedVids() {
+		if (!likedVideos) {
+			try {
+				const liked = await getLikedVideos(username!);
+				setLikesVideos(liked.data.videos);
+			} catch (err: any) {
+				dispatch(
+					notificationActions.showNotification({
+						type: "error",
+						message: err.message
+					})
+				);
+				setVideosType("uploaded");
+			}
+		}
+	}
+
 	return (
 		<Container className="profile-page-container">
 			<Sidebar />
 			<div className="profile-container">
-				{user == null ? (
+				{!user ? (
 					<LoadingSpinner className="spinner" />
 				) : (
 					<>
@@ -102,16 +123,37 @@ export default function Profile() {
 								))}
 							</div>
 						</div>
-						<ProfileButtons />
-						<div className="profile-cards-container">
-							{user!.videos!.map((video, i) => (
-								<ProfileCard
-									key={i}
-									index={i}
-									video={constants.videoLink + "/" + video}
-									handleModalOpen={handleModalOpen}
-								/>
-							))}
+						<ProfileButtons
+							setVideosType={setVideosType}
+							fetchLikedVids={fetchLikedVids}
+						/>
+						<div
+							className={joinClasses(
+								"profile-cards-container",
+								videosType === "liked" && !likedVideos ? "loading" : ""
+							)}
+						>
+							{videosType === "uploaded" ? (
+								user!.videos!.map((video, i) => (
+									<ProfileCard
+										key={i}
+										index={i}
+										video={constants.videoLink + "/" + video}
+										handleModalOpen={handleModalOpen}
+									/>
+								))
+							) : !likedVideos ? (
+								<LoadingSpinner className="liked-spinner" />
+							) : (
+								likedVideos.map((video, i) => (
+									<ProfileCard
+										key={i}
+										index={i}
+										video={constants.videoLink + "/" + video}
+										handleModalOpen={handleModalOpen}
+									/>
+								))
+							)}
 						</div>
 					</>
 				)}

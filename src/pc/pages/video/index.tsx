@@ -42,7 +42,7 @@ export default function Video() {
 		<Container className="video-page-container">
 			<Sidebar />
 			<div className={"content-container"}>
-				{videoData == null ? <LoadingSpinner /> : <VideoCard {...videoData} />}
+				{!videoData ? <LoadingSpinner /> : <VideoCard {...videoData} />}
 			</div>
 		</Container>
 	);

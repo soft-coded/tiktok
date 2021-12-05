@@ -114,6 +114,10 @@ $suggested-pfp-size: 32px;
 			grid-template-columns: repeat(3, 1fr);
 			gap: 4px;
 			margin-top: 2px;
+
+			&.loading {
+				display: unset;
+			}
 		}
 	}
 }

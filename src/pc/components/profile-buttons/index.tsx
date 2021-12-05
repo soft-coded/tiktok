@@ -2,7 +2,15 @@ import { useRef, useEffect } from "react";
 
 import "./profile-buttons.scss";
 
-export default function ProfileButtons() {
+interface Props {
+	setVideosType: React.Dispatch<React.SetStateAction<"uploaded" | "liked">>;
+	fetchLikedVids: () => Promise<void>;
+}
+
+export default function ProfileButtons({
+	setVideosType,
+	fetchLikedVids
+}: Props) {
 	const buttonsRef = useRef<HTMLDivElement | null>(null);
 
 	useEffect(() => {
@@ -41,10 +49,22 @@ export default function ProfileButtons() {
 	return (
 		<div className="profile-category-buttons" ref={buttonsRef}>
 			<div className="btns">
-				<button className="active" data-position="0" onClick={e => true}>
+				<button
+					className="active"
+					data-position="0"
+					onClick={() => setVideosType("uploaded")}
+				>
 					Videos
 				</button>
-				<button data-position="1">Liked</button>
+				<button
+					data-position="1"
+					onClick={() => {
+						setVideosType("liked");
+						fetchLikedVids();
+					}}
+				>
+					Liked
+				</button>
 			</div>
 			<div className="button-underbar">
 				<span style={{ left: "0%" }} />
