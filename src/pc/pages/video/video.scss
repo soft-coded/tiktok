@@ -7,12 +7,5 @@ $container-width: 692px;
 	.content-container {
 		width: $container-width;
 		height: 100%;
-
-		&.loading {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			height: 596px;
-		}
 	}
 }

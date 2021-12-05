@@ -10,7 +10,6 @@ import { getVideo } from "../../../common/api/video";
 import { useAppDispatch } from "../../../common/store";
 import { notificationActions } from "../../store/slices/notification-slice";
 import LoadingSpinner from "../../components/loading-spinner";
-import { joinClasses } from "../../../common/utils";
 
 // tempId = 61ab9a45873a1874c8b32ed9;
 
@@ -45,9 +44,7 @@ export default function Video() {
 	return (
 		<Container className="video-page-container">
 			<Sidebar />
-			<div
-				className={joinClasses("content-container", isLoading ? "loading" : "")}
-			>
+			<div className={"content-container"}>
 				{isLoading ? <LoadingSpinner /> : <VideoCard {...videoData} />}
 			</div>
 		</Container>

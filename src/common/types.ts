@@ -15,10 +15,11 @@ export interface UserData extends CommonData {
 	following?: number | UserData[];
 	followers?: number | UserData[];
 	totalLikes?: number;
-	videos?: VideoData[]; // either uploaded or liked, can't be both
+	videos?: VideoData[] | string[]; // either uploaded or liked, can't be both
 }
 
 export interface VideoData extends CommonData {
+	_id?: string;
 	videoId?: string;
 	uploader?: UserData;
 	caption?: string;

@@ -38,7 +38,7 @@ export function handleClickOutside(
 export function convertToDate(date: string | Date) {
 	return new Date(date).toLocaleString(["en-IN", "en-GB", "en"], {
 		day: "numeric",
-		month: "2-digit",
+		month: "short",
 		hour: "numeric",
 		hour12: true
 	});

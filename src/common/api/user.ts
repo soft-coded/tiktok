@@ -9,6 +9,13 @@ const shortParams: UserQuery = {
 	following: "num",
 	totalLikes: "1"
 };
-
 export const getShortUser = (username: string) =>
 	apiClient.get(userURL + "/" + username, { params: shortParams });
+
+const params: UserQuery = {
+	...shortParams,
+	name: "1",
+	videos: "uploaded"
+};
+export const getUser = (username: string) =>
+	apiClient.get(userURL + "/" + username, { params });

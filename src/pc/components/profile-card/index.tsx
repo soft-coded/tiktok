@@ -14,7 +14,14 @@ export default function ProfileCard({
 	return (
 		<div className="profile-card">
 			<div className="video-container">
-				<video src={video} playsInline onClick={() => handleModalOpen(index)}>
+				<video
+					src={video}
+					playsInline
+					muted
+					onClick={() => handleModalOpen(index)}
+					onMouseOver={e => (e.target as HTMLVideoElement).play()}
+					onMouseOut={e => (e.target as HTMLVideoElement).pause()}
+				>
 					Your browser does not support videos.
 				</video>
 			</div>
