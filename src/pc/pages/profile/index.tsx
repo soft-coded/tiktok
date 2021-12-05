@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import "./profile.scss";
 import Container from "../../components/container";
+import VideosLayout from "./VideosLayout";
 import Sidebar, { suggestedAccounts } from "../../components/sidebar";
 import ProfileButtons from "../../components/profile-buttons";
-import ProfileCard from "../../components/profile-card";
 import { useAppDispatch } from "../../../common/store";
 import { videoModalActions } from "../../store/slices/video-modal-slice";
 import { joinClasses, modifyScrollbar } from "../../../common/utils";
@@ -54,7 +54,7 @@ export default function Profile() {
 		);
 	}
 
-	async function fetchLikedVids() {
+	const fetchLikedVids = useCallback(async () => {
 		if (!likedVideos) {
 			try {
 				const liked = await getLikedVideos(username!);
@@ -69,7 +69,7 @@ export default function Profile() {
 				setVideosType("uploaded");
 			}
 		}
-	}
+	}, [username, dispatch, likedVideos]);
 
 	return (
 		<Container className="profile-page-container">
@@ -130,29 +130,25 @@ export default function Profile() {
 						<div
 							className={joinClasses(
 								"profile-cards-container",
-								videosType === "liked" && !likedVideos ? "loading" : ""
+								(videosType === "liked" &&
+									(!likedVideos || likedVideos.length === 0)) ||
+									(videosType === "uploaded" && user!.videos!.length === 0)
+									? "ungrid"
+									: ""
 							)}
 						>
 							{videosType === "uploaded" ? (
-								user!.videos!.map((video, i) => (
-									<ProfileCard
-										key={i}
-										index={i}
-										video={constants.videoLink + "/" + video}
-										handleModalOpen={handleModalOpen}
-									/>
-								))
+								<VideosLayout
+									videos={user!.videos! as string[]}
+									handleModalOpen={handleModalOpen}
+								/>
 							) : !likedVideos ? (
 								<LoadingSpinner className="liked-spinner" />
 							) : (
-								likedVideos.map((video, i) => (
-									<ProfileCard
-										key={i}
-										index={i}
-										video={constants.videoLink + "/" + video}
-										handleModalOpen={handleModalOpen}
-									/>
-								))
+								<VideosLayout
+									videos={likedVideos}
+									handleModalOpen={handleModalOpen}
+								/>
 							)}
 						</div>
 					</>

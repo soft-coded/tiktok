@@ -115,8 +115,11 @@ $suggested-pfp-size: 32px;
 			gap: 4px;
 			margin-top: 2px;
 
-			&.loading {
-				display: unset;
+			&.ungrid {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				margin-top: 24px;
 			}
 		}
 	}
