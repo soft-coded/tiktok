@@ -14,7 +14,6 @@ interface Props extends CardProps {
 }
 
 export default function CardDropdown(props: Props) {
-	const [isLoading, setIsLoading] = useState(true);
 	const [user, setUser] = useState<UserData | null>(null);
 	const dispatch = useAppDispatch();
 
@@ -23,7 +22,6 @@ export default function CardDropdown(props: Props) {
 			try {
 				const res = await getShortUser(props.uploader!.username!);
 				setUser(res.data);
-				setIsLoading(false);
 			} catch (err: any) {
 				dispatch(
 					notificationActions.showNotification({
@@ -31,8 +29,6 @@ export default function CardDropdown(props: Props) {
 						message: err.message
 					})
 				);
-				// !!! do not set loading to false as it will cause type errors !!!
-				// just let the component unmount when the user hovers out
 			}
 		}
 		fetchData();
@@ -45,7 +41,7 @@ export default function CardDropdown(props: Props) {
 			onMouseOut={props.onMouseOut}
 			onMouseOver={props.onMouseOver}
 		>
-			{isLoading ? (
+			{user == null ? (
 				<LoadingSpinner />
 			) : (
 				<>

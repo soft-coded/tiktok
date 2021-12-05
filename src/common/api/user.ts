@@ -6,7 +6,6 @@ const userURL = "/user";
 const shortParams: UserQuery = {
 	description: "1",
 	followers: "num",
-	following: "num",
 	totalLikes: "1"
 };
 export const getShortUser = (username: string) =>
@@ -15,6 +14,7 @@ export const getShortUser = (username: string) =>
 const params: UserQuery = {
 	...shortParams,
 	name: "1",
+	following: "num",
 	videos: "uploaded"
 };
 export const getUser = (username: string) =>

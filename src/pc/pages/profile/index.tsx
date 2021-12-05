@@ -21,7 +21,6 @@ export default function Profile() {
 	const { username } = useParams();
 	const dispatch = useAppDispatch();
 	const [user, setUser] = useState<UserData | null>(null);
-	const [isLoading, setIsLoading] = useState(true);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -30,7 +29,6 @@ export default function Profile() {
 				if (!username) throw new Error("Invalid URL.");
 				const res = await getUser(username);
 				setUser(res.data);
-				setIsLoading(false);
 			} catch (err: any) {
 				dispatch(
 					notificationActions.showNotification({
@@ -38,7 +36,6 @@ export default function Profile() {
 						message: err.message
 					})
 				);
-				// component gets unmounted, no need to change loading state
 				navigate("/", { replace: true });
 			}
 		}
@@ -57,7 +54,7 @@ export default function Profile() {
 		<Container className="profile-page-container">
 			<Sidebar />
 			<div className="profile-container">
-				{isLoading ? (
+				{user == null ? (
 					<LoadingSpinner className="spinner" />
 				) : (
 					<>

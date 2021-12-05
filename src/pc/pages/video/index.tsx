@@ -14,7 +14,6 @@ import LoadingSpinner from "../../components/loading-spinner";
 // tempId = 61ab9a45873a1874c8b32ed9;
 
 export default function Video() {
-	const [isLoading, setIsLoading] = useState(true);
 	const [videoData, setVideoData] = useState<VideoData | null>(null);
 	const videoId = useParams().videoId;
 	const dispatch = useAppDispatch();
@@ -26,7 +25,6 @@ export default function Video() {
 				if (!videoId) throw new Error("Invalid URL.");
 				const res = await getVideo(videoId);
 				setVideoData(res.data);
-				setIsLoading(false);
 			} catch (err: any) {
 				dispatch(
 					notificationActions.showNotification({
@@ -34,7 +32,6 @@ export default function Video() {
 						message: err.message
 					})
 				);
-				// no need to set loading to false as the component gets unmounted anyway
 				navigate("/", { replace: true });
 			}
 		}
@@ -45,7 +42,7 @@ export default function Video() {
 		<Container className="video-page-container">
 			<Sidebar />
 			<div className={"content-container"}>
-				{isLoading ? <LoadingSpinner /> : <VideoCard {...videoData} />}
+				{videoData == null ? <LoadingSpinner /> : <VideoCard {...videoData} />}
 			</div>
 		</Container>
 	);
