@@ -15,8 +15,6 @@ import { notificationActions } from "../../store/slices/notification-slice";
 import constants from "../../../common/constants";
 import LoadingSpinner from "../../components/loading-spinner";
 
-let videoInd: number;
-
 export default function Profile() {
 	const { username } = useParams();
 	const dispatch = useAppDispatch();
@@ -48,10 +46,7 @@ export default function Profile() {
 
 	function handleModalOpen(ind: number) {
 		modifyScrollbar("hide");
-		videoInd = ind;
-		dispatch(
-			videoModalActions.showModal({ ...user, video: user!.videos![videoInd] })
-		);
+		dispatch(videoModalActions.showModal({ videoId: user!.videos![ind] }));
 	}
 
 	const fetchLikedVids = useCallback(async () => {

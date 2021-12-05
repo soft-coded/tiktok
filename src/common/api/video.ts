@@ -23,3 +23,6 @@ const params: VideoQuery = {
 };
 export const getVideo = (id: string) =>
 	apiClient.get(videoURL + "/" + id, { params });
+
+export const getVidComments = (id: string) =>
+	apiClient.get(videoURL + "/" + id, { params: { comments: "list" } });

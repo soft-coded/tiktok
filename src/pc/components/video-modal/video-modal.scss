@@ -220,6 +220,24 @@ $modal-content-width: 544px;
 					font-size: 0.75rem;
 					color: rgba(var(--clr-secondary-values), 0.75);
 				}
+
+				.likes-portion {
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					margin-left: auto;
+					color: rgba(var(--clr-secondary-values), 0.5);
+					font-weight: 400;
+
+					i {
+						font-size: 1.2rem;
+						cursor: pointer;
+
+						&.liked {
+							color: red;
+						}
+					}
+				}
 			}
 		}
 		.post-comment {
