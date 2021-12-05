@@ -2,7 +2,6 @@
 
 $profile-pic-size: 56px;
 $video-player-height: calc(450px + (100vw - 768px) / 1152 * 100);
-$vid-aspect-ratio: 9 / 16;
 $dropdown-width: 296px;
 $dropdown-pfp-size: 42px;
 
@@ -116,7 +115,18 @@ $dropdown-pfp-size: 42px;
 		}
 
 		.caption {
-			font-size: 0.88rem;
+			font-size: 0.9rem;
+		}
+
+		.tags {
+			margin-top: 2px;
+			font-size: 0.83rem;
+			font-weight: 600;
+
+			span:hover {
+				cursor: pointer;
+				text-decoration: underline;
+			}
 		}
 
 		.music {
@@ -137,13 +147,14 @@ $dropdown-pfp-size: 42px;
 				position: relative;
 				height: $video-player-height;
 				border-radius: 8px;
-				aspect-ratio: $vid-aspect-ratio;
 				overflow: hidden;
 
 				video {
 					width: 100%;
 					height: 100%;
 					cursor: pointer;
+					object-fit: contain;
+					background: var(--clr-secondary);
 				}
 			}
 

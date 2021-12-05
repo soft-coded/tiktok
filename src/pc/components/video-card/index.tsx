@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import "./video-card.scss";
 import ActionButton from "../action-button";
 import { useAppDispatch } from "../../../common/store";
-import { modifyScrollbar } from "../../../common/utils";
+import { modifyScrollbar, convertToDate } from "../../../common/utils";
 import { VideoData } from "../../../common/types";
 import { videoModalActions } from "../../store/slices/video-modal-slice";
 import CardDropdown from "./CardDropdown";
@@ -16,7 +16,6 @@ let DDMountTimeout: NodeJS.Timeout,
 	DDHideTimeout: NodeJS.Timeout,
 	DDUnmountTimeout: NodeJS.Timeout;
 
-// export default function VideoCard(props: CardProps) {
 export default function VideoCard(props: VideoData) {
 	const [showProfileDD, setShowProfileDD] = useState(false);
 	const dispatch = useAppDispatch();
@@ -84,10 +83,18 @@ export default function VideoCard(props: VideoData) {
 					</Link>
 					<h5>
 						{props.uploader!.name} |
-						<span> {new Date(props.createdAt!).toLocaleDateString()}</span>
+						<span>
+							&nbsp;
+							{convertToDate(props.createdAt!)}
+						</span>
 					</h5>
 				</header>
 				<p className="caption">{props.caption}</p>
+				<p className="tags">
+					{props.tags!.map((tag, i) => (
+						<span key={i}>#{tag} </span>
+					))}
+				</p>
 				<p className="music">
 					<i className="fas fa-music" /> {props.music}
 				</p>
