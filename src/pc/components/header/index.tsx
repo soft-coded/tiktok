@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { authModalActions } from "../../store/slices/auth-modal-slice";
 import { authActions } from "../../../common/store/slices/auth";
 import { joinClasses } from "../../../common/utils";
+import constants from "../../../common/constants";
 
 export default function Header() {
 	const [showOptions, setShowOptions] = useState(false);
@@ -58,10 +59,7 @@ export default function Header() {
 								)}
 								onClick={() => setShowOptions(true)}
 							>
-								<img
-									src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Narendra_Modi_2021.jpg/1200px-Narendra_Modi_2021.jpg"
-									alt="pfp"
-								/>
+								<img src={constants.pfpLink + "/" + username} alt="pfp" />
 							</div>
 							{showOptions && (
 								<Dropdown
@@ -75,6 +73,14 @@ export default function Header() {
 									>
 										<i className="fas fa-user" />
 										<span>View profile</span>
+									</Link>
+									<Link
+										to="/"
+										className="hoverable"
+										onClick={() => setShowOptions(false)}
+									>
+										<i className="fas fa-user-edit" />
+										<span>Edit profile</span>
 									</Link>
 									<div className="hoverable" onClick={handleLogOut}>
 										<i className="fas fa-sign-out-alt" />

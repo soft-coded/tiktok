@@ -11,8 +11,6 @@ import { useAppDispatch } from "../../../common/store";
 import { notificationActions } from "../../store/slices/notification-slice";
 import LoadingSpinner from "../../components/loading-spinner";
 
-// tempId = 61ab9a45873a1874c8b32ed9;
-
 export default function Video() {
 	const [videoData, setVideoData] = useState<VideoData | null>(null);
 	const videoId = useParams().videoId;
