@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
 
 import "./video-modal.scss";
@@ -15,7 +15,7 @@ import { authModalActions } from "../../store/slices/auth-modal-slice";
 import Comment from "./Comment";
 import constants from "../../../common/constants";
 import { notificationActions } from "../../store/slices/notification-slice";
-import { getVideo, getVidComments } from "../../../common/api/video";
+import { getVideo, getVidComments, likeVideo } from "../../../common/api/video";
 import LoadingSpinner from "../loading-spinner";
 
 export interface ModalProps extends VideoData {
@@ -24,11 +24,19 @@ export interface ModalProps extends VideoData {
 
 export default function VideoModal(props: ModalProps) {
 	const dispatch = useAppDispatch();
-	const isAuthed = useAppSelector(state => state.auth.isAuthenticated);
+	const { isAuthenticated: isAuthed, username } = useAppSelector(
+		state => state.auth
+	);
 	const [videoData, setVideoData] = useState<VideoData | null>(() =>
 		props.uploader ? props : null
 	);
 	const [comments, setComments] = useState<CommentData[] | null>(null);
+	const [hasLiked, setHasLiked] = useState(false);
+	const curVidId = useMemo(
+		() =>
+			props.video ? props.video : props.videoId ? props.videoId : props._id!,
+		[props.video, props._id, props.videoId]
+	);
 
 	const handleModalClose = useCallback(() => {
 		modifyScrollbar("show");
@@ -37,9 +45,7 @@ export default function VideoModal(props: ModalProps) {
 
 	const fetchComments = useCallback(async () => {
 		try {
-			const res = await getVidComments(
-				props.video ? props.video : props.videoId ? props.videoId : props._id!
-			);
+			const res = await getVidComments(curVidId);
 			setComments(res.data.comments);
 		} catch (err: any) {
 			dispatch(
@@ -50,12 +56,12 @@ export default function VideoModal(props: ModalProps) {
 			);
 			setComments([]);
 		}
-	}, [props.videoId, props._id, props.video, dispatch]);
+	}, [dispatch, curVidId]);
 
 	useEffect(() => {
 		async function fetchVid() {
 			try {
-				const res = await getVideo(props.videoId!);
+				const res = await getVideo(curVidId);
 				setVideoData(res.data);
 			} catch (err: any) {
 				dispatch(
@@ -69,10 +75,25 @@ export default function VideoModal(props: ModalProps) {
 		}
 		if (!videoData) fetchVid();
 		fetchComments();
-	}, [videoData, dispatch, props.videoId, handleModalClose, fetchComments]);
+	}, [videoData, dispatch, curVidId, handleModalClose, fetchComments]);
 
 	function handleAuthModalOpen() {
 		dispatch(authModalActions.showModal());
+	}
+
+	async function likeVid() {
+		if (!isAuthed) return handleAuthModalOpen();
+		try {
+			const res = await likeVideo(username!, curVidId);
+			setHasLiked(res.data.liked);
+		} catch (err: any) {
+			dispatch(
+				notificationActions.showNotification({
+					type: "error",
+					message: err.message
+				})
+			);
+		}
 	}
 
 	return (
@@ -132,8 +153,13 @@ export default function VideoModal(props: ModalProps) {
 							<div className="action-buttons">
 								<ActionButton
 									icon={<i className="fas fa-heart" />}
-									number={props.likes as number}
+									number={
+										hasLiked
+											? (props.likes as number) + 1
+											: (props.likes as number)
+									}
 									className="action-btn-container"
+									onClick={likeVid}
 								/>
 								<ActionButton
 									icon={<i className="fas fa-comment-dots" />}

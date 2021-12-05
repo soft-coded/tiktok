@@ -13,7 +13,6 @@ $modal-content-width: 544px;
 	.video-container-wrapper {
 		position: relative;
 		overflow: hidden;
-		padding: 0 80px;
 		flex: 1 1 896px;
 		background: rgb(0, 0, 0) none repeat scroll 0% 0%;
 
@@ -25,8 +24,9 @@ $modal-content-width: 544px;
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			color: #ffffff;
-			background: rgba(255, 255, 255, 0.15);
+			color: #000;
+			background: rgba(255, 255, 255, 0.5);
+			mix-blend-mode: difference;
 			width: 42px;
 			height: 42px;
 			border-radius: 50%;

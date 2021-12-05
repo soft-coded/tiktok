@@ -26,3 +26,6 @@ export const getVideo = (id: string) =>
 
 export const getVidComments = (id: string) =>
 	apiClient.get(videoURL + "/" + id, { params: { comments: "list" } });
+
+export const likeVideo = (username: string, id: string) =>
+	apiClient.post(videoURL + "/like", { username, videoId: id });
