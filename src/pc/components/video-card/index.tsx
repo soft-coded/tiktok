@@ -76,18 +76,23 @@ export default function VideoCard(props: VideoData) {
 			</div>
 			<div className="card-content">
 				<header>
-					<Link to={"/user/" + props.uploader!.username} className="username">
-						<h4 onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-							{props.uploader!.username}
-						</h4>
-					</Link>
-					<h5>
-						{props.uploader!.name} |
-						<span>
-							&nbsp;
-							{convertToDate(props.createdAt!)}
-						</span>
-					</h5>
+					<div className="uploader">
+						<Link to={"/user/" + props.uploader!.username} className="username">
+							<h4 onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+								{props.uploader!.username}
+							</h4>
+						</Link>
+						<h5>
+							{props.uploader!.name} |
+							<span>
+								&nbsp;
+								{convertToDate(props.createdAt!)}
+							</span>
+						</h5>
+					</div>
+					<div className="follow-btn">
+						<button>Follow</button>
+					</div>
 				</header>
 				<p className="caption">{props.caption}</p>
 				<p className="tags">
@@ -128,9 +133,6 @@ export default function VideoCard(props: VideoData) {
 						/>
 					</div>
 				</div>
-			</div>
-			<div className="follow-btn">
-				<button>Follow</button>
 			</div>
 		</div>
 	);

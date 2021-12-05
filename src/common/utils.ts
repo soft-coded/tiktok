@@ -40,6 +40,7 @@ export function convertToDate(date: string | Date) {
 		day: "numeric",
 		month: "short",
 		hour: "numeric",
+		minute: "numeric",
 		hour12: true
 	});
 }
