@@ -15,10 +15,7 @@ export interface UserData extends CommonData {
 	following?: number | UserData[];
 	followers?: number | UserData[];
 	totalLikes?: number;
-	videos?: {
-		uploaded?: VideoData[];
-		liked?: VideoData[];
-	};
+	videos?: VideoData[]; // either uploaded or liked, can't be both
 }
 
 export interface VideoData extends CommonData {
@@ -35,9 +32,11 @@ export interface VideoData extends CommonData {
 }
 
 export interface CommentData extends CommonData {
+	_id?: string;
+	commentId?: string;
 	postedBy?: UserData;
 	comment?: string;
-	likes?: number | any[];
+	likes?: number | UserData[];
 	replies?: CommentData[];
 }
 
@@ -52,4 +51,27 @@ export interface SignupData {
 	name: string;
 	password: string;
 	confpass: string;
+}
+
+export interface VideoQuery {
+	uploader?: "1";
+	caption?: "1";
+	music?: "1";
+	tags?: "1";
+	shares?: "1";
+	views?: "1";
+	createdAt?: "1";
+	likes?: "1";
+	comments?: "num" | "list";
+}
+
+export interface UserQuery {
+	name?: "1";
+	email?: "1";
+	description?: "1";
+	totalLikes?: "1";
+	createdAt?: "1";
+	following?: "list" | "num";
+	followers?: "list" | "num";
+	videos?: "uploaded" | "liked";
 }

@@ -5,17 +5,19 @@ import "./video-card.scss";
 import ActionButton from "../action-button";
 import { useAppDispatch } from "../../../common/store";
 import { modifyScrollbar } from "../../../common/utils";
-import { VideoData as CardProps } from "../../../common/types";
+import { VideoData } from "../../../common/types";
 import { videoModalActions } from "../../store/slices/video-modal-slice";
 import CardDropdown from "./CardDropdown";
 import { DDAnimationTime } from "../dropdown";
+import constants from "../../../common/constants";
 
 const DDTimeThreshold = 600; // time after which dropdown gets unmounted
 let DDMountTimeout: NodeJS.Timeout,
 	DDHideTimeout: NodeJS.Timeout,
 	DDUnmountTimeout: NodeJS.Timeout;
 
-export default function VideoCard(props: CardProps) {
+// export default function VideoCard(props: CardProps) {
+export default function VideoCard(props: VideoData) {
 	const [showProfileDD, setShowProfileDD] = useState(false);
 	const dispatch = useAppDispatch();
 
@@ -53,15 +55,15 @@ export default function VideoCard(props: CardProps) {
 	return (
 		<div className="app-video-card">
 			<div className="profile-pic">
-				<Link to={"/user/" + props.uploader?.username}>
+				<Link to={"/user/" + props.uploader!.username}>
 					<div
 						className="rounded-photo"
 						onMouseOver={handleMouseOver}
 						onMouseOut={handleMouseOut}
 					>
 						<img
-							src={props.uploader?.profilePhoto}
-							alt={props.uploader?.name}
+							src={constants.pfpLink + "/" + props.uploader!.username}
+							alt={props.uploader!.name}
 						/>
 					</div>
 				</Link>
@@ -75,13 +77,14 @@ export default function VideoCard(props: CardProps) {
 			</div>
 			<div className="card-content">
 				<header>
-					<Link to={"/user/" + props.uploader?.username} className="username">
+					<Link to={"/user/" + props.uploader!.username} className="username">
 						<h4 onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
-							{props.uploader?.username}
+							{props.uploader!.username}
 						</h4>
 					</Link>
 					<h5>
-						{props.uploader?.name} | <span>{props.uploader?.createdAt}</span>
+						{props.uploader!.name} |
+						<span> {new Date(props.createdAt!).toLocaleDateString()}</span>
 					</h5>
 				</header>
 				<p className="caption">{props.caption}</p>
@@ -91,7 +94,7 @@ export default function VideoCard(props: CardProps) {
 				<div className="card-video">
 					<div className="video-container">
 						<video
-							src={props.video}
+							src={constants.videoLink + "/" + props.videoId}
 							playsInline
 							muted
 							autoPlay

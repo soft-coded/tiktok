@@ -1,3 +1,5 @@
+import { baseURL } from "./api";
+
 // eslint-disable-next-line
 export default {
 	usernameRegex: /^[a-zA-Z0-9_]+$/, // letters, numbers and underscore
@@ -11,5 +13,7 @@ export default {
 	captionMaxLen: 150,
 	tagsMaxLen: 200,
 	notificationDuration: 5000,
-	notificationAnimDuration: 1000
+	notificationAnimDuration: 1000,
+	pfpLink: baseURL + "/user/profilePhoto",
+	videoLink: baseURL + "/video/stream"
 };

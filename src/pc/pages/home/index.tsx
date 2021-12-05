@@ -5,7 +5,6 @@ import VideoCard from "../../components/video-card";
 
 export const posts = [
 	{
-		userId: "1",
 		profilePhoto:
 			"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Narendra_Modi_2021.jpg/1200px-Narendra_Modi_2021.jpg",
 		name: "Narendra Modi",
@@ -20,7 +19,6 @@ export const posts = [
 		uploadTime: "12h ago"
 	},
 	{
-		userId: "2",
 		profilePhoto:
 			"https://c.ndtvimg.com/2021-10/anbbap0g_amit-shah-at-nhrc-event-pti_625x300_12_October_21.jpg",
 		name: "Amit Shah",
@@ -42,8 +40,8 @@ export default function Home() {
 		<Container className="homepage-container">
 			<Sidebar />
 			<div className="content-container">
-				{posts.map(post => (
-					<VideoCard key={post.userId} {...post} />
+				{posts.map((post, i) => (
+					<VideoCard key={i} {...post} />
 				))}
 			</div>
 		</Container>

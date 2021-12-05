@@ -1,5 +1,6 @@
 import Dropdown from "../dropdown";
 import { VideoData as CardProps } from "../../../common/types";
+import constants from "../../../common/constants";
 
 interface Props extends CardProps {
 	onMouseOver: () => void;
@@ -16,7 +17,10 @@ export default function CardDropdown(props: Props) {
 		>
 			<div className="top">
 				<div className="rounded-photo">
-					<img src={props.uploader?.profilePhoto} alt={props.caption} />
+					<img
+						src={constants.pfpLink + "/" + props.uploader!.username}
+						alt={props.caption}
+					/>
 				</div>
 				<div className="follow-btn">
 					<button>Follow</button>
@@ -24,8 +28,8 @@ export default function CardDropdown(props: Props) {
 			</div>
 			<div className="card-content dd-card-names">
 				<header>
-					<h4 className="username">{props.uploader?.username}</h4>
-					<h5>{props.uploader?.name}</h5>
+					<h4 className="username">{props.uploader!.username}</h4>
+					<h5>{props.uploader!.name}</h5>
 				</header>
 			</div>
 			<div className="counts">
