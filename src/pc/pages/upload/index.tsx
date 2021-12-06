@@ -51,9 +51,9 @@ export default function UploadPage() {
 			setIsLoading(true);
 			try {
 				if (!videoFile || videoFile.type !== "video/mp4")
-					throw new Error("Invalid video.");
+					throw new Error("Invalid video");
 				if (videoFile.size > constants.videoSizeLimit)
-					throw new Error("File too large.");
+					throw new Error("File too large");
 
 				const formData = new FormData();
 				formData.append("caption", values.caption);

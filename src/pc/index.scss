@@ -87,3 +87,13 @@ $scrollbar-track-color: rgba(var(--clr-secondary-values), 0.25);
 		}
 	}
 }
+
+.tags {
+	font-size: 0.85rem;
+	font-weight: 600;
+	cursor: pointer;
+
+	span:hover {
+		text-decoration: underline;
+	}
+}

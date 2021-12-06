@@ -28,7 +28,7 @@ export default function Profile() {
 	useEffect(() => {
 		async function fetchData() {
 			try {
-				if (!username) throw new Error("Invalid URL.");
+				if (!username) throw new Error("Invalid URL");
 				const res = await getUser(username);
 				setUser(res.data);
 			} catch (err: any) {

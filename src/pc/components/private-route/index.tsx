@@ -13,7 +13,7 @@ export default function PrivateRoute() {
 			dispatch(
 				notificationActions.showNotification({
 					type: "error",
-					message: "Log in to continue."
+					message: "Log in to continue"
 				})
 			);
 		}

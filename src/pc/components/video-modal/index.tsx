@@ -148,6 +148,11 @@ export default function VideoModal(props: ModalProps) {
 								</div>
 							</header>
 							<p className="caption">{props.caption}</p>
+							<p className="tags">
+								{props.tags!.map((tag, i) => (
+									<span key={i}>#{tag} </span>
+								))}
+							</p>
 							<h5 className="music">
 								<i className="fas fa-music" /> {props.music}
 							</h5>
@@ -195,7 +200,11 @@ export default function VideoModal(props: ModalProps) {
 							)}
 						</div>
 						{isAuthed && (
-							<AddComment videoId={curVidId} fetchComments={fetchComments} />
+							<AddComment
+								videoId={curVidId}
+								fetchComments={fetchComments}
+								setComments={setComments}
+							/>
 						)}
 					</>
 				)}

@@ -20,7 +20,7 @@ export default function Video() {
 	useEffect(() => {
 		async function fetchVideo() {
 			try {
-				if (!videoId) throw new Error("Invalid URL.");
+				if (!videoId) throw new Error("Invalid URL");
 				const res = await getVideo(videoId);
 				setVideoData(res.data);
 			} catch (err: any) {

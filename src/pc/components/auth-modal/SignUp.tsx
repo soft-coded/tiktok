@@ -25,7 +25,7 @@ const validationSchema = yup.object().shape({
 		)
 		.matches(
 			constants.usernameRegex,
-			"Only English letters, digits and underscores allowed."
+			"Only English letters, digits and underscores allowed"
 		),
 	name: yup
 		.string()

@@ -15,6 +15,7 @@ interface InputProps {
 	value?: string;
 	name?: string;
 	error?: string | false;
+	autoComplete?: string;
 }
 
 export default function Input({
@@ -28,7 +29,8 @@ export default function Input({
 	onBlur,
 	value,
 	name,
-	error
+	error,
+	autoComplete
 }: InputProps) {
 	return (
 		<div className={wrapperClassName}>
@@ -49,6 +51,7 @@ export default function Input({
 					onBlur={onBlur}
 					value={value}
 					name={name}
+					autoComplete={autoComplete}
 				/>
 			</div>
 			{error && (
