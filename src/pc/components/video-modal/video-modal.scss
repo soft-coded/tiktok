@@ -212,6 +212,7 @@ $modal-content-width: 544px;
 				}
 
 				p {
+					display: inline-block;
 					font-size: 0.88rem;
 					font-weight: 400;
 				}
@@ -248,19 +249,25 @@ $modal-content-width: 544px;
 			padding: 12px;
 			border-top: 2px solid var(--clr-border);
 
-			input {
+			.input-wrapper {
+				width: 90%;
+			}
+
+			.comment-input {
 				background: rgba(var(--clr-secondary-values), 0.06);
 				border-radius: 8px;
-				padding: 10px;
 				font-size: 0.9rem;
 				caret-color: var(--clr-primary);
-				width: 90%;
 			}
 
 			button {
 				width: 10%;
 				font-weight: 500;
 				color: var(--clr-primary);
+
+				&:disabled {
+					color: rgba(var(--clr-secondary-values), 0.4);
+				}
 			}
 		}
 	}

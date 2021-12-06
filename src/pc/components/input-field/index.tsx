@@ -8,6 +8,7 @@ interface InputProps {
 	placeholder?: string;
 	id?: string;
 	className?: string;
+	wrapperClassName?: string;
 	icon?: ReactNode;
 	onChange?: (a: any) => void;
 	onBlur?: (a: any) => void;
@@ -21,6 +22,7 @@ export default function Input({
 	placeholder,
 	id,
 	className,
+	wrapperClassName,
 	icon,
 	onChange,
 	onBlur,
@@ -29,7 +31,7 @@ export default function Input({
 	error
 }: InputProps) {
 	return (
-		<div>
+		<div className={wrapperClassName}>
 			<div
 				className={joinClasses(
 					classes["app-input-field"],
@@ -49,7 +51,16 @@ export default function Input({
 					name={name}
 				/>
 			</div>
-			{error && <div className={classes["form-error-container"]}>{error}</div>}
+			{error && (
+				<div
+					className={joinClasses(
+						classes["form-error-container"],
+						"error-container"
+					)}
+				>
+					{error}
+				</div>
+			)}
 		</div>
 	);
 }

@@ -12,6 +12,7 @@ export default {
 	musicMaxLen: 30,
 	captionMaxLen: 150,
 	tagsMaxLen: 200,
+	commentMaxLen: 300,
 	notificationDuration: 5000,
 	notificationAnimDuration: 1000,
 	pfpLink: baseURL + "/user/profilePhoto",

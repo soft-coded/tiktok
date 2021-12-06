@@ -13,7 +13,7 @@ export default function Comment(props: CommentData) {
 			</div>
 			<div className="comment-content">
 				<h4>{props.postedBy!.name}</h4>
-				<p>{props.comment}</p>
+				<p className="break-word">{props.comment}</p>
 				<h5>{convertToDate(props.createdAt!)}</h5>
 			</div>
 			<div className="likes-portion">
