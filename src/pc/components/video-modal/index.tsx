@@ -14,9 +14,10 @@ import { videoModalActions } from "../../store/slices/video-modal-slice";
 import { authModalActions } from "../../store/slices/auth-modal-slice";
 import Comment from "./Comment";
 import AddComment from "./AddComment";
+import Likes from "./Likes";
 import constants from "../../../common/constants";
 import { notificationActions } from "../../store/slices/notification-slice";
-import { getVideo, getVidComments, likeVideo } from "../../../common/api/video";
+import { getVideo, getVidComments } from "../../../common/api/video";
 import LoadingSpinner from "../loading-spinner";
 
 export interface ModalProps extends VideoData {
@@ -32,7 +33,6 @@ export default function VideoModal(props: ModalProps) {
 		props.uploader ? props : null
 	);
 	const [comments, setComments] = useState<CommentData[] | null>(null);
-	const [hasLiked, setHasLiked] = useState(false);
 	const curVidId = useMemo(
 		() =>
 			props.video ? props.video : props.videoId ? props.videoId : props._id!,
@@ -59,34 +59,10 @@ export default function VideoModal(props: ModalProps) {
 		}
 	}, [dispatch, curVidId]);
 
-	useEffect(() => {
-		async function fetchVid() {
-			try {
-				const res = await getVideo(curVidId);
-				setVideoData(res.data);
-			} catch (err: any) {
-				dispatch(
-					notificationActions.showNotification({
-						type: "error",
-						message: err.message
-					})
-				);
-				handleModalClose();
-			}
-		}
-		if (!videoData) fetchVid();
-		fetchComments();
-	}, [videoData, dispatch, curVidId, handleModalClose, fetchComments]);
-
-	function handleAuthModalOpen() {
-		dispatch(authModalActions.showModal());
-	}
-
-	async function likeVid() {
-		if (!isAuthed) return handleAuthModalOpen();
+	const fetchVid = useCallback(async () => {
 		try {
-			const res = await likeVideo(username!, curVidId);
-			setHasLiked(res.data.liked);
+			const res = await getVideo(curVidId, username ? username : undefined);
+			setVideoData(res.data);
 		} catch (err: any) {
 			dispatch(
 				notificationActions.showNotification({
@@ -94,7 +70,17 @@ export default function VideoModal(props: ModalProps) {
 					message: err.message
 				})
 			);
+			handleModalClose();
 		}
+	}, [curVidId, dispatch, handleModalClose, username]);
+
+	useEffect(() => {
+		if (!videoData) fetchVid();
+		fetchComments();
+	}, [videoData, fetchVid, fetchComments]);
+
+	function handleAuthModalOpen() {
+		dispatch(authModalActions.showModal());
 	}
 
 	return (
@@ -157,21 +143,19 @@ export default function VideoModal(props: ModalProps) {
 								<i className="fas fa-music" /> {props.music}
 							</h5>
 							<div className="action-buttons">
-								<ActionButton
-									icon={<i className="fas fa-heart" />}
-									number={
-										hasLiked
-											? (props.likes as number) + 1
-											: (props.likes as number)
-									}
-									className="action-btn-container"
-									onClick={likeVid}
+								<Likes
+									handleAuthModalOpen={handleAuthModalOpen}
+									likes={props.likes!}
+									curVidId={curVidId}
+									hasLiked={props.hasLiked}
 								/>
-								<ActionButton
-									icon={<i className="fas fa-comment-dots" />}
-									number={props.comments as number}
-									className="action-btn-container"
-								/>
+								<label htmlFor="comment">
+									<ActionButton
+										icon={<i className="fas fa-comment-dots" />}
+										number={props.comments as number}
+										className="action-btn-container"
+									/>
+								</label>
 							</div>
 						</div>
 						<div

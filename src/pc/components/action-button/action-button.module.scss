@@ -22,7 +22,7 @@ $action-btn-size: 48px;
 	background-color: rgba(var(--clr-secondary-values), 0.06);
 	font-size: 1.3rem;
 	cursor: pointer;
-	transition: background-color 0.25s ease-out;
+	transition: background-color 0.25s ease-out, color 0.25s ease-out;
 
 	&:hover {
 		background-color: rgba(var(--clr-secondary-values), 0.1);

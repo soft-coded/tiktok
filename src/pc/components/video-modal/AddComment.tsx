@@ -61,6 +61,7 @@ export default function AddComment({
 	return (
 		<form className="post-comment" onSubmit={formik.handleSubmit}>
 			<Input
+				id="comment"
 				autoComplete="off"
 				placeholder="Add a comment"
 				className="comment-input"

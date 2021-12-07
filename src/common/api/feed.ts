@@ -2,4 +2,5 @@ import { apiClient } from ".";
 
 const feedURL = "/feed";
 
-export const getFeed = () => apiClient.get(feedURL);
+export const getFeed = (username?: string | null) =>
+	apiClient.get(feedURL, { params: { username } });

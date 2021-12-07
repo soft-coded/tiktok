@@ -128,6 +128,13 @@ $modal-content-width: 544px;
 				font-weight: 600;
 				color: rgba(var(--clr-secondary-values), 0.75);
 
+				&.liked {
+					.action-btn {
+						background: var(--clr-primary);
+						color: #fff;
+					}
+				}
+
 				.action-btn {
 					width: 32px;
 					height: 32px;

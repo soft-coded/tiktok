@@ -26,10 +26,11 @@ export interface VideoData extends CommonData {
 	music?: string;
 	video?: string;
 	tags?: string[];
-	likes?: number | string[];
+	likes?: number;
 	comments?: number | CommentData[];
 	shares?: number;
 	views?: number;
+	hasLiked?: boolean;
 }
 
 export interface CommentData extends CommonData {
@@ -39,6 +40,7 @@ export interface CommentData extends CommonData {
 	comment?: string;
 	likes?: number | UserData[];
 	replies?: CommentData[];
+	hasLiked?: boolean;
 }
 
 export interface LoginData {
@@ -55,6 +57,7 @@ export interface SignupData {
 }
 
 export interface VideoQuery {
+	username?: string;
 	uploader?: "1";
 	caption?: "1";
 	music?: "1";
