@@ -21,7 +21,7 @@ const params: VideoQuery = {
 	tags: "1",
 	comments: "num"
 };
-export const getVideo = (id: string, username?: string) =>
+export const getVideo = (id: string, username?: string | null) =>
 	apiClient.get(videoURL + "/" + id, { params: { ...params, username } });
 
 export const getVidComments = (id: string) =>

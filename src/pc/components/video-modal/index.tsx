@@ -24,6 +24,8 @@ export interface ModalProps extends VideoData {
 	setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+let prevUrl: string;
+
 export default function VideoModal(props: ModalProps) {
 	const dispatch = useAppDispatch();
 	const { isAuthenticated: isAuthed, username } = useAppSelector(
@@ -36,6 +38,13 @@ export default function VideoModal(props: ModalProps) {
 			props.video ? props.video : props.videoId ? props.videoId : props._id!,
 		[props.video, props._id, props.videoId]
 	);
+
+	useEffect(() => {
+		prevUrl = window.location.href;
+		window.history.replaceState(null, "", "/video/" + curVidId);
+
+		return () => window.history.replaceState(null, "", prevUrl);
+	}, [curVidId]);
 
 	const handleModalClose = useCallback(() => {
 		modifyScrollbar("show");
@@ -59,7 +68,7 @@ export default function VideoModal(props: ModalProps) {
 
 	const fetchVid = useCallback(async () => {
 		try {
-			const res = await getVideo(curVidId, username ? username : undefined);
+			const res = await getVideo(curVidId, username);
 			setVideoData(res.data);
 		} catch (err: any) {
 			dispatch(
