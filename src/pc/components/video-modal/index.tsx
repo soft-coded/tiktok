@@ -24,8 +24,6 @@ export interface ModalProps extends VideoData {
 	setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-let prevUrl: string;
-
 export default function VideoModal(props: ModalProps) {
 	const dispatch = useAppDispatch();
 	const { isAuthenticated: isAuthed, username } = useAppSelector(
@@ -40,7 +38,7 @@ export default function VideoModal(props: ModalProps) {
 	);
 
 	useEffect(() => {
-		prevUrl = window.location.href;
+		const prevUrl = window.location.href;
 		window.history.replaceState(null, "", "/video/" + curVidId);
 
 		return () => window.history.replaceState(null, "", prevUrl);
