@@ -29,9 +29,7 @@ export default function VideoModal(props: ModalProps) {
 	const { isAuthenticated: isAuthed, username } = useAppSelector(
 		state => state.auth
 	);
-	const [videoData, setVideoData] = useState<VideoData | null>(() =>
-		props.uploader ? props : null
-	);
+	const [videoData, setVideoData] = useState<VideoData | null>(null);
 	const [comments, setComments] = useState<CommentData[] | null>(null);
 	const curVidId = useMemo(
 		() =>
@@ -75,9 +73,9 @@ export default function VideoModal(props: ModalProps) {
 	}, [curVidId, dispatch, handleModalClose, username]);
 
 	useEffect(() => {
-		if (!videoData) fetchVid();
+		fetchVid();
 		fetchComments();
-	}, [videoData, fetchVid, fetchComments]);
+	}, [fetchVid, fetchComments]);
 
 	function handleAuthModalOpen() {
 		dispatch(authModalActions.showModal());
@@ -118,41 +116,41 @@ export default function VideoModal(props: ModalProps) {
 							<header>
 								<div className="rounded-photo">
 									<img
-										src={constants.pfpLink + "/" + props.uploader!.username}
-										alt={props.uploader!.name}
+										src={constants.pfpLink + "/" + videoData.uploader!.username}
+										alt={videoData.uploader!.name}
 									/>
 								</div>
 								<div className="names">
-									<h3>{props.uploader!.username}</h3>
+									<h3>{videoData.uploader!.username}</h3>
 									<h4>
-										{props.uploader!.name} |&nbsp;
-										<span>{convertToDate(props.createdAt!)}</span>
+										{videoData.uploader!.name} |&nbsp;
+										<span>{convertToDate(videoData.createdAt!)}</span>
 									</h4>
 								</div>
 								<div className="follow-btn">
 									<button>Follow</button>
 								</div>
 							</header>
-							<p className="caption">{props.caption}</p>
+							<p className="caption">{videoData.caption}</p>
 							<p className="tags">
-								{props.tags!.map((tag, i) => (
+								{videoData.tags!.map((tag, i) => (
 									<span key={i}>#{tag} </span>
 								))}
 							</p>
 							<h5 className="music">
-								<i className="fas fa-music" /> {props.music}
+								<i className="fas fa-music" /> {videoData.music}
 							</h5>
 							<div className="action-buttons">
 								<Likes
 									handleAuthModalOpen={handleAuthModalOpen}
-									likes={props.likes!}
+									likes={videoData.likes!}
 									curVidId={curVidId}
-									hasLiked={props.hasLiked}
+									hasLiked={videoData.hasLiked}
 								/>
 								<label htmlFor="comment">
 									<ActionButton
 										icon={<i className="fas fa-comment-dots" />}
-										number={props.comments as number}
+										number={videoData.comments as number}
 										className="action-btn-container"
 									/>
 								</label>

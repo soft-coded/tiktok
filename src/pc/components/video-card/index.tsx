@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 
 import "./video-card.scss";
 import ActionButton from "../action-button";
-import { useAppDispatch, useAppSelector } from "../../../common/store";
+import Likes from "../video-modal/Likes";
+import { useAppDispatch } from "../../../common/store";
 import { modifyScrollbar, convertToDate } from "../../../common/utils";
 import { VideoData } from "../../../common/types";
 import { videoModalActions } from "../../store/slices/video-modal-slice";
@@ -11,8 +12,6 @@ import CardDropdown from "./CardDropdown";
 import { DDAnimationTime } from "../dropdown";
 import constants from "../../../common/constants";
 import { authModalActions } from "../../store/slices/auth-modal-slice";
-import { likeVideo } from "../../../common/api/video";
-import { notificationActions } from "../../store/slices/notification-slice";
 
 const DDTimeThreshold = 600; // time after which dropdown gets unmounted
 let DDMountTimeout: NodeJS.Timeout,
@@ -22,9 +21,6 @@ let DDMountTimeout: NodeJS.Timeout,
 export default function VideoCard(props: VideoData) {
 	const [showProfileDD, setShowProfileDD] = useState(false);
 	const dispatch = useAppDispatch();
-	const { isAuthenticated: isAuthed, username } = useAppSelector(
-		state => state.auth
-	);
 
 	function handleModalOpen() {
 		modifyScrollbar("hide");
@@ -55,20 +51,6 @@ export default function VideoCard(props: VideoData) {
 	function handleDDMouseOver() {
 		clearTimeout(DDHideTimeout);
 		clearTimeout(DDUnmountTimeout);
-	}
-
-	async function likeVid() {
-		if (!isAuthed) return dispatch(authModalActions.showModal());
-		try {
-			await likeVideo(username!, props.videoId!);
-		} catch (err: any) {
-			dispatch(
-				notificationActions.showNotification({
-					type: "error",
-					message: err.message
-				})
-			);
-		}
 	}
 
 	return (
@@ -136,11 +118,11 @@ export default function VideoCard(props: VideoData) {
 						</video>
 					</div>
 					<div className="action-buttons">
-						<ActionButton
-							icon={<i className="fas fa-heart" />}
-							number={props.likes as number}
-							onClick={likeVid}
-							className="action-btn-container"
+						<Likes
+							likes={props.likes!}
+							curVidId={props.videoId!}
+							handleAuthModalOpen={() => dispatch(authModalActions.showModal())}
+							hasLiked={props.hasLiked}
 						/>
 						<ActionButton
 							icon={<i className="fas fa-comment-dots" />}

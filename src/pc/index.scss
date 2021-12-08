@@ -97,3 +97,13 @@ $scrollbar-track-color: rgba(var(--clr-secondary-values), 0.25);
 		text-decoration: underline;
 	}
 }
+
+.action-btn-container.liked {
+	.action-btn {
+		background: var(--clr-primary);
+
+		i {
+			color: #fff;
+		}
+	}
+}

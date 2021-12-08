@@ -8,8 +8,8 @@ import Header from "./components/header";
 import Notification from "./components/notification";
 import AuthModal from "./components/auth-modal";
 import PrivateRoute from "./components/private-route";
+import VideoModal from "./components/video-modal";
 const Home = lazy(() => import("./pages/home"));
-const VideoModal = lazy(() => import("./components/video-modal"));
 const Profile = lazy(() => import("./pages/profile"));
 const Video = lazy(() => import("./pages/video"));
 const Upload = lazy(() => import("./pages/upload"));
@@ -34,8 +34,8 @@ export default function PCLayout() {
 					type={notification.type!}
 				/>
 			)}
+			{videoModal.show && <VideoModal {...videoModal.data!} />}
 			<Suspense fallback={<FullscreenSpinner />}>
-				{videoModal.show && <VideoModal {...videoModal.data!} />}
 				<Routes>
 					<Route path="/" element={<Home />} />
 					<Route path="/user/:username" element={<Profile />} />
