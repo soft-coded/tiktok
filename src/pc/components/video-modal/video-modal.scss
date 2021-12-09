@@ -235,7 +235,7 @@ $modal-content-width: 544px;
 						cursor: pointer;
 
 						&.liked {
-							color: red;
+							color: var(--clr-primary);
 						}
 					}
 				}

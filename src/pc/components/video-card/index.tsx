@@ -24,7 +24,11 @@ export default function VideoCard(props: VideoData) {
 
 	function handleModalOpen() {
 		modifyScrollbar("hide");
-		dispatch(videoModalActions.showModal(props));
+		dispatch(
+			videoModalActions.showModal({
+				videoId: props.videoId
+			})
+		);
 	}
 
 	function handleMouseOver() {
@@ -119,13 +123,16 @@ export default function VideoCard(props: VideoData) {
 					</div>
 					<div className="action-buttons">
 						<Likes
+							// likes={vidDynamics.likes!}
 							likes={props.likes!}
 							curVidId={props.videoId!}
 							handleAuthModalOpen={() => dispatch(authModalActions.showModal())}
+							// hasLiked={vidDynamics.hasLiked}
 							hasLiked={props.hasLiked}
 						/>
 						<ActionButton
 							icon={<i className="fas fa-comment-dots" />}
+							// number={vidDynamics.comments as number}
 							number={props.comments as number}
 							className="action-btn-container"
 						/>

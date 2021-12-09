@@ -24,6 +24,8 @@ export interface ModalProps extends VideoData {
 	setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+let url = { prevURL: "" };
+
 export default function VideoModal(props: ModalProps) {
 	const dispatch = useAppDispatch();
 	const { isAuthenticated: isAuthed, username } = useAppSelector(
@@ -38,10 +40,10 @@ export default function VideoModal(props: ModalProps) {
 	);
 
 	useEffect(() => {
-		const prevUrl = window.location.href;
+		url.prevURL = window.location.href;
 		window.history.replaceState(null, "", "/video/" + curVidId);
 
-		return () => window.history.replaceState(null, "", prevUrl);
+		return () => window.history.replaceState(null, "", url.prevURL);
 	}, [curVidId]);
 
 	const handleModalClose = useCallback(() => {
@@ -51,7 +53,7 @@ export default function VideoModal(props: ModalProps) {
 
 	const fetchComments = useCallback(async () => {
 		try {
-			const res = await getVidComments(curVidId);
+			const res = await getVidComments(curVidId, username);
 			setComments(res.data.comments);
 		} catch (err: any) {
 			dispatch(
@@ -62,7 +64,7 @@ export default function VideoModal(props: ModalProps) {
 			);
 			setComments([]);
 		}
-	}, [dispatch, curVidId]);
+	}, [dispatch, curVidId, username]);
 
 	const fetchVid = useCallback(async () => {
 		try {
@@ -170,7 +172,15 @@ export default function VideoModal(props: ModalProps) {
 								!comments ? (
 									<LoadingSpinner />
 								) : (
-									comments.map((comment, i) => <Comment key={i} {...comment} />)
+									comments.map((comment, i) => (
+										<Comment
+											key={i}
+											{...comment}
+											handleModalClose={handleModalClose}
+											url={url}
+											videoId={curVidId}
+										/>
+									))
 								)
 							) : (
 								<div className="unauthed">

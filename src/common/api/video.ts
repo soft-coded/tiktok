@@ -24,8 +24,10 @@ const params: VideoQuery = {
 export const getVideo = (id: string, username?: string | null) =>
 	apiClient.get(videoURL + "/" + id, { params: { ...params, username } });
 
-export const getVidComments = (id: string) =>
-	apiClient.get(videoURL + "/" + id, { params: { comments: "list" } });
+export const getVidComments = (id: string, username?: string | null) =>
+	apiClient.get(videoURL + "/" + id, {
+		params: { comments: "list", username }
+	});
 
 export const likeVideo = (username: string, id: string) =>
 	apiClient.post(videoURL + "/like", { username, videoId: id });
@@ -38,3 +40,10 @@ export const postComment = (
 
 export const getCustom = (id: string, p: VideoQuery) =>
 	apiClient.get(videoURL + "/" + id, { params: p });
+
+export const likeComment = (
+	videoId: string,
+	commentId: string,
+	username: string
+) =>
+	apiClient.post(videoURL + "/likeComment", { videoId, commentId, username });
