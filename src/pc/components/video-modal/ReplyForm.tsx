@@ -1,0 +1,56 @@
+import { useFormik } from "formik";
+import * as yup from "yup";
+
+import Input from "../input-field";
+import constants from "../../../common/constants";
+import { reply } from "../../../common/api/video";
+import { useAppSelector } from "../../../common/store";
+
+const validationSchema = yup.object().shape({
+	comment: yup
+		.string()
+		.required("")
+		.max(
+			constants.commentMaxLen,
+			`At most ${constants.commentMaxLen} characters`
+		)
+});
+
+interface Props {
+	commentId: string;
+	videoId: string;
+}
+
+export default function ReplyForm(props: Props) {
+	const username = useAppSelector(state => state.auth.username);
+
+	const formik = useFormik({
+		initialValues: {
+			comment: ""
+		},
+		validationSchema,
+		onSubmit: async ({ comment }) => {
+			await reply(comment, props.commentId, props.videoId, username!);
+			formik.setFieldValue("comment", "");
+		}
+	});
+
+	return (
+		<form className="reply" onSubmit={formik.handleSubmit}>
+			<Input
+				className="reply-input"
+				placeholder="Add a reply"
+				wrapperClassName="reply-wrapper"
+				name="comment"
+				value={formik.values.comment}
+				onChange={formik.handleChange}
+				onBlur={formik.handleBlur}
+				error={formik.touched.comment && formik.errors.comment}
+				autoComplete="off"
+			/>
+			<button type="submit" disabled={!formik.dirty || !formik.isValid}>
+				<i className="fas fa-paper-plane" />
+			</button>
+		</form>
+	);
+}

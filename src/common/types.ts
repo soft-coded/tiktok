@@ -39,7 +39,7 @@ export interface CommentData extends CommonData {
 	postedBy?: UserData;
 	comment?: string;
 	likes?: number;
-	replies?: CommentData[];
+	replies?: number | CommentData[];
 	hasLiked?: boolean;
 }
 

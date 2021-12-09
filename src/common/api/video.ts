@@ -47,3 +47,16 @@ export const likeComment = (
 	username: string
 ) =>
 	apiClient.post(videoURL + "/likeComment", { videoId, commentId, username });
+
+export const reply = (
+	comment: string,
+	commentId: string,
+	videoId: string,
+	username: string
+) =>
+	apiClient.post(videoURL + "/reply", {
+		comment,
+		commentId,
+		videoId,
+		username
+	});

@@ -13,7 +13,7 @@ import ActionButton from "../action-button";
 import { videoModalActions } from "../../store/slices/video-modal-slice";
 import { authModalActions } from "../../store/slices/auth-modal-slice";
 import Comment from "./Comment";
-import AddComment from "./AddComment";
+import CommentForm from "./CommentForm";
 import Likes from "./Likes";
 import constants from "../../../common/constants";
 import { notificationActions } from "../../store/slices/notification-slice";
@@ -199,7 +199,7 @@ export default function VideoModal(props: ModalProps) {
 							)}
 						</div>
 						{isAuthed && (
-							<AddComment
+							<CommentForm
 								videoId={curVidId}
 								fetchComments={fetchComments}
 								setComments={setComments}
