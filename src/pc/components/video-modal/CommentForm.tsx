@@ -41,7 +41,7 @@ export default function AddComment({
 				dispatch(
 					notificationActions.showNotification({
 						type: "success",
-						message: "Comment posted!"
+						message: "Comment posted"
 					})
 				);
 				setComments(null);

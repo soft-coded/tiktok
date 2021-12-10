@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 import ReplyForm from "./ReplyForm";
+import Reply from "./Reply";
+import LoadingSpinner from "../loading-spinner";
 import constants from "../../../common/constants";
 import { CommentData } from "../../../common/types";
 import { convertToDate, joinClasses } from "../../../common/utils";
-import { likeComment } from "../../../common/api/video";
-import { useAppSelector } from "../../../common/store";
+import { likeComment, getReplies } from "../../../common/api/video";
+import { useAppSelector, useAppDispatch } from "../../../common/store";
+import { notificationActions } from "../../store/slices/notification-slice";
 
 interface Props extends CommentData {
 	handleModalClose: () => void;
@@ -16,7 +19,11 @@ interface Props extends CommentData {
 
 export default function Comment(props: Props) {
 	const navigate = useNavigate();
+	const dispatch = useAppDispatch();
 	const username = useAppSelector(state => state.auth.username);
+	const [totalReplies, setTotalReplies] = useState(props.replies as number);
+	const [replies, setReplies] = useState<CommentData[] | null>(null);
+	const [showReplies, setShowReplies] = useState(false);
 	const [showReplyInput, setShowReplyInput] = useState(false);
 	const [likeStats, setLikeStats] = useState({
 		likesNum: props.likes!,
@@ -35,6 +42,25 @@ export default function Comment(props: Props) {
 			setLikeStats(prev => ({ likesNum: prev.likesNum + 1, hasLiked: true }));
 		else
 			setLikeStats(prev => ({ likesNum: prev.likesNum - 1, hasLiked: false }));
+	}
+
+	const fetchReplies = useCallback(async () => {
+		try {
+			return (await getReplies(props.videoId, props.commentId!)).data.replies;
+		} catch (err: any) {
+			dispatch(
+				notificationActions.showNotification({
+					type: "error",
+					message: err.message
+				})
+			);
+		}
+	}, [props.videoId, props.commentId, dispatch]);
+
+	async function triggerReplies() {
+		if (showReplies) return setShowReplies(false);
+		setShowReplies(true);
+		if (!replies) setReplies(await fetchReplies());
 	}
 
 	return (
@@ -66,11 +92,42 @@ export default function Comment(props: Props) {
 					</span>
 				</div>
 				{showReplyInput && (
-					<ReplyForm commentId={props.commentId!} videoId={props.videoId} />
+					<ReplyForm
+						commentId={props.commentId!}
+						videoId={props.videoId}
+						setReplies={setReplies}
+						setShowReplies={setShowReplies}
+						hideReplyInput={() => setShowReplyInput(false)}
+						fetchReplies={fetchReplies}
+						setTotalReplies={setTotalReplies}
+					/>
 				)}
-				{(props.replies as number) > 0 && (
-					<p className="trigger-replies">
-						View replies ({props.replies}) <i className="fas fa-caret-down" />
+				{showReplies &&
+					(replies ? (
+						replies.map(reply => (
+							<Reply
+								key={reply.replyId}
+								{...reply}
+								handleModalClose={props.handleModalClose}
+								url={props.url}
+								videoId={props.videoId}
+							/>
+						))
+					) : (
+						<LoadingSpinner className="comments-spinner" />
+					))}
+				{totalReplies > 0 && (
+					<p className="clickable trigger-replies" onClick={triggerReplies}>
+						{!showReplies ? (
+							<>
+								View replies ({totalReplies})&nbsp;
+								<i className="fas fa-caret-down" />
+							</>
+						) : (
+							<>
+								Hide replies <i className="fas fa-caret-up" />
+							</>
+						)}
 					</p>
 				)}
 			</div>

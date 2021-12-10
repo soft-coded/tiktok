@@ -60,3 +60,12 @@ export const reply = (
 		videoId,
 		username
 	});
+
+export const getReplies = (
+	videoId: string,
+	commentId: string,
+	username?: string | null
+) =>
+	apiClient.get(videoURL + "/getReplies", {
+		params: { videoId, commentId, username }
+	});

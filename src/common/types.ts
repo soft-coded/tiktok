@@ -36,6 +36,7 @@ export interface VideoData extends CommonData {
 export interface CommentData extends CommonData {
 	_id?: string;
 	commentId?: string;
+	replyId?: string;
 	postedBy?: UserData;
 	comment?: string;
 	likes?: number;

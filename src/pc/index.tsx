@@ -8,7 +8,7 @@ import Header from "./components/header";
 import Notification from "./components/notification";
 import AuthModal from "./components/auth-modal";
 import PrivateRoute from "./components/private-route";
-import VideoModal from "./components/video-modal";
+const VideoModal = lazy(() => import("./components/video-modal"));
 const Home = lazy(() => import("./pages/home"));
 const Profile = lazy(() => import("./pages/profile"));
 const Video = lazy(() => import("./pages/video"));
@@ -34,7 +34,10 @@ export default function PCLayout() {
 					type={notification.type!}
 				/>
 			)}
-			{videoModal.show && <VideoModal {...videoModal.data!} />}
+			{/* keep modal in a separate Suspense or it rerenders the routes as well */}
+			<Suspense fallback={<FullscreenSpinner />}>
+				{videoModal.show && <VideoModal {...videoModal.data!} />}
+			</Suspense>
 			<Suspense fallback={<FullscreenSpinner />}>
 				<Routes>
 					<Route path="/" element={<Home />} />
