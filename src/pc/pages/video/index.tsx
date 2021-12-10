@@ -7,7 +7,7 @@ import Sidebar from "../../components/sidebar";
 import VideoCard from "../../components/video-card";
 import { VideoData } from "../../../common/types";
 import { getVideo } from "../../../common/api/video";
-import { useAppDispatch } from "../../../common/store";
+import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { notificationActions } from "../../store/slices/notification-slice";
 import LoadingSpinner from "../../components/loading-spinner";
 
@@ -16,12 +16,13 @@ export default function Video() {
 	const videoId = useParams().videoId;
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
+	const username = useAppSelector(state => state.auth.username);
 
 	useEffect(() => {
 		async function fetchVideo() {
 			try {
 				if (!videoId) throw new Error("Invalid URL");
-				const res = await getVideo(videoId);
+				const res = await getVideo(videoId, username);
 				setVideoData(res.data);
 			} catch (err: any) {
 				dispatch(

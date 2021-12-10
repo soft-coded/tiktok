@@ -1,13 +1,18 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
 import ReplyForm from "./ReplyForm";
 import Reply from "./Reply";
 import LoadingSpinner from "../loading-spinner";
+import Dropdown from "../dropdown";
 import constants from "../../../common/constants";
 import { CommentData } from "../../../common/types";
 import { convertToDate, joinClasses } from "../../../common/utils";
-import { likeComment, getReplies } from "../../../common/api/video";
+import {
+	likeComment,
+	getReplies,
+	deleteComment
+} from "../../../common/api/video";
 import { useAppSelector, useAppDispatch } from "../../../common/store";
 import { notificationActions } from "../../store/slices/notification-slice";
 
@@ -15,12 +20,17 @@ interface Props extends CommentData {
 	handleModalClose: () => void;
 	url: { prevURL: string };
 	videoId: string;
+	setComments: React.Dispatch<React.SetStateAction<CommentData[] | null>>;
+	fetchComments: () => Promise<void>;
 }
 
 export default function Comment(props: Props) {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
-	const username = useAppSelector(state => state.auth.username);
+	const { username, token } = useAppSelector(state => state.auth);
+	const poster = props.postedBy!.username;
+	const isPoster = useMemo(() => username === poster, [poster, username]);
+	const [showDropdown, setShowDropdown] = useState(false);
 	const [totalReplies, setTotalReplies] = useState(props.replies as number);
 	const [replies, setReplies] = useState<CommentData[] | null>(null);
 	const [showReplies, setShowReplies] = useState(false);
@@ -61,6 +71,33 @@ export default function Comment(props: Props) {
 		if (showReplies) return setShowReplies(false);
 		setShowReplies(true);
 		if (!replies) setReplies(await fetchReplies());
+	}
+
+	async function deleteComm() {
+		try {
+			const res = await deleteComment(
+				props.commentId!,
+				props.videoId,
+				username!,
+				token!
+			);
+			dispatch(
+				notificationActions.showNotification({
+					type: "success",
+					message: "Comment deleted"
+				})
+			);
+			props.setComments(null);
+			props.fetchComments();
+		} catch (err: any) {
+			dispatch(
+				notificationActions.showNotification({
+					type: "error",
+					message: err.message
+				})
+			);
+			setShowDropdown(false);
+		}
 	}
 
 	return (
@@ -132,15 +169,33 @@ export default function Comment(props: Props) {
 				)}
 			</div>
 			<div className="likes-portion">
-				<i
-					className={joinClasses(
-						likeStats.hasLiked ? "fas" : "far",
-						"fa-heart",
-						likeStats.hasLiked ? "liked" : ""
-					)}
-					onClick={likeComm}
-				/>
-				<span>{likeStats.likesNum}</span>
+				{isPoster && (
+					<i
+						className="fas fa-ellipsis-h"
+						onClick={() => setShowDropdown(true)}
+					/>
+				)}
+				{showDropdown && (
+					<Dropdown
+						className="comment-dropdown"
+						setShowDropdown={setShowDropdown}
+					>
+						<span className="hoverable" onClick={() => deleteComm()}>
+							<i className="fas fa-trash-alt" /> Delete
+						</span>
+					</Dropdown>
+				)}
+				<div className="likes-container">
+					<i
+						className={joinClasses(
+							likeStats.hasLiked ? "fas" : "far",
+							"fa-heart",
+							likeStats.hasLiked ? "liked" : ""
+						)}
+						onClick={likeComm}
+					/>
+					<span>{likeStats.likesNum}</span>
+				</div>
 			</div>
 		</div>
 	);

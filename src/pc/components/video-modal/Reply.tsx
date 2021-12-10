@@ -1,11 +1,11 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import constants from "../../../common/constants";
 import { CommentData } from "../../../common/types";
 import { convertToDate, joinClasses } from "../../../common/utils";
-import { likeComment } from "../../../common/api/video";
-import { useAppSelector } from "../../../common/store";
+// import { likeComment } from "../../../common/api/video";
+// import { useAppSelector } from "../../../common/store";
 
 interface Props extends CommentData {
 	handleModalClose: () => void;

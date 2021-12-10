@@ -266,12 +266,20 @@ $modal-content-width: 544px;
 				}
 
 				.likes-portion {
+					position: relative;
 					display: flex;
 					flex-direction: column;
 					align-items: center;
+					gap: 8px;
 					margin-left: auto;
 					color: rgba(var(--clr-secondary-values), 0.5);
 					font-weight: 400;
+
+					.likes-container {
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+					}
 
 					i {
 						font-size: 1.2rem;
@@ -279,6 +287,22 @@ $modal-content-width: 544px;
 
 						&.liked {
 							color: var(--clr-primary);
+						}
+					}
+
+					.comment-dropdown {
+						top: 0;
+						left: 0;
+						bottom: unset;
+						width: unset;
+						transform: translate(-105%, 20%);
+
+						span {
+							display: flex;
+							align-items: center;
+							gap: 8px;
+							padding: 4px 20px;
+							color: rgba(var(--clr-secondary-values), 0.7);
 						}
 					}
 				}

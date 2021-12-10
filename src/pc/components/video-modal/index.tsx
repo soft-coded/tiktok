@@ -179,6 +179,8 @@ export default function VideoModal(props: ModalProps) {
 											handleModalClose={handleModalClose}
 											url={url}
 											videoId={curVidId}
+											setComments={setComments}
+											fetchComments={fetchComments}
 										/>
 									))
 								)

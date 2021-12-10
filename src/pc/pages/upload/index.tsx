@@ -124,6 +124,7 @@ export default function UploadPage() {
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								error={formik.touched.caption && formik.errors.caption}
+								autoComplete="off"
 							/>
 						</div>
 						<div className="form-group">
@@ -135,6 +136,7 @@ export default function UploadPage() {
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								error={formik.touched.tags && formik.errors.tags}
+								autoComplete="off"
 							/>
 						</div>
 						<div className="form-group">
@@ -146,6 +148,7 @@ export default function UploadPage() {
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
 								error={formik.touched.music && formik.errors.music}
+								autoComplete="off"
 							/>
 						</div>
 						<button
