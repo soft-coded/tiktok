@@ -203,8 +203,19 @@ $modal-content-width: 544px;
 				.comment-content {
 					display: flex;
 					flex-direction: column;
-					gap: 8px;
+					gap: 10px;
 					width: 100%;
+				}
+
+				.content-wrapper {
+					display: flex;
+					flex-direction: column;
+					gap: 10px;
+				}
+
+				.container-wrapper {
+					display: flex;
+					justify-content: space-between;
 				}
 
 				.time-wrapper {
@@ -220,13 +231,12 @@ $modal-content-width: 544px;
 
 				h4 {
 					font-weight: 500;
-					line-height: 1rem;
+					line-height: 1.15rem;
 				}
 
 				p {
-					display: inline-block;
-					font-size: 0.88rem;
-					font-weight: 400;
+					font-size: 0.93rem;
+					line-height: 1.15rem;
 				}
 
 				h5 {
@@ -265,20 +275,25 @@ $modal-content-width: 544px;
 					}
 				}
 
+				.fa-ellipsis-h {
+					line-height: 0;
+				}
+
 				.likes-portion {
 					position: relative;
 					display: flex;
 					flex-direction: column;
-					align-items: center;
-					gap: 8px;
-					margin-left: auto;
+					gap: 12px;
 					color: rgba(var(--clr-secondary-values), 0.5);
-					font-weight: 400;
 
 					.likes-container {
 						display: flex;
 						flex-direction: column;
 						align-items: center;
+
+						span {
+							font-size: 0.82rem;
+						}
 					}
 
 					i {
@@ -295,7 +310,7 @@ $modal-content-width: 544px;
 						left: 0;
 						bottom: unset;
 						width: unset;
-						transform: translate(-105%, 20%);
+						transform: translateX(-100%);
 
 						span {
 							display: flex;

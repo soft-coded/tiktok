@@ -44,26 +44,48 @@ export default function Reply(props: Props) {
 				/>
 			</div>
 			<div className="comment-content">
-				<h4 className="clickable" onClick={showProfile}>
-					{props.postedBy!.name}
-				</h4>
-				<p className="break-word">{props.comment}</p>
+				<div className="container-wrapper">
+					<div className="content-wrapper">
+						<h4 className="clickable" onClick={showProfile}>
+							{props.postedBy!.name}
+						</h4>
+						<p className="break-word">{props.comment}</p>
+					</div>
+					<div className="likes-portion">
+						{/* {isPoster && (
+							<i
+								className="fas fa-ellipsis-h"
+								onClick={() => setShowDropdown(true)}
+							/>
+						)}
+						{showDropdown && (
+							<Dropdown
+								className="comment-dropdown"
+								setShowDropdown={setShowDropdown}
+							>
+								<span className="hoverable" onClick={() => deleteComm()}>
+									<i className="fas fa-trash-alt" /> Delete
+								</span>
+							</Dropdown>
+						)} */}
+						<div className="likes-container">
+							<i
+								// className={joinClasses(
+								// likeStats.hasLiked ? "fas" : "far",
+								// "fa-heart",
+								// likeStats.hasLiked ? "liked" : ""
+								// )}
+								className="far fa-heart"
+								// onClick={likeComm}
+							/>
+							{/* <span>{likeStats.likesNum}</span> */}
+							<span>0</span>
+						</div>
+					</div>
+				</div>
 				<div className="time-wrapper">
 					<h5>{convertToDate(props.createdAt!)}</h5>
 				</div>
-			</div>
-			<div className="likes-portion">
-				<i
-					// className={joinClasses(
-					// likeStats.hasLiked ? "fas" : "far",
-					// "fa-heart",
-					// likeStats.hasLiked ? "liked" : ""
-					// )}
-					className="far fa-heart"
-					// onClick={likeComm}
-				/>
-				{/* <span>{likeStats.likesNum}</span> */}
-				<span>0</span>
 			</div>
 		</div>
 	);
