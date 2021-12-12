@@ -56,7 +56,8 @@ export default function Comment(props: Props) {
 
 	const fetchReplies = useCallback(async () => {
 		try {
-			return (await getReplies(props.videoId, props.commentId!)).data.replies;
+			return (await getReplies(props.videoId, props.commentId!, username!)).data
+				.replies;
 		} catch (err: any) {
 			dispatch(
 				notificationActions.showNotification({
@@ -65,7 +66,7 @@ export default function Comment(props: Props) {
 				})
 			);
 		}
-	}, [props.videoId, props.commentId, dispatch]);
+	}, [props.videoId, props.commentId, dispatch, username]);
 
 	async function triggerReplies() {
 		if (showReplies) return setShowReplies(false);
@@ -75,12 +76,7 @@ export default function Comment(props: Props) {
 
 	async function deleteComm() {
 		try {
-			const res = await deleteComment(
-				props.commentId!,
-				props.videoId,
-				username!,
-				token!
-			);
+			await deleteComment(props.commentId!, props.videoId, username!, token!);
 			dispatch(
 				notificationActions.showNotification({
 					type: "success",
@@ -128,7 +124,7 @@ export default function Comment(props: Props) {
 								className="comment-dropdown"
 								setShowDropdown={setShowDropdown}
 							>
-								<span className="hoverable" onClick={() => deleteComm()}>
+								<span className="hoverable" onClick={deleteComm}>
 									<i className="fas fa-trash-alt" /> Delete
 								</span>
 							</Dropdown>
@@ -181,6 +177,10 @@ export default function Comment(props: Props) {
 								handleModalClose={props.handleModalClose}
 								url={props.url}
 								videoId={props.videoId}
+								commentId={props.commentId}
+								setTotalReplies={setTotalReplies}
+								setReplies={setReplies}
+								fetchReplies={fetchReplies}
 							/>
 						))
 					) : (

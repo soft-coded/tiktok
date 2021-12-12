@@ -35,7 +35,7 @@ export default function Video() {
 			}
 		}
 		fetchVideo();
-	}, [videoId, dispatch, navigate]);
+	}, [videoId, dispatch, navigate, username]);
 
 	return (
 		<Container className="video-page-container">

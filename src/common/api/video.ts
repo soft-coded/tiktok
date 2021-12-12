@@ -71,6 +71,17 @@ export const reply = (
 		username
 	});
 
+export const deleteReply = (
+	videoId: string,
+	commentId: string,
+	replyId: string,
+	username: string,
+	token: string
+) =>
+	apiClient.delete(videoURL + "/reply", {
+		data: { videoId, commentId, replyId, username, token }
+	});
+
 export const getReplies = (
 	videoId: string,
 	commentId: string,
@@ -78,4 +89,17 @@ export const getReplies = (
 ) =>
 	apiClient.get(videoURL + "/getReplies", {
 		params: { videoId, commentId, username }
+	});
+
+export const likeReply = (
+	videoId: string,
+	commentId: string,
+	replyId: string,
+	username: string
+) =>
+	apiClient.post(videoURL + "/likeReply", {
+		videoId,
+		commentId,
+		replyId,
+		username
 	});
