@@ -5,6 +5,7 @@ import ReplyForm from "./ReplyForm";
 import Reply from "./Reply";
 import LoadingSpinner from "../loading-spinner";
 import Dropdown from "../dropdown";
+import UserDropdown from "../user-dropdown";
 import constants from "../../../common/constants";
 import { CommentData } from "../../../common/types";
 import { convertToDate, joinClasses } from "../../../common/utils";
@@ -30,7 +31,8 @@ export default function Comment(props: Props) {
 	const { username, token } = useAppSelector(state => state.auth);
 	const poster = props.postedBy!.username;
 	const isPoster = useMemo(() => username === poster, [poster, username]);
-	const [showDropdown, setShowDropdown] = useState(false);
+	const [showOptions, setShowOptions] = useState(false);
+	const [showUserDD, setShowUserDD] = useState(false);
 	const [totalReplies, setTotalReplies] = useState(props.replies as number);
 	const [replies, setReplies] = useState<CommentData[] | null>(null);
 	const [showReplies, setShowReplies] = useState(false);
@@ -92,13 +94,34 @@ export default function Comment(props: Props) {
 					message: err.message
 				})
 			);
-			setShowDropdown(false);
+			setShowOptions(false);
 		}
+	}
+
+	function showUDD() {
+		setShowUserDD(true);
+	}
+
+	function hideUDD() {
+		setShowUserDD(false);
 	}
 
 	return (
 		<div className="comment">
-			<div className="rounded-photo clickable" onClick={showProfile}>
+			<div className="dropdown-wrapper">
+				<UserDropdown
+					showDropdown={showUserDD}
+					onMouseOver={showUDD}
+					onMouseOut={hideUDD}
+					username={props.postedBy!.username!}
+				/>
+			</div>
+			<div
+				className="rounded-photo clickable"
+				onClick={showProfile}
+				onMouseOver={showUDD}
+				onMouseOut={hideUDD}
+			>
 				<img
 					src={constants.pfpLink + "/" + props.postedBy!.username}
 					alt={props.postedBy!.username}
@@ -107,7 +130,12 @@ export default function Comment(props: Props) {
 			<div className="comment-content">
 				<div className="container-wrapper">
 					<div className="content-wrapper">
-						<h4 className="clickable" onClick={showProfile}>
+						<h4
+							className="clickable"
+							onClick={showProfile}
+							onMouseOver={showUDD}
+							onMouseOut={hideUDD}
+						>
 							{props.postedBy!.name}
 						</h4>
 						<p className="break-word">{props.comment}</p>
@@ -116,13 +144,13 @@ export default function Comment(props: Props) {
 						{isPoster && (
 							<i
 								className="fas fa-ellipsis-h"
-								onClick={() => setShowDropdown(true)}
+								onClick={() => setShowOptions(true)}
 							/>
 						)}
-						{showDropdown && (
+						{showOptions && (
 							<Dropdown
 								className="comment-dropdown"
-								setShowDropdown={setShowDropdown}
+								setShowDropdown={setShowOptions}
 							>
 								<span className="hoverable" onClick={deleteComm}>
 									<i className="fas fa-trash-alt" /> Delete

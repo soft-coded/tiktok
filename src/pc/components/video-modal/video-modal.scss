@@ -195,6 +195,15 @@ $modal-content-width: 544px;
 				gap: 12px;
 				padding: 12px 0;
 
+				.dropdown-wrapper {
+					position: absolute;
+					height: 36px;
+
+					.username {
+						font-weight: 600;
+					}
+				}
+
 				.rounded-photo {
 					flex-shrink: 0;
 					width: calc(#{$profile-photo-size} - 8px);

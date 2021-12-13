@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 
 import Dropdown from "./DD";
-import { VideoData as CardProps } from "../../../common/types";
 import { DDAnimationTime } from "../dropdown";
 
-interface Props extends CardProps {
+interface Props {
 	onMouseOver: () => void;
 	onMouseOut: () => void;
 	showDropdown: boolean;
+	username: string;
 }
 
 const DDTimeThreshold = 600; // time after which dropdown gets unmounted
@@ -42,11 +42,5 @@ export default function UserDropdown(props: Props) {
 		}
 	}, [showDropdown]);
 
-	return showDD ? (
-		<Dropdown
-			{...props}
-			onMouseOver={props.onMouseOver}
-			onMouseOut={props.onMouseOut}
-		/>
-	) : null;
+	return showDD ? <Dropdown {...props} /> : null;
 }

@@ -12,11 +12,6 @@ import CardDropdown from "../user-dropdown";
 import constants from "../../../common/constants";
 import { authModalActions } from "../../store/slices/auth-modal-slice";
 
-// const DDTimeThreshold = 600; // time after which dropdown gets unmounted
-// let DDMountTimeout: NodeJS.Timeout,
-// 	DDHideTimeout: NodeJS.Timeout,
-// 	DDUnmountTimeout: NodeJS.Timeout;
-
 export default function VideoCard(props: VideoData) {
 	const [showProfileDD, setShowProfileDD] = useState(false);
 	const dispatch = useAppDispatch();
@@ -54,7 +49,7 @@ export default function VideoCard(props: VideoData) {
 					</div>
 				</Link>
 				<CardDropdown
-					{...props}
+					username={props.uploader!.username!}
 					showDropdown={showProfileDD}
 					onMouseOver={showDD}
 					onMouseOut={hideDD}

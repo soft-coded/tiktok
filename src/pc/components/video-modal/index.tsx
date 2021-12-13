@@ -152,7 +152,12 @@ export default function VideoModal(props: ModalProps) {
 									/>
 								</div>
 								<div className="names">
-									<h3 className="clickable" onClick={showProfile}>
+									<h3
+										className="clickable"
+										onClick={showProfile}
+										onMouseOver={showDD}
+										onMouseOut={hideDD}
+									>
 										{videoData.uploader!.username}
 									</h3>
 									<h4>
@@ -161,7 +166,7 @@ export default function VideoModal(props: ModalProps) {
 									</h4>
 								</div>
 								<UserDropdown
-									{...videoData}
+									username={videoData.uploader!.username!}
 									onMouseOver={showDD}
 									onMouseOut={hideDD}
 									showDropdown={showDropdown}

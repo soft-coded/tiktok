@@ -4,6 +4,7 @@ import { UserQuery } from "../types";
 const userURL = "/user";
 
 const shortParams: UserQuery = {
+	name: "1",
 	description: "1",
 	followers: "num",
 	totalLikes: "1"

@@ -4,14 +4,15 @@ import "./user-dropdown.scss";
 import Dropdown from "../dropdown";
 import LoadingSpinner from "../loading-spinner";
 import { useAppDispatch } from "../../../common/store";
-import { UserData, VideoData as CardProps } from "../../../common/types";
+import { UserData } from "../../../common/types";
 import constants from "../../../common/constants";
 import { getShortUser } from "../../../common/api/user";
 import { notificationActions } from "../../store/slices/notification-slice";
 
-interface Props extends CardProps {
+interface Props {
 	onMouseOver: () => void;
 	onMouseOut: () => void;
+	username: string;
 }
 
 export default function CardDropdown(props: Props) {
@@ -21,7 +22,7 @@ export default function CardDropdown(props: Props) {
 	useEffect(() => {
 		async function fetchData() {
 			try {
-				const res = await getShortUser(props.uploader!.username!);
+				const res = await getShortUser(props.username);
 				setUser(res.data);
 			} catch (err: any) {
 				dispatch(
@@ -33,7 +34,7 @@ export default function CardDropdown(props: Props) {
 			}
 		}
 		fetchData();
-	}, [dispatch, props.uploader]);
+	}, [dispatch, props.username]);
 
 	return (
 		<Dropdown
@@ -49,8 +50,8 @@ export default function CardDropdown(props: Props) {
 					<div className="top">
 						<div className="rounded-photo">
 							<img
-								src={constants.pfpLink + "/" + props.uploader!.username}
-								alt={props.caption}
+								src={constants.pfpLink + "/" + user.username}
+								alt={user.name}
 							/>
 						</div>
 						<div className="follow-btn">
@@ -59,20 +60,20 @@ export default function CardDropdown(props: Props) {
 					</div>
 					<div className="card-content dd-card-names">
 						<header className="names-header">
-							<h4 className="username">{props.uploader!.username}</h4>
-							<h5>{props.uploader!.name}</h5>
+							<h4 className="username">{user.username}</h4>
+							<h5>{user.name}</h5>
 						</header>
 					</div>
 					<div className="counts">
 						<p>
-							<span>{user!.followers}</span> Followers
+							<span>{user.followers}</span> Followers
 						</p>
 						<p>
-							<span>{user!.totalLikes}</span>&nbsp;
-							{user!.totalLikes! === 1 ? "Like" : "Likes"}
+							<span>{user.totalLikes}</span>&nbsp;
+							{user.totalLikes! === 1 ? "Like" : "Likes"}
 						</p>
 					</div>
-					<p className="description">{user!.description}</p>
+					<p className="description">{user.description}</p>
 				</>
 			)}
 		</Dropdown>

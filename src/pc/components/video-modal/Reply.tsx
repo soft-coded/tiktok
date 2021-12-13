@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Dropdown from "../dropdown";
+import UserDropdown from "../user-dropdown";
 import constants from "../../../common/constants";
 import { CommentData } from "../../../common/types";
 import { convertToDate, joinClasses } from "../../../common/utils";
@@ -21,10 +22,11 @@ interface Props extends CommentData {
 export default function Reply(props: Props) {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
+	const [showUserDD, setShowUserDD] = useState(false);
 	const { username, token } = useAppSelector(state => state.auth);
 	const poster = props.postedBy!.username;
 	const isPoster = useMemo(() => username === poster, [poster, username]);
-	const [showDropdown, setShowDropdown] = useState(false);
+	const [showOptions, setShowOptions] = useState(false);
 	const [likeStats, setLikeStats] = useState({
 		likesNum: props.likes!,
 		hasLiked: props.hasLiked!
@@ -47,6 +49,14 @@ export default function Reply(props: Props) {
 			setLikeStats(prev => ({ likesNum: prev.likesNum + 1, hasLiked: true }));
 		else
 			setLikeStats(prev => ({ likesNum: prev.likesNum - 1, hasLiked: false }));
+	}
+
+	function showUDD() {
+		setShowUserDD(true);
+	}
+
+	function hideUDD() {
+		setShowUserDD(false);
 	}
 
 	async function deleteRep() {
@@ -74,13 +84,26 @@ export default function Reply(props: Props) {
 					message: err.message
 				})
 			);
-			setShowDropdown(false);
+			setShowOptions(false);
 		}
 	}
 
 	return (
 		<div className="comment">
-			<div className="rounded-photo clickable" onClick={showProfile}>
+			<div className="dropdown-wrapper">
+				<UserDropdown
+					showDropdown={showUserDD}
+					onMouseOver={showUDD}
+					onMouseOut={hideUDD}
+					username={props.postedBy!.username!}
+				/>
+			</div>
+			<div
+				className="rounded-photo clickable"
+				onClick={showProfile}
+				onMouseOver={showUDD}
+				onMouseOut={hideUDD}
+			>
 				<img
 					src={constants.pfpLink + "/" + props.postedBy!.username}
 					alt={props.postedBy!.username}
@@ -89,7 +112,12 @@ export default function Reply(props: Props) {
 			<div className="comment-content">
 				<div className="container-wrapper">
 					<div className="content-wrapper">
-						<h4 className="clickable" onClick={showProfile}>
+						<h4
+							className="clickable"
+							onClick={showProfile}
+							onMouseOver={showUDD}
+							onMouseOut={hideUDD}
+						>
 							{props.postedBy!.name}
 						</h4>
 						<p className="break-word">{props.comment}</p>
@@ -98,13 +126,13 @@ export default function Reply(props: Props) {
 						{isPoster && (
 							<i
 								className="fas fa-ellipsis-h"
-								onClick={() => setShowDropdown(true)}
+								onClick={() => setShowOptions(true)}
 							/>
 						)}
-						{showDropdown && (
+						{showOptions && (
 							<Dropdown
 								className="comment-dropdown"
-								setShowDropdown={setShowDropdown}
+								setShowDropdown={setShowOptions}
 							>
 								<span className="hoverable" onClick={deleteRep}>
 									<i className="fas fa-trash-alt" /> Delete
