@@ -102,6 +102,23 @@ $modal-content-width: 544px;
 
 		.follow-btn {
 			margin-left: auto;
+			position: relative;
+		}
+
+		.vid-dropdown {
+			top: 0;
+			left: 0;
+			bottom: unset;
+			width: unset;
+			transform: translate(-105%, 20%);
+
+			span {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				padding: 4px 20px;
+				color: rgba(var(--clr-secondary-values), 0.7);
+			}
 		}
 
 		.caption {

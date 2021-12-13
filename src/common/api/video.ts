@@ -32,6 +32,11 @@ export const getVidComments = (id: string, username?: string | null) =>
 		params: { comments: "list", username }
 	});
 
+export const deleteVideo = (id: string, username: string, token: string) =>
+	apiClient.delete(videoURL + "/" + id, {
+		data: { username, token }
+	});
+
 export const likeVideo = (username: string, id: string) =>
 	apiClient.post(videoURL + "/like", { username, videoId: id });
 

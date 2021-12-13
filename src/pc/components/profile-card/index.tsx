@@ -18,6 +18,7 @@ export default function ProfileCard({
 					src={video}
 					playsInline
 					muted
+					loop
 					onClick={() => handleModalOpen(index)}
 					onMouseOver={e => (e.target as HTMLVideoElement).play()}
 					onMouseOut={e => (e.target as HTMLVideoElement).pause()}

@@ -96,7 +96,7 @@ export default function Profile() {
 									<strong>{user!.followers}</strong> Followers
 								</p>
 								<p>
-									<strong>{user!.totalLikes}</strong>&nbsp;
+									<strong>{user!.totalLikes}</strong>
 									{user!.totalLikes! === 1 ? "Like" : "Likes"}
 								</p>
 							</div>

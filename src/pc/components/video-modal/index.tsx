@@ -15,10 +15,15 @@ import { authModalActions } from "../../store/slices/auth-modal-slice";
 import Comment from "./Comment";
 import CommentForm from "./CommentForm";
 import Likes from "./Likes";
+import Dropdown from "../dropdown";
 import UserDropdown from "../user-dropdown";
 import constants from "../../../common/constants";
 import { notificationActions } from "../../store/slices/notification-slice";
-import { getVideo, getVidComments } from "../../../common/api/video";
+import {
+	getVideo,
+	getVidComments,
+	deleteVideo
+} from "../../../common/api/video";
 import LoadingSpinner from "../loading-spinner";
 
 export interface ModalProps extends VideoData {
@@ -30,12 +35,19 @@ let url = { prevURL: "" };
 export default function VideoModal(props: ModalProps) {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
-	const { isAuthenticated: isAuthed, username } = useAppSelector(
-		state => state.auth
-	);
+	const {
+		isAuthenticated: isAuthed,
+		username,
+		token
+	} = useAppSelector(state => state.auth);
 	const [videoData, setVideoData] = useState<VideoData | null>(null);
 	const [comments, setComments] = useState<CommentData[] | null>(null);
 	const [showDropdown, setShowDropdown] = useState(false);
+	const [showOptions, setShowOptions] = useState(false);
+	const isPoster = useMemo(
+		() => (videoData ? username === videoData.uploader!.username : false),
+		[videoData, username]
+	);
 	const curVidId = useMemo(
 		() =>
 			props.video ? props.video : props.videoId ? props.videoId : props._id!,
@@ -107,6 +119,27 @@ export default function VideoModal(props: ModalProps) {
 		setShowDropdown(false);
 	}
 
+	async function delVid() {
+		try {
+			await deleteVideo(curVidId, username!, token!);
+			handleModalClose();
+			dispatch(
+				notificationActions.showNotification({
+					type: "success",
+					message: "Video deleted"
+				})
+			);
+			navigate("/user/" + username);
+		} catch (err: any) {
+			dispatch(
+				notificationActions.showNotification({
+					type: "error",
+					message: err.message
+				})
+			);
+		}
+	}
+
 	return (
 		<div className="app-video-modal">
 			<div className="video-container-wrapper">
@@ -172,7 +205,26 @@ export default function VideoModal(props: ModalProps) {
 									showDropdown={showDropdown}
 								/>
 								<div className="follow-btn">
-									<button>Follow</button>
+									{isPoster ? (
+										<>
+											<i
+												className="clickable fas fa-ellipsis-h"
+												onClick={() => setShowOptions(true)}
+											/>
+											{showOptions && (
+												<Dropdown
+													className="vid-dropdown"
+													setShowDropdown={setShowOptions}
+												>
+													<span className="hoverable" onClick={delVid}>
+														<i className="fas fa-trash-alt" /> Delete
+													</span>
+												</Dropdown>
+											)}
+										</>
+									) : (
+										<button>Follow</button>
+									)}
 								</div>
 							</header>
 							<p className="caption">{videoData.caption}</p>

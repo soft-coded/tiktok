@@ -1,7 +1,9 @@
 $card-width: 196px;
+$card-height: 260px;
 
 .profile-card {
 	width: $card-width;
+	height: $card-height;
 
 	.video-container {
 		display: flex;
@@ -10,12 +12,13 @@ $card-width: 196px;
 		width: 100%;
 		height: 100%;
 		background: var(--clr-secondary);
+		overflow: hidden;
 
 		video {
 			background: var(--clr-secondary);
 			width: 100%;
+			height: 100%;
 			cursor: pointer;
-			object-fit: contain;
 		}
 	}
 }
