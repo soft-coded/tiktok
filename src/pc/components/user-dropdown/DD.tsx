@@ -10,8 +10,8 @@ import { getShortUser } from "../../../common/api/user";
 import { notificationActions } from "../../store/slices/notification-slice";
 
 interface Props extends CardProps {
-	onMouseOver?: () => void;
-	onMouseOut?: () => void;
+	onMouseOver: () => void;
+	onMouseOut: () => void;
 }
 
 export default function CardDropdown(props: Props) {
@@ -58,7 +58,7 @@ export default function CardDropdown(props: Props) {
 						</div>
 					</div>
 					<div className="card-content dd-card-names">
-						<header>
+						<header className="names-header">
 							<h4 className="username">{props.uploader!.username}</h4>
 							<h5>{props.uploader!.name}</h5>
 						</header>

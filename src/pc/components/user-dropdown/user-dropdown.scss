@@ -27,7 +27,7 @@ $dropdown-pfp-size: 42px;
 	}
 
 	.dd-card-names {
-		header {
+		.names-header {
 			flex-direction: column;
 			gap: 0;
 			align-items: stretch;
@@ -36,6 +36,7 @@ $dropdown-pfp-size: 42px;
 			.username {
 				font-size: 1rem;
 				cursor: unset;
+				font-weight: 600;
 
 				&:hover {
 					text-decoration: none;

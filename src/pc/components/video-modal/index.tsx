@@ -15,7 +15,7 @@ import { authModalActions } from "../../store/slices/auth-modal-slice";
 import Comment from "./Comment";
 import CommentForm from "./CommentForm";
 import Likes from "./Likes";
-import CardDropdown from "../user-dropdown";
+import UserDropdown from "../user-dropdown";
 import constants from "../../../common/constants";
 import { notificationActions } from "../../store/slices/notification-slice";
 import { getVideo, getVidComments } from "../../../common/api/video";
@@ -99,6 +99,14 @@ export default function VideoModal(props: ModalProps) {
 		handleModalClose();
 	}
 
+	function showDD() {
+		setShowDropdown(true);
+	}
+
+	function hideDD() {
+		setShowDropdown(false);
+	}
+
 	return (
 		<div className="app-video-modal">
 			<div className="video-container-wrapper">
@@ -135,7 +143,8 @@ export default function VideoModal(props: ModalProps) {
 								<div
 									className="clickable rounded-photo"
 									onClick={showProfile}
-									onMouseOver={() => setShowDropdown(true)}
+									onMouseOver={showDD}
+									onMouseOut={hideDD}
 								>
 									<img
 										src={constants.pfpLink + "/" + videoData.uploader!.username}
@@ -151,13 +160,12 @@ export default function VideoModal(props: ModalProps) {
 										<span>{convertToDate(videoData.createdAt!)}</span>
 									</h4>
 								</div>
-								{/* {showDropdown && (
-									<CardDropdown
-										uploader={videoData.uploader}
-										onMouseOut={() => setShowDropdown(false)}
-										onMouseOver={() => {}}
-									/>
-								)} */}
+								<UserDropdown
+									{...videoData}
+									onMouseOver={showDD}
+									onMouseOut={hideDD}
+									showDropdown={showDropdown}
+								/>
 								<div className="follow-btn">
 									<button>Follow</button>
 								</div>

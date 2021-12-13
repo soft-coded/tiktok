@@ -82,6 +82,7 @@ $modal-content-width: 544px;
 			display: flex;
 			align-items: center;
 			gap: 12px;
+			position: relative;
 
 			.rounded-photo {
 				width: $profile-photo-size;

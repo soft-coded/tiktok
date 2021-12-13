@@ -21,6 +21,8 @@ export default function UserDropdown(props: Props) {
 
 	useEffect(() => {
 		if (showDropdown) {
+			clearTimeout(DDHideTimeout);
+			clearTimeout(DDUnmountTimeout);
 			DDMountTimeout = setTimeout(() => setShowDD(true), DDTimeThreshold);
 		} else {
 			clearTimeout(DDMountTimeout);
@@ -40,16 +42,10 @@ export default function UserDropdown(props: Props) {
 		}
 	}, [showDropdown]);
 
-	function handleDDMouseOver() {
-		clearTimeout(DDHideTimeout);
-		clearTimeout(DDUnmountTimeout);
-		props.onMouseOver();
-	}
-
 	return showDD ? (
 		<Dropdown
 			{...props}
-			onMouseOver={handleDDMouseOver}
+			onMouseOver={props.onMouseOver}
 			onMouseOut={props.onMouseOut}
 		/>
 	) : null;
