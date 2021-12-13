@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+import "./user-dropdown.scss";
 import Dropdown from "../dropdown";
 import LoadingSpinner from "../loading-spinner";
 import { useAppDispatch } from "../../../common/store";
@@ -9,8 +10,8 @@ import { getShortUser } from "../../../common/api/user";
 import { notificationActions } from "../../store/slices/notification-slice";
 
 interface Props extends CardProps {
-	onMouseOver: () => void;
-	onMouseOut: () => void;
+	onMouseOver?: () => void;
+	onMouseOut?: () => void;
 }
 
 export default function CardDropdown(props: Props) {
@@ -36,7 +37,7 @@ export default function CardDropdown(props: Props) {
 
 	return (
 		<Dropdown
-			className="video-card-dropdown"
+			className="user-dropdown"
 			trigger="hover"
 			onMouseOut={props.onMouseOut}
 			onMouseOver={props.onMouseOver}

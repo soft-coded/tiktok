@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "./video-modal.scss";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
@@ -15,6 +15,7 @@ import { authModalActions } from "../../store/slices/auth-modal-slice";
 import Comment from "./Comment";
 import CommentForm from "./CommentForm";
 import Likes from "./Likes";
+import CardDropdown from "../user-dropdown";
 import constants from "../../../common/constants";
 import { notificationActions } from "../../store/slices/notification-slice";
 import { getVideo, getVidComments } from "../../../common/api/video";
@@ -28,11 +29,13 @@ let url = { prevURL: "" };
 
 export default function VideoModal(props: ModalProps) {
 	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
 	const { isAuthenticated: isAuthed, username } = useAppSelector(
 		state => state.auth
 	);
 	const [videoData, setVideoData] = useState<VideoData | null>(null);
 	const [comments, setComments] = useState<CommentData[] | null>(null);
+	const [showDropdown, setShowDropdown] = useState(false);
 	const curVidId = useMemo(
 		() =>
 			props.video ? props.video : props.videoId ? props.videoId : props._id!,
@@ -90,6 +93,12 @@ export default function VideoModal(props: ModalProps) {
 		dispatch(authModalActions.showModal());
 	}
 
+	function showProfile() {
+		url.prevURL = "/user/" + videoData!.uploader!.username;
+		navigate("/user/" + videoData!.uploader!.username);
+		handleModalClose();
+	}
+
 	return (
 		<div className="app-video-modal">
 			<div className="video-container-wrapper">
@@ -123,19 +132,32 @@ export default function VideoModal(props: ModalProps) {
 					<>
 						<div className="modal-top">
 							<header>
-								<div className="rounded-photo">
+								<div
+									className="clickable rounded-photo"
+									onClick={showProfile}
+									onMouseOver={() => setShowDropdown(true)}
+								>
 									<img
 										src={constants.pfpLink + "/" + videoData.uploader!.username}
 										alt={videoData.uploader!.name}
 									/>
 								</div>
 								<div className="names">
-									<h3>{videoData.uploader!.username}</h3>
+									<h3 className="clickable" onClick={showProfile}>
+										{videoData.uploader!.username}
+									</h3>
 									<h4>
 										{videoData.uploader!.name} |&nbsp;
 										<span>{convertToDate(videoData.createdAt!)}</span>
 									</h4>
 								</div>
+								{/* {showDropdown && (
+									<CardDropdown
+										uploader={videoData.uploader}
+										onMouseOut={() => setShowDropdown(false)}
+										onMouseOver={() => {}}
+									/>
+								)} */}
 								<div className="follow-btn">
 									<button>Follow</button>
 								</div>

@@ -8,15 +8,14 @@ import { useAppDispatch } from "../../../common/store";
 import { modifyScrollbar, convertToDate } from "../../../common/utils";
 import { VideoData } from "../../../common/types";
 import { videoModalActions } from "../../store/slices/video-modal-slice";
-import CardDropdown from "./CardDropdown";
-import { DDAnimationTime } from "../dropdown";
+import CardDropdown from "../user-dropdown";
 import constants from "../../../common/constants";
 import { authModalActions } from "../../store/slices/auth-modal-slice";
 
-const DDTimeThreshold = 600; // time after which dropdown gets unmounted
-let DDMountTimeout: NodeJS.Timeout,
-	DDHideTimeout: NodeJS.Timeout,
-	DDUnmountTimeout: NodeJS.Timeout;
+// const DDTimeThreshold = 600; // time after which dropdown gets unmounted
+// let DDMountTimeout: NodeJS.Timeout,
+// 	DDHideTimeout: NodeJS.Timeout,
+// 	DDUnmountTimeout: NodeJS.Timeout;
 
 export default function VideoCard(props: VideoData) {
 	const [showProfileDD, setShowProfileDD] = useState(false);
@@ -31,30 +30,12 @@ export default function VideoCard(props: VideoData) {
 		);
 	}
 
-	function handleMouseOver() {
-		DDMountTimeout = setTimeout(() => setShowProfileDD(true), DDTimeThreshold);
+	function showDD() {
+		setShowProfileDD(true);
 	}
 
-	function handleMouseOut() {
-		clearTimeout(DDMountTimeout);
-		const card = document.querySelector(".video-card-dropdown");
-		if (card) {
-			// hide timeout
-			DDHideTimeout = setTimeout(
-				() => card.classList.add("hide"),
-				DDTimeThreshold
-			);
-			// remove timeout
-			DDUnmountTimeout = setTimeout(
-				() => setShowProfileDD(false),
-				DDAnimationTime + DDTimeThreshold
-			);
-		}
-	}
-
-	function handleDDMouseOver() {
-		clearTimeout(DDHideTimeout);
-		clearTimeout(DDUnmountTimeout);
+	function hideDD() {
+		setShowProfileDD(false);
 	}
 
 	return (
@@ -63,8 +44,8 @@ export default function VideoCard(props: VideoData) {
 				<Link to={"/user/" + props.uploader!.username}>
 					<div
 						className="rounded-photo"
-						onMouseOver={handleMouseOver}
-						onMouseOut={handleMouseOut}
+						onMouseOver={showDD}
+						onMouseOut={hideDD}
 					>
 						<img
 							src={constants.pfpLink + "/" + props.uploader!.username}
@@ -72,19 +53,18 @@ export default function VideoCard(props: VideoData) {
 						/>
 					</div>
 				</Link>
-				{showProfileDD && (
-					<CardDropdown
-						{...props}
-						onMouseOver={handleDDMouseOver}
-						onMouseOut={handleMouseOut}
-					/>
-				)}
+				<CardDropdown
+					{...props}
+					showDropdown={showProfileDD}
+					onMouseOver={showDD}
+					onMouseOut={hideDD}
+				/>
 			</div>
 			<div className="card-content">
 				<header>
 					<div className="uploader">
 						<Link to={"/user/" + props.uploader!.username} className="username">
-							<h4 onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>
+							<h4 onMouseOver={showDD} onMouseOut={hideDD}>
 								{props.uploader!.username}
 							</h4>
 						</Link>
