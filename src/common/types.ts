@@ -16,6 +16,7 @@ export interface UserData extends CommonData {
 	followers?: number | UserData[];
 	totalLikes?: number;
 	videos?: VideoData[] | string[]; // either uploaded or liked, can't be both
+	isFollowing?: boolean;
 }
 
 export interface VideoData extends CommonData {
@@ -79,4 +80,5 @@ export interface UserQuery {
 	following?: "list" | "num";
 	followers?: "list" | "num";
 	videos?: "uploaded" | "liked";
+	loggedInAs?: string;
 }

@@ -66,7 +66,8 @@ export default function CardDropdown(props: Props) {
 					</div>
 					<div className="counts">
 						<p>
-							<span>{user.followers}</span> Followers
+							<span>{user.followers}</span>&nbsp;
+							{user.followers! === 1 ? "Follower" : "Followers"}
 						</p>
 						<p>
 							<span>{user.totalLikes}</span>&nbsp;

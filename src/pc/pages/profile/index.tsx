@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import "./profile.scss";
@@ -6,10 +6,10 @@ import Container from "../../components/container";
 import VideosLayout from "./VideosLayout";
 import Sidebar, { suggestedAccounts } from "../../components/sidebar";
 import ProfileButtons from "../../components/profile-buttons";
-import { useAppDispatch } from "../../../common/store";
+import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { videoModalActions } from "../../store/slices/video-modal-slice";
 import { joinClasses, modifyScrollbar } from "../../../common/utils";
-import { getLikedVideos, getUser } from "../../../common/api/user";
+import { getLikedVideos, getUser, followUser } from "../../../common/api/user";
 import { UserData } from "../../../common/types";
 import { notificationActions } from "../../store/slices/notification-slice";
 import constants from "../../../common/constants";
@@ -18,6 +18,11 @@ import LoadingSpinner from "../../components/loading-spinner";
 export default function Profile() {
 	const { username } = useParams();
 	const dispatch = useAppDispatch();
+	const loggedInAs = useAppSelector(state => state.auth.username);
+	const isOwnProfile = useMemo(
+		() => (loggedInAs ? username === loggedInAs : false),
+		[username, loggedInAs]
+	);
 	const [user, setUser] = useState<UserData | null>(null);
 	const [likedVideos, setLikesVideos] = useState<string[] | null>(null);
 	const [videosType, setVideosType] = useState<"uploaded" | "liked">(
@@ -25,24 +30,24 @@ export default function Profile() {
 	);
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		async function fetchData() {
-			try {
-				if (!username) throw new Error("Invalid URL");
-				const res = await getUser(username);
-				setUser(res.data);
-			} catch (err: any) {
-				dispatch(
-					notificationActions.showNotification({
-						type: "error",
-						message: err.message
-					})
-				);
-				navigate("/", { replace: true });
-			}
+	const fetchData = useCallback(async () => {
+		try {
+			const res = await getUser(username!, loggedInAs);
+			setUser(res.data);
+		} catch (err: any) {
+			dispatch(
+				notificationActions.showNotification({
+					type: "error",
+					message: err.message
+				})
+			);
+			navigate("/", { replace: true });
 		}
+	}, [username, navigate, dispatch, loggedInAs]);
+
+	useEffect(() => {
 		fetchData();
-	}, [username, navigate, dispatch]);
+	}, [fetchData]);
 
 	function handleModalOpen(ind: number) {
 		modifyScrollbar("hide");
@@ -66,6 +71,20 @@ export default function Profile() {
 		}
 	}, [username, dispatch, likedVideos]);
 
+	async function follow() {
+		try {
+			await followUser(username!, loggedInAs);
+			fetchData();
+		} catch (err: any) {
+			dispatch(
+				notificationActions.showNotification({
+					type: "error",
+					message: err.message
+				})
+			);
+		}
+	}
+
 	return (
 		<Container className="profile-page-container">
 			<Sidebar />
@@ -84,7 +103,17 @@ export default function Profile() {
 							<div className="names">
 								<h1>{user!.username}</h1>
 								<h4>{user!.name}</h4>
-								<button className="primary-button">Follow</button>
+								{isOwnProfile ? (
+									<button className="info-button">Edit Profile</button>
+								) : user!.isFollowing ? (
+									<button className="secondary-button" onClick={follow}>
+										Following
+									</button>
+								) : (
+									<button className="primary-button" onClick={follow}>
+										Follow
+									</button>
+								)}
 							</div>
 						</header>
 						<div className="user-details">
@@ -93,7 +122,8 @@ export default function Profile() {
 									<strong>{user!.following}</strong> Following
 								</p>
 								<p>
-									<strong>{user!.followers}</strong> Followers
+									<strong>{user!.followers}</strong>
+									{user!.followers! === 1 ? "Follower" : "Followers"}
 								</p>
 								<p>
 									<strong>{user!.totalLikes}</strong>

@@ -74,7 +74,9 @@ export default function Sidebar() {
 						<span>
 							Log in to follow creators, like videos, and view comments.
 						</span>
-						<button onClick={handleClick}>Log In</button>
+						<button className="secondary-button" onClick={handleClick}>
+							Log In
+						</button>
 					</div>
 				)}
 				<div className="suggested">

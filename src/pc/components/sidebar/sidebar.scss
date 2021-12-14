@@ -62,19 +62,6 @@ $bg-transition: background-color 0.25s ease-out;
 		color: rgba(var(--clr-secondary-values), 0.5);
 		border-bottom: 2px solid var(--clr-border);
 		font-size: 0.9rem;
-
-		button {
-			color: var(--clr-primary);
-			font-weight: 600;
-			font-size: 1rem;
-			padding: 10px;
-			border-radius: $btn-border-radius;
-			border: 1px solid var(--clr-primary);
-
-			&:hover {
-				background-color: rgba(var(--clr-primary-values), 0.06);
-			}
-		}
 	}
 
 	.suggested,

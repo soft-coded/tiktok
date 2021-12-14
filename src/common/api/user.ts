@@ -14,12 +14,16 @@ export const getShortUser = (username: string) =>
 
 const params: UserQuery = {
 	...shortParams,
-	name: "1",
 	following: "num",
 	videos: "uploaded"
 };
-export const getUser = (username: string) =>
-	apiClient.get(userURL + "/" + username, { params });
+export const getUser = (username: string, loggedInAs?: string | null) =>
+	apiClient.get(userURL + "/" + username, {
+		params: { ...params, loggedInAs }
+	});
 
 export const getLikedVideos = (username: string) =>
 	apiClient.get(userURL + "/" + username, { params: { videos: "liked" } });
+
+export const followUser = (toFollow: string, loggedInAs: string | null) =>
+	apiClient.post(userURL + "/follow", { toFollow, loggedInAs });
