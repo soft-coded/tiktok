@@ -39,13 +39,7 @@ const authSlice = createSlice({
 	name: "auth",
 	initialState,
 	reducers: {
-		login(state, action) {
-			state.username = action.payload.username;
-			state.token = action.payload.token;
-			state.isAuthenticated = true;
-			state.status = null;
-			state.error = null;
-
+		login(_, action) {
 			localStorage.setItem(
 				"userData",
 				JSON.stringify({
@@ -53,22 +47,27 @@ const authSlice = createSlice({
 					token: action.payload.token
 				})
 			);
+			// fetch from the store after reload
+			window.location.reload();
 		},
-		logout(state) {
-			state.username = null;
-			state.token = null;
-			state.isAuthenticated = false;
-			state.error = null;
-			state.status = null;
-
+		logout() {
 			localStorage.removeItem("userData");
+			// reload automatically resets all state
+			window.location.reload();
 		},
-		loginOnLoad(state, action) {
-			const userData = localStorage.getItem("userData");
-			if (userData) {
-				action.payload = JSON.parse(userData);
-				authSlice.caseReducers.login(state, action);
-			} else state.status = null;
+		loginOnLoad(state) {
+			if (localStorage.getItem("userData"))
+				authSlice.caseReducers.setFromStore(state);
+			else state.status = null;
+		},
+		// !!!reducer to be used internally, should *not* be called from outside!!!
+		setFromStore(state) {
+			const user = JSON.parse(localStorage.getItem("userData")!);
+			state.username = user.username;
+			state.token = user.token;
+			state.isAuthenticated = true;
+			state.status = null;
+			state.error = null;
 		}
 	},
 	extraReducers: builder => {

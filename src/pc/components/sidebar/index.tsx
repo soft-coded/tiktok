@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { NavLink, Link } from "react-router-dom";
 
 import "./sidebar.scss";
@@ -52,22 +52,23 @@ export default function Sidebar() {
 		state => state.pc.sidebar
 	);
 
+	const getFollowing = useCallback(async () => {
+		try {
+			await dispatch(fetchFollowing(username!)).unwrap();
+		} catch (err: any) {
+			dispatch(
+				notificationActions.showNotification({
+					type: "error",
+					message: "Couldn't fetch users you follow: " + err.message
+				})
+			);
+		}
+	}, [dispatch, username]);
+
 	useEffect(() => {
 		if (!isAuthed || followingList) return;
-		async function getFollowing() {
-			try {
-				await dispatch(fetchFollowing(username!)).unwrap();
-			} catch (err: any) {
-				dispatch(
-					notificationActions.showNotification({
-						type: "error",
-						message: "Couldn't fetch users you follow: " + err.message
-					})
-				);
-			}
-		}
 		getFollowing();
-	}, [isAuthed, dispatch, username, followingList]);
+	}, [isAuthed, getFollowing, followingList]);
 
 	function handleClick() {
 		dispatch(authModalActions.showModal());
