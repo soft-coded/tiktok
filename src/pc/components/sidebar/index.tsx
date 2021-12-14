@@ -1,9 +1,14 @@
+import { useState, useEffect } from "react";
 import { NavLink, Link } from "react-router-dom";
 
 import "./sidebar.scss";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { authModalActions } from "../../store/slices/auth-modal-slice";
 import { joinClasses } from "../../../common/utils";
+import { notificationActions } from "../../store/slices/notification-slice";
+import { fetchFollowing } from "../../store/slices/sidebar-slice";
+import constants from "../../../common/constants";
+import LoadingSpinner from "../loading-spinner";
 
 export const suggestedAccounts = [
 	{
@@ -40,7 +45,29 @@ export const suggestedAccounts = [
 
 export default function Sidebar() {
 	const dispatch = useAppDispatch();
-	const isAuthed = useAppSelector(state => state.auth.isAuthenticated);
+	const { isAuthenticated: isAuthed, username } = useAppSelector(
+		state => state.auth
+	);
+	const { following: followingList } = useAppSelector(
+		state => state.pc.sidebar
+	);
+
+	useEffect(() => {
+		if (!isAuthed || followingList) return;
+		async function getFollowing() {
+			try {
+				await dispatch(fetchFollowing(username!)).unwrap();
+			} catch (err: any) {
+				dispatch(
+					notificationActions.showNotification({
+						type: "error",
+						message: "Couldn't fetch users you follow: " + err.message
+					})
+				);
+			}
+		}
+		getFollowing();
+	}, [isAuthed, dispatch, username, followingList]);
 
 	function handleClick() {
 		dispatch(authModalActions.showModal());
@@ -107,19 +134,28 @@ export default function Sidebar() {
 							<h5 className="see-all">See all</h5>
 						</header>
 						<div className="accounts">
-							{suggestedAccounts.map((acc, i) => (
-								<Link key={i} to={"/user/" + acc.username}>
-									<div className={joinClasses("hoverable", "account-details")}>
-										<div className="rounded-photo">
-											<img src={acc.photo} alt={acc.name} />
+							{followingList ? (
+								followingList.map((acc, i) => (
+									<Link key={i} to={"/user/" + acc.username}>
+										<div
+											className={joinClasses("hoverable", "account-details")}
+										>
+											<div className="rounded-photo">
+												<img
+													src={constants.pfpLink + "/" + acc.username}
+													alt={acc.name}
+												/>
+											</div>
+											<div className="name-container">
+												<h5>{acc.username}</h5>
+												<h6>{acc.name}</h6>
+											</div>
 										</div>
-										<div className="name-container">
-											<h5>{acc.username}</h5>
-											<h6>{acc.name}</h6>
-										</div>
-									</div>
-								</Link>
-							))}
+									</Link>
+								))
+							) : (
+								<LoadingSpinner className="spinner" />
+							)}
 						</div>
 					</div>
 				)}

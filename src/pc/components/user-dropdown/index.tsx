@@ -40,6 +40,12 @@ export default function UserDropdown(props: Props) {
 				);
 			}
 		}
+
+		return () => {
+			clearTimeout(DDMountTimeout);
+			clearTimeout(DDHideTimeout);
+			clearTimeout(DDUnmountTimeout);
+		};
 	}, [showDropdown]);
 
 	return showDD ? <Dropdown {...props} /> : null;

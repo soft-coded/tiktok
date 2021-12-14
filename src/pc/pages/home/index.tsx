@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 
 import "./home.scss";
-import Container from "../../components/container";
-import Sidebar from "../../components/sidebar";
+import PageWithSidebar from "../../components/page-with-sidebar";
 import VideoCard from "../../components/video-card";
 import { VideoData } from "../../../common/types";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
@@ -34,8 +33,7 @@ export default function Home() {
 	}, [dispatch, username]);
 
 	return (
-		<Container className="homepage-container">
-			<Sidebar />
+		<PageWithSidebar className="homepage-container">
 			<div className="content-container">
 				{!feed ? (
 					<LoadingSpinner />
@@ -43,6 +41,6 @@ export default function Home() {
 					feed.map(video => <VideoCard key={video.videoId} {...video} />)
 				)}
 			</div>
-		</Container>
+		</PageWithSidebar>
 	);
 }

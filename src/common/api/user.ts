@@ -22,6 +22,9 @@ export const getUser = (username: string, loggedInAs?: string | null) =>
 		params: { ...params, loggedInAs }
 	});
 
+export const getCustom = (params: UserQuery, username: string) =>
+	apiClient.get(userURL + "/" + username, { params });
+
 export const getLikedVideos = (username: string) =>
 	apiClient.get(userURL + "/" + username, { params: { videos: "liked" } });
 

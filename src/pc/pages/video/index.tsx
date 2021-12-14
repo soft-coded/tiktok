@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import "./video.scss";
-import Container from "../../components/container";
-import Sidebar from "../../components/sidebar";
+import PageWithSidebar from "../../components/page-with-sidebar";
 import VideoCard from "../../components/video-card";
 import { VideoData } from "../../../common/types";
 import { getVideo } from "../../../common/api/video";
@@ -38,11 +37,10 @@ export default function Video() {
 	}, [videoId, dispatch, navigate, username]);
 
 	return (
-		<Container className="video-page-container">
-			<Sidebar />
+		<PageWithSidebar className="video-page-container">
 			<div className={"content-container"}>
 				{!videoData ? <LoadingSpinner /> : <VideoCard {...videoData} />}
 			</div>
-		</Container>
+		</PageWithSidebar>
 	);
 }

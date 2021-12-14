@@ -24,7 +24,7 @@ $bg-transition: background-color 0.25s ease-out;
 	background: var(--clr-background);
 	width: $sidebar-width;
 	padding-right: 8px;
-	padding-bottom: 100px;
+	padding-bottom: 24px;
 	margin: 4px 0;
 
 	nav {
@@ -109,5 +109,9 @@ $bg-transition: background-color 0.25s ease-out;
 
 	.following {
 		border-top: 2px solid var(--clr-border);
+	}
+
+	.spinner {
+		--circle-size: 12px;
 	}
 }
