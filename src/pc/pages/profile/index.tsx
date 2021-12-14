@@ -97,15 +97,15 @@ export default function Profile() {
 							<div className="rounded-photo">
 								<img
 									src={constants.pfpLink + "/" + user!.username}
-									alt={user!.name}
+									alt={user.name}
 								/>
 							</div>
 							<div className="names">
-								<h1>{user!.username}</h1>
-								<h4>{user!.name}</h4>
+								<h1>{user.username}</h1>
+								<h4>{user.name}</h4>
 								{isOwnProfile ? (
 									<button className="info-button">Edit Profile</button>
-								) : user!.isFollowing ? (
+								) : user.isFollowing ? (
 									<button className="secondary-button" onClick={follow}>
 										Following
 									</button>
@@ -119,18 +119,18 @@ export default function Profile() {
 						<div className="user-details">
 							<div className="counts">
 								<p>
-									<strong>{user!.following}</strong> Following
+									<strong>{user.following}</strong> Following
 								</p>
 								<p>
-									<strong>{user!.followers}</strong>
-									{user!.followers! === 1 ? "Follower" : "Followers"}
+									<strong>{user.followers}</strong>
+									{user.followers === 1 ? "Follower" : "Followers"}
 								</p>
 								<p>
-									<strong>{user!.totalLikes}</strong>
-									{user!.totalLikes! === 1 ? "Like" : "Likes"}
+									<strong>{user.totalLikes}</strong>
+									{user.totalLikes === 1 ? "Like" : "Likes"}
 								</p>
 							</div>
-							<p className="description">{user!.description}</p>
+							<p className="description">{user.description}</p>
 						</div>
 						<div className="suggested">
 							<h5>
@@ -157,14 +157,14 @@ export default function Profile() {
 								"profile-cards-container",
 								(videosType === "liked" &&
 									(!likedVideos || likedVideos.length === 0)) ||
-									(videosType === "uploaded" && user!.videos!.length === 0)
+									(videosType === "uploaded" && user.videos!.length === 0)
 									? "ungrid"
 									: ""
 							)}
 						>
 							{videosType === "uploaded" ? (
 								<VideosLayout
-									videos={user!.videos! as string[]}
+									videos={user.videos as string[]}
 									handleModalOpen={handleModalOpen}
 								/>
 							) : !likedVideos ? (
