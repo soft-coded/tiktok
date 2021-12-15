@@ -1,23 +1,18 @@
 import ProfileCard from "../../components/profile-card";
 import constants from "../../../common/constants";
+import { VideoData } from "../../../common/types";
 
 interface Props {
-	videos: string[];
-	handleModalOpen: (a: number) => void;
+	videos: VideoData[];
 }
 
-export default function VideosLayout({ videos, handleModalOpen }: Props) {
+export default function VideosLayout({ videos }: Props) {
 	return videos.length === 0 ? (
 		<h4>No videos.</h4>
 	) : (
 		<>
 			{videos.map((video, i) => (
-				<ProfileCard
-					key={i}
-					index={i}
-					video={constants.videoLink + "/" + video}
-					handleModalOpen={handleModalOpen}
-				/>
+				<ProfileCard key={i} {...video} />
 			))}
 		</>
 	);

@@ -7,9 +7,9 @@ import VideosLayout from "./VideosLayout";
 import FollowButton from "../../components/follow-button";
 import ProfileButtons from "../../components/profile-buttons";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
-import { joinClasses, modifyScrollbar } from "../../../common/utils";
+import { joinClasses } from "../../../common/utils";
 import { getLikedVideos, getUser } from "../../../common/api/user";
-import { UserData } from "../../../common/types";
+import { UserData, VideoData } from "../../../common/types";
 import { notificationActions } from "../../store/slices/notification-slice";
 import constants from "../../../common/constants";
 import LoadingSpinner from "../../components/loading-spinner";
@@ -49,10 +49,6 @@ export default function Profile() {
 		fetchData();
 	}, [fetchData]);
 
-	function handleModalOpen(ind: number) {
-		modifyScrollbar("hide");
-	}
-
 	const fetchLikedVids = useCallback(async () => {
 		if (!likedVideos) {
 			try {
@@ -77,7 +73,7 @@ export default function Profile() {
 					<LoadingSpinner className="spinner" />
 				) : (
 					<>
-						<header>
+						<header className="profile-header">
 							<div className="rounded-photo">
 								<img
 									src={constants.pfpLink + "/" + user!.username}
@@ -152,17 +148,11 @@ export default function Profile() {
 							)}
 						>
 							{videosType === "uploaded" ? (
-								<VideosLayout
-									videos={user.videos as string[]}
-									handleModalOpen={handleModalOpen}
-								/>
+								<VideosLayout videos={user.videos as VideoData[]} />
 							) : !likedVideos ? (
 								<LoadingSpinner className="liked-spinner" />
 							) : (
-								<VideosLayout
-									videos={likedVideos}
-									handleModalOpen={handleModalOpen}
-								/>
+								<VideosLayout videos={likedVideos as VideoData[]} />
 							)}
 						</div>
 					</>

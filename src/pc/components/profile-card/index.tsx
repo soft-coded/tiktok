@@ -1,27 +1,39 @@
+import { useState, Suspense, lazy } from "react";
+
 import "./profile-card.scss";
+import FullscreenSpinner from "../../components/fullscreen-spinner";
+import { VideoData } from "../../../common/types";
+import { modifyScrollbar } from "../../../common/utils";
+import constants from "../../../common/constants";
+const VideoModal = lazy(() => import("../../components/video-modal"));
 
-interface CardProps {
-	video: string;
-	index: number;
-	handleModalOpen: (i: number) => void;
-}
+// interface CardProps extends VideoData {
+// }
 
-export default function ProfileCard({
-	video,
-	handleModalOpen,
-	index
-}: CardProps) {
+export default function ProfileCard(props: VideoData) {
+	const [showModal, setShowModal] = useState(false);
+
+	function handleModalOpen() {
+		modifyScrollbar("hide");
+		setShowModal(true);
+	}
+
 	return (
 		<div className="profile-card">
+			{showModal && (
+				<Suspense fallback={<FullscreenSpinner />}>
+					<VideoModal {...props} setShowModal={setShowModal} />
+				</Suspense>
+			)}
 			<div className="video-container">
 				<video
-					src={video}
+					src={constants.videoLink + "/" + props.videoId}
 					playsInline
 					muted
 					loop
-					onClick={() => handleModalOpen(index)}
 					onMouseOver={e => (e.target as HTMLVideoElement).play()}
 					onMouseOut={e => (e.target as HTMLVideoElement).pause()}
+					onClick={handleModalOpen}
 				>
 					Your browser does not support videos.
 				</video>
