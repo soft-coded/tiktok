@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import "./user-dropdown.scss";
 import Dropdown from "../dropdown";
 import LoadingSpinner from "../loading-spinner";
-import { useAppDispatch } from "../../../common/store";
+import FollowButton from "../follow-button";
+import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { UserData } from "../../../common/types";
 import constants from "../../../common/constants";
 import { getShortUser } from "../../../common/api/user";
@@ -13,16 +14,18 @@ interface Props {
 	onMouseOver: () => void;
 	onMouseOut: () => void;
 	username: string;
+	onFollow?: (a?: any) => any;
 }
 
 export default function CardDropdown(props: Props) {
 	const [user, setUser] = useState<UserData | null>(null);
+	const loggedInAs = useAppSelector(state => state.auth.username);
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
 		async function fetchData() {
 			try {
-				const res = await getShortUser(props.username);
+				const res = await getShortUser(props.username, loggedInAs);
 				setUser(res.data);
 			} catch (err: any) {
 				dispatch(
@@ -54,9 +57,16 @@ export default function CardDropdown(props: Props) {
 								alt={user.name}
 							/>
 						</div>
-						<div className="follow-btn">
-							<button>Follow</button>
-						</div>
+						{loggedInAs !== user.username && (
+							<div className="follow-btn">
+								<FollowButton
+									isFollowing={user.isFollowing}
+									toFollow={user.username!}
+									followingClassName="info-button"
+									onClick={props.onFollow}
+								/>
+							</div>
+						)}
 					</div>
 					<div className="card-content dd-card-names">
 						<header className="names-header">

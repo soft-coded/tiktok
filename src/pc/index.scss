@@ -112,15 +112,24 @@ $scrollbar-track-color: rgba(var(--clr-secondary-values), 0.25);
 		&:hover {
 			background-color: rgba(var(--clr-primary-values), 0.06);
 		}
+
+		&.info-button {
+			color: rgba(var(--clr-secondary-values), 0.8);
+			border-color: rgba(var(--clr-secondary-values), 0.8);
+
+			&:hover {
+				background-color: rgba(var(--clr-secondary-values), 0.06);
+			}
+		}
 	}
 }
 
 .tags {
 	font-size: 0.85rem;
 	font-weight: 600;
-	cursor: pointer;
 
 	span:hover {
+		cursor: pointer;
 		text-decoration: underline;
 	}
 }

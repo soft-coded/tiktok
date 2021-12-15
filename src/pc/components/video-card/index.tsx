@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 
 import "./video-card.scss";
 import ActionButton from "../action-button";
+import FollowButton from "../follow-button";
 import Likes from "../video-modal/Likes";
-import { useAppDispatch } from "../../../common/store";
+import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { modifyScrollbar, convertToDate } from "../../../common/utils";
 import { VideoData } from "../../../common/types";
 import { videoModalActions } from "../../store/slices/video-modal-slice";
@@ -14,6 +15,8 @@ import { authModalActions } from "../../store/slices/auth-modal-slice";
 
 export default function VideoCard(props: VideoData) {
 	const [showProfileDD, setShowProfileDD] = useState(false);
+	const loggedInAs = useAppSelector(state => state.auth.username);
+	const [isFollowing, setIsFollowing] = useState(props.isFollowing);
 	const dispatch = useAppDispatch();
 
 	function handleModalOpen() {
@@ -31,6 +34,10 @@ export default function VideoCard(props: VideoData) {
 
 	function hideDD() {
 		setShowProfileDD(false);
+	}
+
+	function onFollow(res?: boolean) {
+		setIsFollowing(res);
 	}
 
 	return (
@@ -53,6 +60,7 @@ export default function VideoCard(props: VideoData) {
 					showDropdown={showProfileDD}
 					onMouseOver={showDD}
 					onMouseOut={hideDD}
+					onFollow={onFollow}
 				/>
 			</div>
 			<div className="card-content">
@@ -71,9 +79,16 @@ export default function VideoCard(props: VideoData) {
 							</span>
 						</h5>
 					</div>
-					<div className="follow-btn">
-						<button>Follow</button>
-					</div>
+					{!isFollowing && loggedInAs !== props.uploader!.username && (
+						<div className="follow-btn">
+							<FollowButton
+								isFollowing={isFollowing}
+								toFollow={props.uploader!.username!}
+								onClick={onFollow}
+								hideUnfollow={true}
+							/>
+						</div>
+					)}
 				</header>
 				<p className="caption">{props.caption}</p>
 				<p className="tags">

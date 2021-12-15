@@ -32,6 +32,7 @@ export interface VideoData extends CommonData {
 	shares?: number;
 	views?: number;
 	hasLiked?: boolean;
+	isFollowing?: boolean;
 }
 
 export interface CommentData extends CommonData {

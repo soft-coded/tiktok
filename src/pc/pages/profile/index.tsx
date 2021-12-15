@@ -93,7 +93,7 @@ export default function Profile() {
 									<FollowButton
 										onClick={fetchData}
 										isFollowing={user.isFollowing!}
-										username={username!}
+										toFollow={username!}
 										followClassName="primary-button"
 										followingClassName="secondary-button"
 									/>

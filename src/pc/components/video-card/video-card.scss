@@ -27,8 +27,8 @@ $video-player-height: calc(450px + (100vw - 768px) / 1152 * 100);
 
 		header {
 			display: flex;
-			align-items: baseline;
 			gap: 6px;
+			height: 24px;
 
 			.username {
 				font-weight: 700;

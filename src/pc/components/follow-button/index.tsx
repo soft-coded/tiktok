@@ -6,25 +6,42 @@ import { notificationActions } from "../../store/slices/notification-slice";
 import { fetchFollowing } from "../../store/slices/sidebar-slice";
 
 interface Props {
-	isFollowing: boolean;
-	username: string;
-	onClick?: () => any;
+	isFollowing?: boolean;
+	toFollow: string;
+	onClick?: (a?: boolean) => any;
 	followingClassName?: string;
 	followClassName?: string;
+	hideUnfollow?: boolean;
 }
 
 export default function FollowButton(props: Props) {
 	const loggedInAs = useAppSelector(state => state.auth.username);
 	const [isFollowing, setIsFollowing] = useState(props.isFollowing);
 	const dispatch = useAppDispatch();
-	const { username, onClick } = props;
+	const { toFollow, onClick } = props;
 
 	const follow = useCallback(async () => {
 		try {
-			const res = await followUser(username!, loggedInAs);
-			await dispatch(fetchFollowing(loggedInAs!)).unwrap();
+			if (!loggedInAs) throw new Error("Log in to follow " + toFollow);
+			const res = await followUser(toFollow, loggedInAs);
+			await dispatch(fetchFollowing(loggedInAs)).unwrap();
 			setIsFollowing(res.data.followed);
-			if (onClick) onClick();
+			if (onClick) onClick(res.data.followed);
+			if (res.data.followed) {
+				dispatch(
+					notificationActions.showNotification({
+						type: "success",
+						message: "You started following " + toFollow
+					})
+				);
+			} else {
+				dispatch(
+					notificationActions.showNotification({
+						type: "success",
+						message: "You unfollowed " + toFollow
+					})
+				);
+			}
 		} catch (err: any) {
 			dispatch(
 				notificationActions.showNotification({
@@ -33,12 +50,14 @@ export default function FollowButton(props: Props) {
 				})
 			);
 		}
-	}, [username, loggedInAs, onClick, dispatch]);
+	}, [toFollow, loggedInAs, onClick, dispatch]);
 
 	return isFollowing ? (
-		<button className={props.followingClassName} onClick={follow}>
-			Following
-		</button>
+		!props.hideUnfollow ? (
+			<button className={props.followingClassName} onClick={follow}>
+				Following
+			</button>
+		) : null
 	) : (
 		<button className={props.followClassName} onClick={follow}>
 			Follow

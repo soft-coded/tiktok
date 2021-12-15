@@ -6,6 +6,7 @@ import { DDAnimationTime } from "../dropdown";
 interface Props {
 	onMouseOver: () => void;
 	onMouseOut: () => void;
+	onFollow?: (a?: any) => any;
 	showDropdown: boolean;
 	username: string;
 }
