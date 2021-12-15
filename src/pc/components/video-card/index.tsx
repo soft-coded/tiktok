@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Suspense, lazy } from "react";
 import { Link } from "react-router-dom";
 
 import "./video-card.scss";
@@ -8,12 +8,16 @@ import Likes from "../video-modal/Likes";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { modifyScrollbar, convertToDate } from "../../../common/utils";
 import { VideoData } from "../../../common/types";
-import { videoModalActions } from "../../store/slices/video-modal-slice";
 import CardDropdown from "../user-dropdown";
 import constants from "../../../common/constants";
 import { authModalActions } from "../../store/slices/auth-modal-slice";
+import FullscreenSpinner from "../fullscreen-spinner";
+const VideoModal = lazy(() => import("../video-modal"));
+
+// http://localhost:3000/video/61b7740ba3691bf1c7fa93ef
 
 export default function VideoCard(props: VideoData) {
+	const [showVideoModal, setShowVideoModal] = useState(false);
 	const [showProfileDD, setShowProfileDD] = useState(false);
 	const loggedInAs = useAppSelector(state => state.auth.username);
 	const [isFollowing, setIsFollowing] = useState(props.isFollowing);
@@ -21,11 +25,7 @@ export default function VideoCard(props: VideoData) {
 
 	function handleModalOpen() {
 		modifyScrollbar("hide");
-		dispatch(
-			videoModalActions.showModal({
-				videoId: props.videoId
-			})
-		);
+		setShowVideoModal(true);
 	}
 
 	function showDD() {
@@ -38,6 +38,11 @@ export default function VideoCard(props: VideoData) {
 
 	return (
 		<div className="app-video-card">
+			{showVideoModal && (
+				<Suspense fallback={<FullscreenSpinner />}>
+					<VideoModal {...props} setShowModal={setShowVideoModal} />
+				</Suspense>
+			)}
 			<div className="profile-pic">
 				<Link to={"/user/" + props.uploader!.username}>
 					<div

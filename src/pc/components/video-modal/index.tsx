@@ -11,7 +11,6 @@ import {
 } from "../../../common/utils";
 import ActionButton from "../action-button";
 import FollowButton from "../follow-button";
-import { videoModalActions } from "../../store/slices/video-modal-slice";
 import { authModalActions } from "../../store/slices/auth-modal-slice";
 import Comment from "./Comment";
 import CommentForm from "./CommentForm";
@@ -20,11 +19,7 @@ import Dropdown from "../dropdown";
 import UserDropdown from "../user-dropdown";
 import constants from "../../../common/constants";
 import { notificationActions } from "../../store/slices/notification-slice";
-import {
-	getVideo,
-	getVidComments,
-	deleteVideo
-} from "../../../common/api/video";
+import { getVidComments, deleteVideo } from "../../../common/api/video";
 import LoadingSpinner from "../loading-spinner";
 
 export interface ModalProps extends VideoData {
@@ -41,19 +36,19 @@ export default function VideoModal(props: ModalProps) {
 		username,
 		token
 	} = useAppSelector(state => state.auth);
-	const [videoData, setVideoData] = useState<VideoData | null>(null);
 	const [comments, setComments] = useState<CommentData[] | null>(null);
 	const [showDropdown, setShowDropdown] = useState(false);
 	const [showOptions, setShowOptions] = useState(false);
 	const isPoster = useMemo(
-		() => (videoData ? username === videoData.uploader!.username : false),
-		[videoData, username]
+		() => username === props.uploader!.username,
+		[username, props.uploader]
 	);
 	const curVidId = useMemo(
 		() =>
 			props.video ? props.video : props.videoId ? props.videoId : props._id!,
 		[props.video, props._id, props.videoId]
 	);
+	const { setShowModal } = props;
 
 	useEffect(() => {
 		url.prevURL = window.location.href;
@@ -64,8 +59,8 @@ export default function VideoModal(props: ModalProps) {
 
 	const handleModalClose = useCallback(() => {
 		modifyScrollbar("show");
-		dispatch(videoModalActions.hideModal());
-	}, [dispatch]);
+		setShowModal(false);
+	}, [setShowModal]);
 
 	const fetchComments = useCallback(async () => {
 		try {
@@ -82,33 +77,17 @@ export default function VideoModal(props: ModalProps) {
 		}
 	}, [dispatch, curVidId, username]);
 
-	const fetchVid = useCallback(async () => {
-		try {
-			const res = await getVideo(curVidId, username);
-			setVideoData(res.data);
-		} catch (err: any) {
-			dispatch(
-				notificationActions.showNotification({
-					type: "error",
-					message: err.message
-				})
-			);
-			handleModalClose();
-		}
-	}, [curVidId, dispatch, handleModalClose, username]);
-
 	useEffect(() => {
-		fetchVid();
 		fetchComments();
-	}, [fetchVid, fetchComments]);
+	}, [fetchComments]);
 
 	function handleAuthModalOpen() {
 		dispatch(authModalActions.showModal());
 	}
 
 	function showProfile() {
-		url.prevURL = "/user/" + videoData!.uploader!.username;
-		navigate("/user/" + videoData!.uploader!.username);
+		url.prevURL = "/user/" + props!.uploader!.username;
+		navigate("/user/" + props!.uploader!.username);
 		handleModalClose();
 	}
 
@@ -168,143 +147,130 @@ export default function VideoModal(props: ModalProps) {
 				</div>
 			</div>
 			<div className="modal-content">
-				{!videoData ? (
-					<LoadingSpinner />
-				) : (
-					<>
-						<div className="modal-top">
-							<header>
-								<div
-									className="clickable rounded-photo"
-									onClick={showProfile}
-									onMouseOver={showDD}
-									onMouseOut={hideDD}
-								>
-									<img
-										src={constants.pfpLink + "/" + videoData.uploader!.username}
-										alt={videoData.uploader!.name}
-									/>
-								</div>
-								<div className="names">
-									<h3
-										className="clickable"
-										onClick={showProfile}
-										onMouseOver={showDD}
-										onMouseOut={hideDD}
-									>
-										{videoData.uploader!.username}
-									</h3>
-									<h4>
-										{videoData.uploader!.name} |&nbsp;
-										<span>{convertToDate(videoData.createdAt!)}</span>
-									</h4>
-								</div>
-								<UserDropdown
-									username={videoData.uploader!.username!}
-									onMouseOver={showDD}
-									onMouseOut={hideDD}
-									showDropdown={showDropdown}
-								/>
-								<div className="follow-btn">
-									{isPoster ? (
-										<>
-											<i
-												className="clickable fas fa-ellipsis-h"
-												onClick={() => setShowOptions(true)}
-											/>
-											{showOptions && (
-												<Dropdown
-													className="vid-dropdown"
-													setShowDropdown={setShowOptions}
-												>
-													<span className="hoverable" onClick={delVid}>
-														<i className="fas fa-trash-alt" /> Delete
-													</span>
-												</Dropdown>
-											)}
-										</>
-									) : (
-										!videoData.isFollowing &&
-										username !== videoData.uploader!.username && (
-											<div className="follow-btn">
-												<FollowButton
-													isFollowing={videoData.isFollowing}
-													toFollow={videoData.uploader!.username!}
-													hideUnfollow={true}
-												/>
-											</div>
-										)
-									)}
-								</div>
-							</header>
-							<p className="caption">{videoData.caption}</p>
-							<p className="tags">
-								{videoData.tags!.map((tag, i) => (
-									<span key={i}>#{tag} </span>
-								))}
-							</p>
-							<h5 className="music">
-								<i className="fas fa-music" /> {videoData.music}
-							</h5>
-							<div className="action-buttons">
-								<Likes
-									handleAuthModalOpen={handleAuthModalOpen}
-									likes={videoData.likes!}
-									curVidId={curVidId}
-									hasLiked={videoData.hasLiked}
-								/>
-								<label htmlFor="comment">
-									<ActionButton
-										icon={<i className="fas fa-comment-dots" />}
-										number={videoData.comments as number}
-										className="action-btn-container"
-									/>
-								</label>
-							</div>
-						</div>
+				<div className="modal-top">
+					<header>
 						<div
-							className={joinClasses("comments", isAuthed ? "container" : "")}
+							className="clickable rounded-photo"
+							onClick={showProfile}
+							onMouseOver={showDD}
+							onMouseOut={hideDD}
 						>
-							{isAuthed ? (
-								!comments ? (
-									<LoadingSpinner />
-								) : (
-									comments.map((comment, i) => (
-										<Comment
-											key={i}
-											{...comment}
-											handleModalClose={handleModalClose}
-											url={url}
-											videoId={curVidId}
-											setComments={setComments}
-											fetchComments={fetchComments}
-										/>
-									))
-								)
+							<img
+								src={constants.pfpLink + "/" + props.uploader!.username}
+								alt={props.uploader!.name}
+							/>
+						</div>
+						<div className="names">
+							<h3
+								className="clickable"
+								onClick={showProfile}
+								onMouseOver={showDD}
+								onMouseOut={hideDD}
+							>
+								{props.uploader!.username}
+							</h3>
+							<h4>
+								{props.uploader!.name} |&nbsp;
+								<span>{convertToDate(props.createdAt!)}</span>
+							</h4>
+						</div>
+						<UserDropdown
+							username={props.uploader!.username!}
+							onMouseOver={showDD}
+							onMouseOut={hideDD}
+							showDropdown={showDropdown}
+						/>
+						<div className="follow-btn">
+							{isPoster ? (
+								<>
+									<i
+										className="clickable fas fa-ellipsis-h"
+										onClick={() => setShowOptions(true)}
+									/>
+									{showOptions && (
+										<Dropdown
+											className="vid-dropdown"
+											setShowDropdown={setShowOptions}
+										>
+											<span className="hoverable" onClick={delVid}>
+												<i className="fas fa-trash-alt" /> Delete
+											</span>
+										</Dropdown>
+									)}
+								</>
 							) : (
-								<div className="unauthed">
-									<h1>Log in to see comments</h1>
-									<h5>Log in to see comments and like the video.</h5>
-									<button
-										className="primary-button"
-										onClick={handleAuthModalOpen}
-									>
-										Log In
-									</button>
-									<p>
-										Don't have an account? <Link to="/signup">Sign up</Link>
-									</p>
-								</div>
+								!props.isFollowing &&
+								username !== props.uploader!.username && (
+									<div className="follow-btn">
+										<FollowButton
+											isFollowing={props.isFollowing}
+											toFollow={props.uploader!.username!}
+											hideUnfollow={true}
+										/>
+									</div>
+								)
 							)}
 						</div>
-						{isAuthed && (
-							<CommentForm
-								videoId={curVidId}
-								fetchComments={fetchComments}
-								setComments={setComments}
+					</header>
+					<p className="caption">{props.caption}</p>
+					<p className="tags">
+						{props.tags!.map((tag, i) => (
+							<span key={i}>#{tag} </span>
+						))}
+					</p>
+					<h5 className="music">
+						<i className="fas fa-music" /> {props.music}
+					</h5>
+					<div className="action-buttons">
+						<Likes
+							handleAuthModalOpen={handleAuthModalOpen}
+							likes={props.likes!}
+							curVidId={curVidId}
+							hasLiked={props.hasLiked}
+						/>
+						<label htmlFor="comment">
+							<ActionButton
+								icon={<i className="fas fa-comment-dots" />}
+								number={props.comments as number}
+								className="action-btn-container"
 							/>
-						)}
-					</>
+						</label>
+					</div>
+				</div>
+				<div className={joinClasses("comments", isAuthed ? "container" : "")}>
+					{isAuthed ? (
+						!comments ? (
+							<LoadingSpinner />
+						) : (
+							comments.map((comment, i) => (
+								<Comment
+									key={i}
+									{...comment}
+									handleModalClose={handleModalClose}
+									url={url}
+									videoId={curVidId}
+									setComments={setComments}
+									fetchComments={fetchComments}
+								/>
+							))
+						)
+					) : (
+						<div className="unauthed">
+							<h1>Log in to see comments</h1>
+							<h5>Log in to see comments and like the video.</h5>
+							<button className="primary-button" onClick={handleAuthModalOpen}>
+								Log In
+							</button>
+							<p>Don't have an account? Sign up</p>
+						</div>
+					)}
+				</div>
+				{isAuthed && (
+					<CommentForm
+						videoId={curVidId}
+						fetchComments={fetchComments}
+						setComments={setComments}
+					/>
 				)}
 			</div>
 		</div>

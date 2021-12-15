@@ -7,7 +7,6 @@ import VideosLayout from "./VideosLayout";
 import FollowButton from "../../components/follow-button";
 import ProfileButtons from "../../components/profile-buttons";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
-import { videoModalActions } from "../../store/slices/video-modal-slice";
 import { joinClasses, modifyScrollbar } from "../../../common/utils";
 import { getLikedVideos, getUser } from "../../../common/api/user";
 import { UserData } from "../../../common/types";
@@ -52,7 +51,6 @@ export default function Profile() {
 
 	function handleModalOpen(ind: number) {
 		modifyScrollbar("hide");
-		dispatch(videoModalActions.showModal({ videoId: user!.videos![ind] }));
 	}
 
 	const fetchLikedVids = useCallback(async () => {

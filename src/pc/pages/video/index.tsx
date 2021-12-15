@@ -22,6 +22,7 @@ export default function Video() {
 			try {
 				if (!videoId) throw new Error("Invalid URL");
 				const res = await getVideo(videoId, username);
+				delete res.data.success;
 				setVideoData(res.data);
 			} catch (err: any) {
 				dispatch(
