@@ -24,10 +24,13 @@ const fetchFollowing = createAsyncThunk(
 	}
 );
 
-const fetchSuggested = createAsyncThunk("sidebar/suggested", async () => {
-	const res = await getSuggested();
-	return res.data.users;
-});
+const fetchSuggested = createAsyncThunk(
+	"sidebar/suggested",
+	async (limit?: number) => {
+		const res = await getSuggested(limit);
+		return res.data.users;
+	}
+);
 
 const sidebarSlice = createSlice({
 	name: "sidebar",

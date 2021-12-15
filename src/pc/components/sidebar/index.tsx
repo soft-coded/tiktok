@@ -42,7 +42,7 @@ export default function Sidebar() {
 		if (suggestedAccounts) return;
 		async function getSuggested() {
 			try {
-				await dispatch(fetchSuggested()).unwrap();
+				await dispatch(fetchSuggested(5)).unwrap();
 			} catch (err: any) {
 				dispatch(
 					notificationActions.showNotification({
@@ -101,7 +101,7 @@ export default function Sidebar() {
 						{suggestedAccounts ? (
 							suggestedAccounts.map((acc, i) => (
 								<Link key={i} to={"/user/" + acc.username}>
-									<div className={joinClasses("hoverable", "account-details")}>
+									<div className="hoverable account-details">
 										<div className="rounded-photo">
 											<img
 												src={constants.pfpLink + "/" + acc.username}

@@ -5,4 +5,5 @@ const feedURL = "/feed";
 export const getFeed = (username?: string | null) =>
 	apiClient.get(feedURL, { params: { username } });
 
-export const getSuggested = () => apiClient.get(feedURL + "/suggested");
+export const getSuggested = (limit?: number) =>
+	apiClient.get(feedURL + "/suggested", { params: { limit } });
