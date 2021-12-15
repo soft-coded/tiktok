@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { getCustom } from "../../../common/api/user";
+import { getSuggested } from "../../../common/api/feed";
 import { UserData } from "../../../common/types";
 
 interface InitState {
@@ -23,6 +24,11 @@ const fetchFollowing = createAsyncThunk(
 	}
 );
 
+const fetchSuggested = createAsyncThunk("sidebar/suggested", async () => {
+	const res = await getSuggested();
+	return res.data.users;
+});
+
 const sidebarSlice = createSlice({
 	name: "sidebar",
 	initialState,
@@ -42,9 +48,24 @@ const sidebarSlice = createSlice({
 			state.error = null;
 			state.following = action.payload;
 		});
+
+		builder.addCase(fetchSuggested.pending, state => {
+			state.suggested = null;
+			state.error = null;
+		});
+
+		builder.addCase(fetchSuggested.rejected, (state, action) => {
+			state.error = action.error.message!;
+			state.suggested = [];
+		});
+
+		builder.addCase(fetchSuggested.fulfilled, (state, action) => {
+			state.error = null;
+			state.suggested = action.payload;
+		});
 	}
 });
 
 export default sidebarSlice.reducer;
 export const sidebarActions = sidebarSlice.actions;
-export { fetchFollowing };
+export { fetchFollowing, fetchSuggested };

@@ -5,7 +5,6 @@ import "./profile.scss";
 import PageWithSidebar from "../../components/page-with-sidebar";
 import VideosLayout from "./VideosLayout";
 import FollowButton from "../../components/follow-button";
-import { suggestedAccounts } from "../../components/sidebar";
 import ProfileButtons from "../../components/profile-buttons";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { videoModalActions } from "../../store/slices/video-modal-slice";
@@ -20,6 +19,7 @@ export default function Profile() {
 	const { username } = useParams();
 	const dispatch = useAppDispatch();
 	const loggedInAs = useAppSelector(state => state.auth.username);
+	const suggestedAccounts = useAppSelector(state => state.pc.sidebar.suggested);
 	const isOwnProfile = useMemo(
 		() => (loggedInAs ? username === loggedInAs : false),
 		[username, loggedInAs]
@@ -122,14 +122,21 @@ export default function Profile() {
 								<span className="see-all">See all</span>
 							</h5>
 							<div className="account-buttons">
-								{suggestedAccounts.slice(0, 3).map((acc, i) => (
-									<div key={i} className="acc-btn">
-										<div className="rounded-photo">
-											<img src={acc.photo} alt={acc.name} />
+								{suggestedAccounts ? (
+									suggestedAccounts.slice(0, 3).map((acc, i) => (
+										<div key={i} className="acc-btn">
+											<div className="rounded-photo">
+												<img
+													src={constants.pfpLink + "/" + acc.username}
+													alt={acc.name}
+												/>
+											</div>
+											<h4>{acc.username}</h4>
 										</div>
-										<h4>{acc.username}</h4>
-									</div>
-								))}
+									))
+								) : (
+									<LoadingSpinner className="spinner" />
+								)}
 							</div>
 						</div>
 						<ProfileButtons
