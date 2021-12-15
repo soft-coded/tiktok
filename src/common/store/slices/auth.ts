@@ -56,18 +56,13 @@ const authSlice = createSlice({
 			window.location.reload();
 		},
 		loginOnLoad(state) {
-			if (localStorage.getItem("userData"))
-				authSlice.caseReducers.setFromStore(state);
-			else state.status = null;
-		},
-		// !!!reducer to be used internally, should *not* be called from outside!!!
-		setFromStore(state) {
-			const user = JSON.parse(localStorage.getItem("userData")!);
-			state.username = user.username;
-			state.token = user.token;
-			state.isAuthenticated = true;
+			if (localStorage.getItem("userData")) {
+				const user = JSON.parse(localStorage.getItem("userData")!);
+				state.username = user.username;
+				state.token = user.token;
+				state.isAuthenticated = true;
+			}
 			state.status = null;
-			state.error = null;
 		}
 	},
 	extraReducers: builder => {

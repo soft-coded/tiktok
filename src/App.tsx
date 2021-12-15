@@ -11,7 +11,7 @@ export default function App() {
 	const authStatus = useAppSelector(state => state.auth.status);
 
 	useEffect(() => {
-		dispatch(authActions.loginOnLoad(null));
+		dispatch(authActions.loginOnLoad());
 	}, [dispatch]);
 
 	return authStatus === "fetching" ? <FullscreenSpinner /> : <PCLayout />;
