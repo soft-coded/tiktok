@@ -36,10 +36,6 @@ export default function VideoCard(props: VideoData) {
 		setShowProfileDD(false);
 	}
 
-	function onFollow(res?: boolean) {
-		setIsFollowing(res);
-	}
-
 	return (
 		<div className="app-video-card">
 			<div className="profile-pic">
@@ -60,7 +56,7 @@ export default function VideoCard(props: VideoData) {
 					showDropdown={showProfileDD}
 					onMouseOver={showDD}
 					onMouseOut={hideDD}
-					onFollow={onFollow}
+					onFollow={setIsFollowing}
 				/>
 			</div>
 			<div className="card-content">
@@ -84,7 +80,7 @@ export default function VideoCard(props: VideoData) {
 							<FollowButton
 								isFollowing={isFollowing}
 								toFollow={props.uploader!.username!}
-								onClick={onFollow}
+								onClick={setIsFollowing}
 								hideUnfollow={true}
 							/>
 						</div>

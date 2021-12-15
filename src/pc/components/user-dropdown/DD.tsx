@@ -37,7 +37,7 @@ export default function CardDropdown(props: Props) {
 			}
 		}
 		fetchData();
-	}, [dispatch, props.username]);
+	}, [dispatch, props.username, loggedInAs]);
 
 	return (
 		<Dropdown

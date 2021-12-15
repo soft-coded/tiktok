@@ -10,6 +10,7 @@ import {
 	convertToDate
 } from "../../../common/utils";
 import ActionButton from "../action-button";
+import FollowButton from "../follow-button";
 import { videoModalActions } from "../../store/slices/video-modal-slice";
 import { authModalActions } from "../../store/slices/auth-modal-slice";
 import Comment from "./Comment";
@@ -223,7 +224,16 @@ export default function VideoModal(props: ModalProps) {
 											)}
 										</>
 									) : (
-										<button>Follow</button>
+										!videoData.isFollowing &&
+										username !== videoData.uploader!.username && (
+											<div className="follow-btn">
+												<FollowButton
+													isFollowing={videoData.isFollowing}
+													toFollow={videoData.uploader!.username!}
+													hideUnfollow={true}
+												/>
+											</div>
+										)
 									)}
 								</div>
 							</header>

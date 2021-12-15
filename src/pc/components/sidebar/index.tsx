@@ -36,7 +36,7 @@ export default function Sidebar() {
 			}
 		}
 		getFollowing();
-	}, [isAuthed, username, followingList]);
+	}, [isAuthed, username, followingList, dispatch]);
 
 	useEffect(() => {
 		if (suggestedAccounts) return;
