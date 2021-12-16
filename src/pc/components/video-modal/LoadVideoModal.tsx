@@ -74,6 +74,13 @@ export default function LoadVideoModal({ videoId, setShowModal }: ModalProps) {
 		[vidDispatch]
 	);
 
+	const handleCommentsChange = useCallback(
+		(commentsNum: number) => {
+			vidDispatch({ type: videoDynamicsActions.COMMENTED, commentsNum });
+		},
+		[vidDispatch]
+	);
+
 	return videoData ? (
 		<Modal
 			{...videoData}
@@ -81,6 +88,7 @@ export default function LoadVideoModal({ videoId, setShowModal }: ModalProps) {
 			vidDynamics={vidDynamics}
 			handleLike={handleLike}
 			handleFollow={handleFollow}
+			handleCommentsChange={handleCommentsChange}
 		/>
 	) : (
 		<FullscreenSpinner />

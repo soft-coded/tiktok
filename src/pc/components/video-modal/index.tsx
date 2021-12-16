@@ -19,7 +19,11 @@ import Dropdown from "../dropdown";
 import UserDropdown from "../user-dropdown";
 import constants from "../../../common/constants";
 import { notificationActions } from "../../store/slices/notification-slice";
-import { getVidComments, deleteVideo } from "../../../common/api/video";
+import {
+	getVidComments,
+	deleteVideo,
+	getCustom
+} from "../../../common/api/video";
 import LoadingSpinner from "../loading-spinner";
 
 export interface ModalProps extends VideoData {
@@ -27,6 +31,7 @@ export interface ModalProps extends VideoData {
 	vidDynamics: VideoDynamics;
 	handleLike: (hasLiked: boolean) => void;
 	handleFollow: (isFollowing: boolean) => void;
+	handleCommentsChange: (commentsNum: number) => void;
 }
 
 // does not work with plain string, had to use an object instead
@@ -51,7 +56,7 @@ export default function VideoModal(props: ModalProps) {
 		() => (props.videoId ? props.videoId : props._id!),
 		[props._id, props.videoId]
 	);
-	const { setShowModal } = props;
+	const { setShowModal, handleCommentsChange } = props;
 
 	useEffect(() => {
 		url.prevURL = window.location.href;
@@ -74,6 +79,20 @@ export default function VideoModal(props: ModalProps) {
 			setComments([]);
 		}
 	}, [dispatch, curVidId, username]);
+
+	const fetchCommentsNum = useCallback(async () => {
+		try {
+			const res = await getCustom(curVidId, { comments: "num" });
+			handleCommentsChange(res.data.comments);
+		} catch (err: any) {
+			dispatch(
+				notificationActions.showNotification({
+					type: "error",
+					message: "Couldn't fetch number of comments: " + err.message
+				})
+			);
+		}
+	}, [curVidId, dispatch, handleCommentsChange]);
 
 	useEffect(() => {
 		fetchComments();
@@ -229,7 +248,7 @@ export default function VideoModal(props: ModalProps) {
 						<label htmlFor="comment">
 							<ActionButton
 								icon={<i className="fas fa-comment-dots" />}
-								number={props.comments as number}
+								number={props.vidDynamics.commentsNum}
 								className="action-btn-container"
 							/>
 						</label>
@@ -249,6 +268,7 @@ export default function VideoModal(props: ModalProps) {
 									videoId={curVidId}
 									setComments={setComments}
 									fetchComments={fetchComments}
+									fetchCommentsNum={fetchCommentsNum}
 								/>
 							))
 						)
@@ -267,6 +287,7 @@ export default function VideoModal(props: ModalProps) {
 					<CommentForm
 						videoId={curVidId}
 						fetchComments={fetchComments}
+						fetchCommentsNum={fetchCommentsNum}
 						setComments={setComments}
 					/>
 				)}

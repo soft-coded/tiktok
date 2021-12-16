@@ -51,6 +51,13 @@ export default function VideoCard(props: VideoData) {
 		[vidDispatch]
 	);
 
+	const handleCommentsChange = useCallback(
+		(commentsNum: number) => {
+			vidDispatch({ type: videoDynamicsActions.COMMENTED, commentsNum });
+		},
+		[vidDispatch]
+	);
+
 	function showDD() {
 		setShowProfileDD(true);
 	}
@@ -69,6 +76,7 @@ export default function VideoCard(props: VideoData) {
 						vidDynamics={vidDynamics}
 						handleLike={handleLike}
 						handleFollow={handleFollow}
+						handleCommentsChange={handleCommentsChange}
 					/>
 				</Suspense>
 			)}

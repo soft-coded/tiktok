@@ -23,6 +23,7 @@ interface Props extends CommentData {
 	videoId: string;
 	setComments: React.Dispatch<React.SetStateAction<CommentData[] | null>>;
 	fetchComments: () => Promise<void>;
+	fetchCommentsNum: () => Promise<void>;
 }
 
 export default function Comment(props: Props) {
@@ -41,6 +42,7 @@ export default function Comment(props: Props) {
 		likesNum: props.likes!,
 		hasLiked: props.hasLiked!
 	});
+	const { fetchCommentsNum } = props;
 
 	function showProfile() {
 		props.url.prevURL = "/user/" + props.postedBy!.username;
@@ -58,8 +60,10 @@ export default function Comment(props: Props) {
 
 	const fetchReplies = useCallback(async () => {
 		try {
-			return (await getReplies(props.videoId, props.commentId!, username!)).data
-				.replies;
+			const res = (await getReplies(props.videoId, props.commentId!, username!))
+				.data.replies;
+			fetchCommentsNum();
+			return res;
 		} catch (err: any) {
 			dispatch(
 				notificationActions.showNotification({
@@ -68,7 +72,7 @@ export default function Comment(props: Props) {
 				})
 			);
 		}
-	}, [props.videoId, props.commentId, dispatch, username]);
+	}, [props.videoId, props.commentId, dispatch, username, fetchCommentsNum]);
 
 	async function triggerReplies() {
 		if (showReplies) return setShowReplies(false);
@@ -87,6 +91,7 @@ export default function Comment(props: Props) {
 			);
 			props.setComments(null);
 			props.fetchComments();
+			fetchCommentsNum();
 		} catch (err: any) {
 			dispatch(
 				notificationActions.showNotification({

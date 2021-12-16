@@ -23,11 +23,13 @@ interface Props {
 	fetchComments: () => Promise<void>;
 	videoId: string;
 	setComments: React.Dispatch<React.SetStateAction<CommentData[] | null>>;
+	fetchCommentsNum: () => Promise<void>;
 }
 
 export default function AddComment({
 	videoId,
 	fetchComments,
+	fetchCommentsNum,
 	setComments
 }: Props) {
 	const username = useAppSelector(state => state.auth.username);
@@ -47,6 +49,7 @@ export default function AddComment({
 				setComments(null);
 				fetchComments();
 				formik.setFieldValue("comment", "");
+				fetchCommentsNum();
 			} catch (err: any) {
 				dispatch(
 					notificationActions.showNotification({

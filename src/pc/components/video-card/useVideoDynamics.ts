@@ -13,6 +13,7 @@ type ActionType = {
 	type: string;
 	hasLiked?: boolean;
 	isFollowing?: boolean;
+	commentsNum?: number;
 	payload?: VideoDynamics;
 };
 
@@ -32,6 +33,12 @@ function videoDynamicsReducer(
 			return {
 				...state,
 				isFollowing: action.isFollowing
+			};
+
+		case videoDynamicsActions.COMMENTED:
+			return {
+				...state,
+				commentsNum: action.commentsNum!
 			};
 
 		case videoDynamicsActions.ALL:
