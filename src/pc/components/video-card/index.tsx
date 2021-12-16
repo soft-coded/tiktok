@@ -41,7 +41,7 @@ export default function VideoCard(props: VideoData) {
 		setVidDynamics(prev => ({
 			...prev,
 			hasLiked,
-			likesNum: hasLiked ? prev.likesNum + 1 : prev.likesNum - 1
+			likesNum: prev.likesNum + (hasLiked ? 1 : -1)
 		}));
 	}
 

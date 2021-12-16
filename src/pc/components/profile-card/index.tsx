@@ -4,7 +4,9 @@ import "./profile-card.scss";
 import FullscreenSpinner from "../../components/fullscreen-spinner";
 import { modifyScrollbar } from "../../../common/utils";
 import constants from "../../../common/constants";
-const VideoModal = lazy(() => import("../../components/video-modal"));
+const LoadVideoModal = lazy(
+	() => import("../../components/video-modal/LoadVideoModal")
+);
 
 export default function ProfileCard({ videoId }: { videoId: string }) {
 	const [showModal, setShowModal] = useState(false);
@@ -18,7 +20,7 @@ export default function ProfileCard({ videoId }: { videoId: string }) {
 		<div className="profile-card">
 			{showModal && (
 				<Suspense fallback={<FullscreenSpinner />}>
-					<VideoModal videoId={videoId} setShowModal={setShowModal} />
+					<LoadVideoModal videoId={videoId} setShowModal={setShowModal} />
 				</Suspense>
 			)}
 			<div className="video-container">
