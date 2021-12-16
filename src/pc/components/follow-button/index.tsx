@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 import { followUser } from "../../../common/api/user";
 import { useAppSelector, useAppDispatch } from "../../../common/store";
@@ -19,6 +19,10 @@ export default function FollowButton(props: Props) {
 	const [isFollowing, setIsFollowing] = useState(props.isFollowing);
 	const dispatch = useAppDispatch();
 	const { toFollow, onClick } = props;
+
+	useEffect(() => {
+		setIsFollowing(props.isFollowing);
+	}, [props.isFollowing]);
 
 	const follow = useCallback(async () => {
 		try {

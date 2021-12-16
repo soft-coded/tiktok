@@ -3,6 +3,9 @@ import { useState, useEffect, useCallback } from "react";
 import "./video-modal.scss";
 import Modal from ".";
 import FullscreenSpinner from "../fullscreen-spinner";
+import useVideoDynamics, {
+	videoDynamicsActions
+} from "../video-card/useVideoDynamics";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { VideoData } from "../../../common/types";
 import { getVideo } from "../../../common/api/video";
@@ -13,18 +16,11 @@ export interface ModalProps {
 	setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-type VideoDynamics = {
-	hasLiked: boolean;
-	likesNum: number;
-	commentsNum: number;
-	isFollowing: boolean | undefined;
-};
-
 export default function LoadVideoModal({ videoId, setShowModal }: ModalProps) {
 	const dispatch = useAppDispatch();
 	const username = useAppSelector(state => state.auth.username);
 	const [videoData, setVideoData] = useState<VideoData | null>(null);
-	const [vidDynamics, setVidDynamics] = useState<VideoDynamics>({
+	const [vidDynamics, vidDispatch] = useVideoDynamics({
 		hasLiked: false,
 		likesNum: 0,
 		isFollowing: false,
@@ -50,29 +46,41 @@ export default function LoadVideoModal({ videoId, setShowModal }: ModalProps) {
 
 	useEffect(() => {
 		if (!videoData) return;
-		setVidDynamics({
-			hasLiked: videoData.hasLiked!,
-			likesNum: videoData.likes!,
-			isFollowing: videoData.isFollowing,
-			commentsNum: videoData.comments as number
+		vidDispatch({
+			type: videoDynamicsActions.ALL,
+			payload: {
+				hasLiked: videoData.hasLiked!,
+				likesNum: videoData.likes!,
+				isFollowing: videoData.isFollowing,
+				commentsNum: videoData.comments as number
+			}
 		});
-	}, [videoData]);
+	}, [videoData, vidDispatch]);
 
-	const handleLike = useCallback((hasLiked: boolean) => {
-		setVidDynamics(prev => ({
-			...prev,
-			hasLiked,
-			likesNum: prev.likesNum + (hasLiked ? 1 : -1)
-		}));
-	}, []);
+	const handleLike = useCallback(
+		(hasLiked: boolean) => {
+			vidDispatch({
+				type: videoDynamicsActions.LIKED,
+				hasLiked
+			});
+		},
+		[vidDispatch]
+	);
+
+	const handleFollow = useCallback(
+		(isFollowing: boolean) => {
+			vidDispatch({ type: videoDynamicsActions.FOLLOWED, isFollowing });
+		},
+		[vidDispatch]
+	);
 
 	return videoData ? (
 		<Modal
 			{...videoData}
 			setShowModal={setShowModal}
 			vidDynamics={vidDynamics}
-			setVidDynamics={setVidDynamics}
 			handleLike={handleLike}
+			handleFollow={handleFollow}
 		/>
 	) : (
 		<FullscreenSpinner />

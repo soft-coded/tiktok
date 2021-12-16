@@ -83,3 +83,10 @@ export interface UserQuery {
 	videos?: "uploaded" | "liked";
 	loggedInAs?: string;
 }
+
+export interface VideoDynamics {
+	hasLiked: boolean;
+	likesNum: number;
+	commentsNum: number;
+	isFollowing: boolean | undefined;
+}

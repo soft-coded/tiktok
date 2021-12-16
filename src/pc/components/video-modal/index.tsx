@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import "./video-modal.scss";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
-import { CommentData, VideoData } from "../../../common/types";
+import { CommentData, VideoData, VideoDynamics } from "../../../common/types";
 import {
 	joinClasses,
 	modifyScrollbar,
@@ -22,18 +22,11 @@ import { notificationActions } from "../../store/slices/notification-slice";
 import { getVidComments, deleteVideo } from "../../../common/api/video";
 import LoadingSpinner from "../loading-spinner";
 
-type VideoDynamics = {
-	hasLiked: boolean;
-	likesNum: number;
-	commentsNum: number;
-	isFollowing: boolean | undefined;
-};
-
 export interface ModalProps extends VideoData {
 	setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 	vidDynamics: VideoDynamics;
-	setVidDynamics: React.Dispatch<React.SetStateAction<VideoDynamics>>;
 	handleLike: (hasLiked: boolean) => void;
+	handleFollow: (isFollowing: boolean) => void;
 }
 
 // does not work with plain string, had to use an object instead

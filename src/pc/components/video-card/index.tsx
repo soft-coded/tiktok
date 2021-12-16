@@ -1,7 +1,8 @@
-import { useState, Suspense, lazy } from "react";
+import { useState, Suspense, lazy, useCallback } from "react";
 import { Link } from "react-router-dom";
 
 import "./video-card.scss";
+import useVideoDynamics, { videoDynamicsActions } from "./useVideoDynamics";
 import ActionButton from "../action-button";
 import FollowButton from "../follow-button";
 import Likes from "../video-modal/Likes";
@@ -20,7 +21,7 @@ export default function VideoCard(props: VideoData) {
 	const [showProfileDD, setShowProfileDD] = useState(false);
 	const loggedInAs = useAppSelector(state => state.auth.username);
 	const [isFollowing, setIsFollowing] = useState(props.isFollowing);
-	const [vidDynamics, setVidDynamics] = useState({
+	const [vidDynamics, vidDispatch] = useVideoDynamics({
 		hasLiked: props.hasLiked!,
 		likesNum: props.likes!,
 		commentsNum: props.comments as number,
@@ -37,13 +38,19 @@ export default function VideoCard(props: VideoData) {
 		dispatch(authModalActions.showModal());
 	}
 
-	function handleLike(hasLiked: boolean) {
-		setVidDynamics(prev => ({
-			...prev,
-			hasLiked,
-			likesNum: prev.likesNum + (hasLiked ? 1 : -1)
-		}));
-	}
+	const handleLike = useCallback(
+		(hasLiked: boolean) => {
+			vidDispatch({ type: videoDynamicsActions.LIKED, hasLiked });
+		},
+		[vidDispatch]
+	);
+
+	const handleFollow = useCallback(
+		(isFollowing: boolean) => {
+			vidDispatch({ type: videoDynamicsActions.FOLLOWED, isFollowing });
+		},
+		[vidDispatch]
+	);
 
 	function showDD() {
 		setShowProfileDD(true);
@@ -61,8 +68,8 @@ export default function VideoCard(props: VideoData) {
 						{...props}
 						setShowModal={setShowVideoModal}
 						vidDynamics={vidDynamics}
-						setVidDynamics={setVidDynamics}
 						handleLike={handleLike}
+						handleFollow={handleFollow}
 					/>
 				</Suspense>
 			)}

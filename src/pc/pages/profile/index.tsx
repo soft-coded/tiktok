@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 
 import "./profile.scss";
 import PageWithSidebar from "../../components/page-with-sidebar";
@@ -17,6 +17,7 @@ import LoadingSpinner from "../../components/loading-spinner";
 export default function Profile() {
 	const { username } = useParams();
 	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
 	const loggedInAs = useAppSelector(state => state.auth.username);
 	const suggestedAccounts = useAppSelector(state => state.pc.sidebar.suggested);
 	const isOwnProfile = useMemo(
@@ -24,11 +25,10 @@ export default function Profile() {
 		[username, loggedInAs]
 	);
 	const [user, setUser] = useState<UserData | null>(null);
-	const [likedVideos, setLikesVideos] = useState<string[] | null>(null);
+	const [likedVideos, setLikedVideos] = useState<string[] | null>(null);
 	const [videosType, setVideosType] = useState<"uploaded" | "liked">(
 		"uploaded"
 	);
-	const navigate = useNavigate();
 
 	const fetchData = useCallback(async () => {
 		try {
@@ -49,22 +49,25 @@ export default function Profile() {
 		fetchData();
 	}, [fetchData]);
 
+	useEffect(() => {
+		setVideosType("uploaded");
+		setLikedVideos(null);
+	}, [username]);
+
 	const fetchLikedVids = useCallback(async () => {
-		if (!likedVideos) {
-			try {
-				const liked = await getLikedVideos(username!);
-				setLikesVideos(liked.data.videos);
-			} catch (err: any) {
-				dispatch(
-					notificationActions.showNotification({
-						type: "error",
-						message: err.message
-					})
-				);
-				setVideosType("uploaded");
-			}
+		try {
+			const liked = await getLikedVideos(username!);
+			setLikedVideos(liked.data.videos);
+		} catch (err: any) {
+			dispatch(
+				notificationActions.showNotification({
+					type: "error",
+					message: err.message
+				})
+			);
+			setVideosType("uploaded");
 		}
-	}, [username, dispatch, likedVideos]);
+	}, [username, dispatch]);
 
 	return (
 		<PageWithSidebar className="profile-page-container">
@@ -118,15 +121,17 @@ export default function Profile() {
 							<div className="account-buttons">
 								{suggestedAccounts ? (
 									suggestedAccounts.slice(0, 3).map((acc, i) => (
-										<div key={i} className="acc-btn">
-											<div className="rounded-photo">
-												<img
-													src={constants.pfpLink + "/" + acc.username}
-													alt={acc.name}
-												/>
+										<Link key={i} to={"/user/" + acc.username}>
+											<div className="hoverable acc-btn">
+												<div className="rounded-photo">
+													<img
+														src={constants.pfpLink + "/" + acc.username}
+														alt={acc.name}
+													/>
+												</div>
+												<h4>{acc.username}</h4>
 											</div>
-											<h4>{acc.username}</h4>
-										</div>
+										</Link>
 									))
 								) : (
 									<LoadingSpinner className="spinner" />
