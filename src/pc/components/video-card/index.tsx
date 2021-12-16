@@ -14,18 +14,35 @@ import { authModalActions } from "../../store/slices/auth-modal-slice";
 import FullscreenSpinner from "../fullscreen-spinner";
 const VideoModal = lazy(() => import("../video-modal"));
 
-// http://localhost:3000/video/61b7740ba3691bf1c7fa93ef
-
 export default function VideoCard(props: VideoData) {
+	const dispatch = useAppDispatch();
 	const [showVideoModal, setShowVideoModal] = useState(false);
 	const [showProfileDD, setShowProfileDD] = useState(false);
 	const loggedInAs = useAppSelector(state => state.auth.username);
 	const [isFollowing, setIsFollowing] = useState(props.isFollowing);
-	const dispatch = useAppDispatch();
+	const [vidDynamics, setVidDynamics] = useState({
+		hasLiked: props.hasLiked!,
+		likesNum: props.likes!,
+		commentsNum: props.comments as number,
+		isFollowing: props.isFollowing
+	});
 
 	function handleModalOpen() {
 		modifyScrollbar("hide");
 		setShowVideoModal(true);
+	}
+
+	function handleAuthModalOpen() {
+		modifyScrollbar("hide");
+		dispatch(authModalActions.showModal());
+	}
+
+	function handleLike(hasLiked: boolean) {
+		setVidDynamics(prev => ({
+			...prev,
+			hasLiked,
+			likesNum: hasLiked ? prev.likesNum + 1 : prev.likesNum - 1
+		}));
 	}
 
 	function showDD() {
@@ -40,7 +57,13 @@ export default function VideoCard(props: VideoData) {
 		<div className="app-video-card">
 			{showVideoModal && (
 				<Suspense fallback={<FullscreenSpinner />}>
-					<VideoModal {...props} setShowModal={setShowVideoModal} />
+					<VideoModal
+						{...props}
+						setShowModal={setShowVideoModal}
+						vidDynamics={vidDynamics}
+						setVidDynamics={setVidDynamics}
+						handleLike={handleLike}
+					/>
 				</Suspense>
 			)}
 			<div className="profile-pic">
@@ -114,17 +137,15 @@ export default function VideoCard(props: VideoData) {
 					</div>
 					<div className="action-buttons">
 						<Likes
-							// likes={vidDynamics.likes!}
-							likes={props.likes!}
+							likes={vidDynamics.likesNum}
 							curVidId={props.videoId!}
-							handleAuthModalOpen={() => dispatch(authModalActions.showModal())}
-							// hasLiked={vidDynamics.hasLiked}
-							hasLiked={props.hasLiked}
+							handleAuthModalOpen={handleAuthModalOpen}
+							hasLiked={vidDynamics.hasLiked}
+							onClick={handleLike}
 						/>
 						<ActionButton
 							icon={<i className="fas fa-comment-dots" />}
-							// number={vidDynamics.comments as number}
-							number={props.comments as number}
+							number={vidDynamics.commentsNum}
 							className="action-btn-container"
 						/>
 						<ActionButton

@@ -26,11 +26,22 @@ import {
 } from "../../../common/api/video";
 import LoadingSpinner from "../loading-spinner";
 
+type VideoDynamics = {
+	hasLiked: boolean;
+	likesNum: number;
+	commentsNum: number;
+	isFollowing: boolean | undefined;
+};
+
 export interface ModalProps extends VideoData {
 	setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+	vidDynamics?: VideoDynamics;
+	setVidDynamics?: React.Dispatch<React.SetStateAction<VideoDynamics>>;
+	handleLike?: (hasLiked: boolean) => void;
 }
 
-let url = { prevURL: "" };
+// does not work with plain string, had to use an object instead
+const url = { prevURL: "" };
 
 export default function VideoModal(props: ModalProps) {
 	const dispatch = useAppDispatch();
@@ -44,6 +55,13 @@ export default function VideoModal(props: ModalProps) {
 		props.uploader ? props : null
 	);
 	const [comments, setComments] = useState<CommentData[] | null>(null);
+	const [likesStats, setLikesStats] = useState<{
+		hasLiked: boolean;
+		likesNum: number;
+	}>({
+		hasLiked: false,
+		likesNum: 0
+	});
 	const [showDropdown, setShowDropdown] = useState(false);
 	const [showOptions, setShowOptions] = useState(false);
 	const isPoster = useMemo(
@@ -62,11 +80,6 @@ export default function VideoModal(props: ModalProps) {
 
 		return () => window.history.replaceState(null, "", url.prevURL);
 	}, [curVidId]);
-
-	const handleModalClose = useCallback(() => {
-		modifyScrollbar("show");
-		setShowModal(false);
-	}, [setShowModal]);
 
 	const fetchComments = useCallback(async () => {
 		try {
@@ -102,6 +115,19 @@ export default function VideoModal(props: ModalProps) {
 		fetchComments();
 	}, [fetchComments, fetchVid, videoData]);
 
+	useEffect(() => {
+		if (!videoData) return;
+		setLikesStats({
+			hasLiked: videoData.hasLiked!,
+			likesNum: videoData.likes!
+		});
+	}, [videoData]);
+
+	const handleModalClose = useCallback(() => {
+		modifyScrollbar("show");
+		setShowModal(false);
+	}, [setShowModal]);
+
 	function handleAuthModalOpen() {
 		dispatch(authModalActions.showModal());
 	}
@@ -118,6 +144,14 @@ export default function VideoModal(props: ModalProps) {
 
 	function hideDD() {
 		setShowDropdown(false);
+	}
+
+	function handleLike(hasLiked: boolean) {
+		if (props.handleLike) props.handleLike(hasLiked);
+		setLikesStats((prev: any) => ({
+			hasLiked,
+			likesNum: hasLiked ? prev.likesNum + 1 : prev.likesNum - 1
+		}));
 	}
 
 	async function delVid() {
@@ -240,9 +274,18 @@ export default function VideoModal(props: ModalProps) {
 						<div className="action-buttons">
 							<Likes
 								handleAuthModalOpen={handleAuthModalOpen}
-								likes={videoData.likes!}
+								likes={
+									props.vidDynamics?.likesNum != null
+										? props.vidDynamics.likesNum
+										: likesStats.likesNum
+								}
 								curVidId={curVidId}
-								hasLiked={videoData.hasLiked}
+								hasLiked={
+									props.vidDynamics?.hasLiked != null
+										? props.vidDynamics.hasLiked
+										: likesStats.hasLiked
+								}
+								onClick={handleLike}
 							/>
 							<label htmlFor="comment">
 								<ActionButton

@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import ActionButton from "../action-button";
 import { useAppSelector, useAppDispatch } from "../../../common/store";
 import { likeVideo } from "../../../common/api/video";
@@ -11,11 +9,10 @@ interface Props {
 	handleAuthModalOpen: () => void;
 	curVidId: string;
 	hasLiked?: boolean;
+	onClick: (liked: boolean) => void;
 }
 
 export default function Likes(props: Props) {
-	const [liked, setLiked] = useState(props.hasLiked ? props.hasLiked : false);
-	const [likesNum, setLikesNum] = useState(props.likes);
 	const { isAuthenticated: isAuthed, username } = useAppSelector(
 		state => state.auth
 	);
@@ -25,13 +22,7 @@ export default function Likes(props: Props) {
 		if (!isAuthed) return props.handleAuthModalOpen();
 		try {
 			const res = await likeVideo(username!, props.curVidId);
-			if (res.data.liked) {
-				setLiked(true);
-				setLikesNum(prev => prev + 1);
-			} else {
-				setLiked(false);
-				setLikesNum(prev => prev - 1);
-			}
+			props.onClick(res.data.liked);
 		} catch (err: any) {
 			dispatch(
 				notificationActions.showNotification({
@@ -45,8 +36,11 @@ export default function Likes(props: Props) {
 	return (
 		<ActionButton
 			icon={<i className="fas fa-heart" />}
-			number={likesNum}
-			className={joinClasses("action-btn-container", liked ? "liked" : "")}
+			number={props.likes}
+			className={joinClasses(
+				"action-btn-container",
+				props.hasLiked ? "liked" : ""
+			)}
 			onClick={likeVid}
 		/>
 	);
