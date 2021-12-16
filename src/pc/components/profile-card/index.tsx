@@ -2,15 +2,11 @@ import { useState, Suspense, lazy } from "react";
 
 import "./profile-card.scss";
 import FullscreenSpinner from "../../components/fullscreen-spinner";
-import { VideoData } from "../../../common/types";
 import { modifyScrollbar } from "../../../common/utils";
 import constants from "../../../common/constants";
 const VideoModal = lazy(() => import("../../components/video-modal"));
 
-// interface CardProps extends VideoData {
-// }
-
-export default function ProfileCard(props: VideoData) {
+export default function ProfileCard({ videoId }: { videoId: string }) {
 	const [showModal, setShowModal] = useState(false);
 
 	function handleModalOpen() {
@@ -22,12 +18,12 @@ export default function ProfileCard(props: VideoData) {
 		<div className="profile-card">
 			{showModal && (
 				<Suspense fallback={<FullscreenSpinner />}>
-					<VideoModal {...props} setShowModal={setShowModal} />
+					<VideoModal videoId={videoId} setShowModal={setShowModal} />
 				</Suspense>
 			)}
 			<div className="video-container">
 				<video
-					src={constants.videoLink + "/" + props.videoId}
+					src={constants.videoLink + "/" + videoId}
 					playsInline
 					muted
 					loop

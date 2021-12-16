@@ -9,7 +9,7 @@ import ProfileButtons from "../../components/profile-buttons";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { joinClasses } from "../../../common/utils";
 import { getLikedVideos, getUser } from "../../../common/api/user";
-import { UserData, VideoData } from "../../../common/types";
+import { UserData } from "../../../common/types";
 import { notificationActions } from "../../store/slices/notification-slice";
 import constants from "../../../common/constants";
 import LoadingSpinner from "../../components/loading-spinner";
@@ -148,11 +148,11 @@ export default function Profile() {
 							)}
 						>
 							{videosType === "uploaded" ? (
-								<VideosLayout videos={user.videos as VideoData[]} />
+								<VideosLayout videos={user.videos as string[]} />
 							) : !likedVideos ? (
 								<LoadingSpinner className="liked-spinner" />
 							) : (
-								<VideosLayout videos={likedVideos as VideoData[]} />
+								<VideosLayout videos={likedVideos as string[]} />
 							)}
 						</div>
 					</>

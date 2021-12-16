@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import "./video-modal.scss";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
@@ -19,7 +19,11 @@ import Dropdown from "../dropdown";
 import UserDropdown from "../user-dropdown";
 import constants from "../../../common/constants";
 import { notificationActions } from "../../store/slices/notification-slice";
-import { getVidComments, deleteVideo } from "../../../common/api/video";
+import {
+	getVideo,
+	getVidComments,
+	deleteVideo
+} from "../../../common/api/video";
 import LoadingSpinner from "../loading-spinner";
 
 export interface ModalProps extends VideoData {
@@ -36,17 +40,19 @@ export default function VideoModal(props: ModalProps) {
 		username,
 		token
 	} = useAppSelector(state => state.auth);
+	const [videoData, setVideoData] = useState<VideoData | null>(
+		props.uploader ? props : null
+	);
 	const [comments, setComments] = useState<CommentData[] | null>(null);
 	const [showDropdown, setShowDropdown] = useState(false);
 	const [showOptions, setShowOptions] = useState(false);
 	const isPoster = useMemo(
-		() => username === props.uploader!.username,
-		[username, props.uploader]
+		() => (videoData ? username === videoData.uploader!.username : false),
+		[username, videoData]
 	);
 	const curVidId = useMemo(
-		() =>
-			props.video ? props.video : props.videoId ? props.videoId : props._id!,
-		[props.video, props._id, props.videoId]
+		() => (props.videoId ? props.videoId : props._id!),
+		[props._id, props.videoId]
 	);
 	const { setShowModal } = props;
 
@@ -77,9 +83,24 @@ export default function VideoModal(props: ModalProps) {
 		}
 	}, [dispatch, curVidId, username]);
 
+	const fetchVid = useCallback(async () => {
+		try {
+			const res = await getVideo(curVidId, username);
+			setVideoData(res.data);
+		} catch (err: any) {
+			dispatch(
+				notificationActions.showNotification({
+					type: "error",
+					message: err.message
+				})
+			);
+		}
+	}, [dispatch, curVidId, username]);
+
 	useEffect(() => {
+		if (!videoData) fetchVid();
 		fetchComments();
-	}, [fetchComments]);
+	}, [fetchComments, fetchVid, videoData]);
 
 	function handleAuthModalOpen() {
 		dispatch(authModalActions.showModal());
@@ -129,15 +150,7 @@ export default function VideoModal(props: ModalProps) {
 				<div className="poster-container" />
 				<div className="video-container">
 					<video
-						src={
-							constants.videoLink +
-							"/" +
-							(props.video
-								? props.video
-								: props.videoId
-								? props.videoId
-								: props._id)
-						}
+						src={constants.videoLink + "/" + curVidId}
 						playsInline
 						autoPlay
 						controls
@@ -147,96 +160,100 @@ export default function VideoModal(props: ModalProps) {
 				</div>
 			</div>
 			<div className="modal-content">
-				<div className="modal-top">
-					<header>
-						<div
-							className="clickable rounded-photo"
-							onClick={showProfile}
-							onMouseOver={showDD}
-							onMouseOut={hideDD}
-						>
-							<img
-								src={constants.pfpLink + "/" + props.uploader!.username}
-								alt={props.uploader!.name}
-							/>
-						</div>
-						<div className="names">
-							<h3
-								className="clickable"
+				{!videoData ? (
+					<LoadingSpinner />
+				) : (
+					<div className="modal-top">
+						<header>
+							<div
+								className="clickable rounded-photo"
 								onClick={showProfile}
 								onMouseOver={showDD}
 								onMouseOut={hideDD}
 							>
-								{props.uploader!.username}
-							</h3>
-							<h4>
-								{props.uploader!.name} |&nbsp;
-								<span>{convertToDate(props.createdAt!)}</span>
-							</h4>
-						</div>
-						<UserDropdown
-							username={props.uploader!.username!}
-							onMouseOver={showDD}
-							onMouseOut={hideDD}
-							showDropdown={showDropdown}
-						/>
-						<div className="follow-btn">
-							{isPoster ? (
-								<>
-									<i
-										className="clickable fas fa-ellipsis-h"
-										onClick={() => setShowOptions(true)}
-									/>
-									{showOptions && (
-										<Dropdown
-											className="vid-dropdown"
-											setShowDropdown={setShowOptions}
-										>
-											<span className="hoverable" onClick={delVid}>
-												<i className="fas fa-trash-alt" /> Delete
-											</span>
-										</Dropdown>
-									)}
-								</>
-							) : (
-								!props.isFollowing &&
-								username !== props.uploader!.username && (
-									<div className="follow-btn">
-										<FollowButton
-											isFollowing={props.isFollowing}
-											toFollow={props.uploader!.username!}
-											hideUnfollow={true}
-										/>
-									</div>
-								)
-							)}
-						</div>
-					</header>
-					<p className="caption">{props.caption}</p>
-					<p className="tags">
-						{props.tags!.map((tag, i) => (
-							<span key={i}>#{tag} </span>
-						))}
-					</p>
-					<h5 className="music">
-						<i className="fas fa-music" /> {props.music}
-					</h5>
-					<div className="action-buttons">
-						<Likes
-							handleAuthModalOpen={handleAuthModalOpen}
-							likes={props.likes!}
-							curVidId={curVidId}
-							hasLiked={props.hasLiked}
-						/>
-						<label htmlFor="comment">
-							<ActionButton
-								icon={<i className="fas fa-comment-dots" />}
-								number={props.comments as number}
-								className="action-btn-container"
+								<img
+									src={constants.pfpLink + "/" + videoData.uploader!.username}
+									alt={videoData.uploader!.name}
+								/>
+							</div>
+							<div className="names">
+								<h3
+									className="clickable"
+									onClick={showProfile}
+									onMouseOver={showDD}
+									onMouseOut={hideDD}
+								>
+									{videoData.uploader!.username}
+								</h3>
+								<h4>
+									{videoData.uploader!.name} |&nbsp;
+									<span>{convertToDate(videoData.createdAt!)}</span>
+								</h4>
+							</div>
+							<UserDropdown
+								username={videoData.uploader!.username!}
+								onMouseOver={showDD}
+								onMouseOut={hideDD}
+								showDropdown={showDropdown}
 							/>
-						</label>
+							<div className="follow-btn">
+								{isPoster ? (
+									<>
+										<i
+											className="clickable fas fa-ellipsis-h"
+											onClick={() => setShowOptions(true)}
+										/>
+										{showOptions && (
+											<Dropdown
+												className="vid-dropdown"
+												setShowDropdown={setShowOptions}
+											>
+												<span className="hoverable" onClick={delVid}>
+													<i className="fas fa-trash-alt" /> Delete
+												</span>
+											</Dropdown>
+										)}
+									</>
+								) : (
+									!videoData.isFollowing &&
+									!isPoster && (
+										<div className="follow-btn">
+											<FollowButton
+												isFollowing={videoData.isFollowing}
+												toFollow={videoData.uploader!.username!}
+												hideUnfollow={true}
+											/>
+										</div>
+									)
+								)}
+							</div>
+						</header>
+						<p className="caption">{videoData.caption}</p>
+						<p className="tags">
+							{videoData.tags!.map((tag, i) => (
+								<span key={i}>#{tag} </span>
+							))}
+						</p>
+						<h5 className="music">
+							<i className="fas fa-music" /> {videoData.music}
+						</h5>
+						<div className="action-buttons">
+							<Likes
+								handleAuthModalOpen={handleAuthModalOpen}
+								likes={videoData.likes!}
+								curVidId={curVidId}
+								hasLiked={videoData.hasLiked}
+							/>
+							<label htmlFor="comment">
+								<ActionButton
+									icon={<i className="fas fa-comment-dots" />}
+									number={videoData.comments as number}
+									className="action-btn-container"
+								/>
+							</label>
+						</div>
 					</div>
-				</div>
+				)}
 				<div className={joinClasses("comments", isAuthed ? "container" : "")}>
 					{isAuthed ? (
 						!comments ? (

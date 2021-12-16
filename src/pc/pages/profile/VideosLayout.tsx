@@ -1,9 +1,7 @@
 import ProfileCard from "../../components/profile-card";
-import constants from "../../../common/constants";
-import { VideoData } from "../../../common/types";
 
 interface Props {
-	videos: VideoData[];
+	videos: string[];
 }
 
 export default function VideosLayout({ videos }: Props) {
@@ -12,7 +10,7 @@ export default function VideosLayout({ videos }: Props) {
 	) : (
 		<>
 			{videos.map((video, i) => (
-				<ProfileCard key={i} {...video} />
+				<ProfileCard key={i} videoId={video} />
 			))}
 		</>
 	);
