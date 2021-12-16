@@ -20,7 +20,6 @@ export default function VideoCard(props: VideoData) {
 	const [showVideoModal, setShowVideoModal] = useState(false);
 	const [showProfileDD, setShowProfileDD] = useState(false);
 	const loggedInAs = useAppSelector(state => state.auth.username);
-	const [isFollowing, setIsFollowing] = useState(props.isFollowing);
 	const [vidDynamics, vidDispatch] = useVideoDynamics({
 		hasLiked: props.hasLiked!,
 		likesNum: props.likes!,
@@ -91,7 +90,7 @@ export default function VideoCard(props: VideoData) {
 					showDropdown={showProfileDD}
 					onMouseOver={showDD}
 					onMouseOut={hideDD}
-					onFollow={setIsFollowing}
+					onFollow={handleFollow}
 				/>
 			</div>
 			<div className="card-content">
@@ -110,12 +109,12 @@ export default function VideoCard(props: VideoData) {
 							</span>
 						</h5>
 					</div>
-					{!isFollowing && loggedInAs !== props.uploader!.username && (
+					{!vidDynamics.isFollowing && loggedInAs !== props.uploader!.username && (
 						<div className="follow-btn">
 							<FollowButton
-								isFollowing={isFollowing}
+								isFollowing={vidDynamics.isFollowing}
 								toFollow={props.uploader!.username!}
-								onClick={setIsFollowing}
+								onClick={handleFollow}
 								hideUnfollow={true}
 							/>
 						</div>

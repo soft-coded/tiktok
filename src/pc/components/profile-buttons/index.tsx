@@ -5,11 +5,13 @@ import "./profile-buttons.scss";
 interface Props {
 	setVideosType: React.Dispatch<React.SetStateAction<"uploaded" | "liked">>;
 	fetchLikedVids: () => Promise<void>;
+	username: string;
 }
 
 export default function ProfileButtons({
 	setVideosType,
-	fetchLikedVids
+	fetchLikedVids,
+	username
 }: Props) {
 	const buttonsRef = useRef<HTMLDivElement | null>(null);
 
@@ -46,10 +48,20 @@ export default function ProfileButtons({
 			});
 	}, []);
 
+	useEffect(() => {
+		const container = buttonsRef.current!;
+		const bar = container.querySelector("span")!;
+
+		bar.style.left = "0%";
+		container.querySelector("button.active")!.className = "";
+		container.querySelector("button#uploaded")!.className = "active";
+	}, [username]);
+
 	return (
 		<div className="profile-category-buttons" ref={buttonsRef}>
 			<div className="btns">
 				<button
+					id="uploaded"
 					className="active"
 					data-position="0"
 					onClick={() => setVideosType("uploaded")}
@@ -57,6 +69,7 @@ export default function ProfileButtons({
 					Videos
 				</button>
 				<button
+					id="liked"
 					data-position="1"
 					onClick={() => {
 						setVideosType("liked");

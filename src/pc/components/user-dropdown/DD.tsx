@@ -14,7 +14,7 @@ interface Props {
 	onMouseOver: () => void;
 	onMouseOut: () => void;
 	username: string;
-	onFollow?: (a?: any) => any;
+	onFollow?: (followed: boolean) => void;
 }
 
 export default function CardDropdown(props: Props) {

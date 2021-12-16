@@ -174,6 +174,7 @@ export default function VideoModal(props: ModalProps) {
 							onMouseOver={showDD}
 							onMouseOut={hideDD}
 							showDropdown={showDropdown}
+							onFollow={props.handleFollow}
 						/>
 						<div className="follow-btn">
 							{isPoster ? (
@@ -194,11 +195,12 @@ export default function VideoModal(props: ModalProps) {
 									)}
 								</>
 							) : (
-								!props.isFollowing &&
+								!props.vidDynamics.isFollowing &&
 								!isPoster && (
 									<div className="follow-btn">
 										<FollowButton
-											isFollowing={props.isFollowing}
+											isFollowing={props.vidDynamics.isFollowing}
+											onClick={props.handleFollow}
 											toFollow={props.uploader!.username!}
 											hideUnfollow={true}
 										/>

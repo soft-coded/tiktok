@@ -141,6 +141,7 @@ export default function Profile() {
 						<ProfileButtons
 							setVideosType={setVideosType}
 							fetchLikedVids={fetchLikedVids}
+							username={username!}
 						/>
 						<div
 							className={joinClasses(

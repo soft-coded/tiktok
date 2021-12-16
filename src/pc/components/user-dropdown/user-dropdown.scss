@@ -31,7 +31,7 @@ $dropdown-pfp-size: 42px;
 			flex-direction: column;
 			gap: 0;
 			align-items: stretch;
-			margin-top: 8px;
+			margin: 8px 0;
 
 			.username {
 				font-size: 1rem;
@@ -45,6 +45,7 @@ $dropdown-pfp-size: 42px;
 
 			h5 {
 				font-weight: 400;
+				margin-bottom: 4px;
 			}
 		}
 	}

@@ -8,7 +8,7 @@ import { fetchFollowing } from "../../store/slices/sidebar-slice";
 interface Props {
 	isFollowing?: boolean;
 	toFollow: string;
-	onClick?: (a?: boolean) => any;
+	onClick?: (followed: boolean) => any;
 	followingClassName?: string;
 	followClassName?: string;
 	hideUnfollow?: boolean;
