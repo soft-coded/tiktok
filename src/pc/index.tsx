@@ -12,6 +12,7 @@ const Home = lazy(() => import("./pages/home"));
 const Profile = lazy(() => import("./pages/profile"));
 const Video = lazy(() => import("./pages/video"));
 const Upload = lazy(() => import("./pages/upload"));
+const EditProfile = lazy(() => import("./pages/edit-profile"));
 
 export default function PCLayout() {
 	const { pathname } = useLocation();
@@ -38,6 +39,7 @@ export default function PCLayout() {
 					<Route path="/video/:videoId" element={<Video />} />
 					<Route element={<PrivateRoute />}>
 						<Route path="/upload" element={<Upload />} />
+						<Route path="/edit-profile" element={<EditProfile />} />
 					</Route>
 				</Routes>
 			</Suspense>

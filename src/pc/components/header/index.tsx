@@ -75,7 +75,7 @@ export default function Header() {
 										<span>View profile</span>
 									</Link>
 									<Link
-										to="/"
+										to="/edit-profile"
 										className="hoverable"
 										onClick={() => setShowOptions(false)}
 									>
