@@ -36,9 +36,15 @@
 					display: flex;
 					align-items: center;
 
-					p {
-						font-weight: 600;
+					.data {
+						display: flex;
+						align-items: center;
 						margin-left: auto;
+						max-width: 30%;
+
+						p {
+							font-weight: 600;
+						}
 					}
 
 					.edit {
@@ -49,6 +55,11 @@
 							text-decoration: underline;
 						}
 					}
+
+					.passwords {
+						flex-direction: column;
+						gap: 16px;
+					}
 				}
 
 				.pfp {
@@ -58,6 +69,14 @@
 
 					input {
 						display: none;
+					}
+
+					img {
+						transition: opacity 0.15s ease-out;
+
+						&:hover {
+							opacity: 0.5;
+						}
 					}
 				}
 
@@ -77,5 +96,10 @@
 				}
 			}
 		}
+	}
+
+	.save-spinner {
+		--circle-size: 12px;
+		--wrapper-padding: 0;
 	}
 }

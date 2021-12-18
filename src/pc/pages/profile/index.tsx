@@ -84,8 +84,8 @@ export default function Profile() {
 								/>
 							</div>
 							<div className="names">
-								<h1>{user.username}</h1>
-								<h4>{user.name}</h4>
+								<h1 className="break-word">{user.username}</h1>
+								<h4 className="break-word">{user.name}</h4>
 								{!isOwnProfile && (
 									<FollowButton
 										onClick={fetchData}
@@ -111,7 +111,7 @@ export default function Profile() {
 									{user.totalLikes === 1 ? "Like" : "Likes"}
 								</p>
 							</div>
-							<p className="description">{user.description}</p>
+							<p className="break-word description">{user.description}</p>
 						</div>
 						<div className="suggested">
 							<h5>

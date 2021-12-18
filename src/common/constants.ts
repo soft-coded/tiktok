@@ -9,6 +9,8 @@ export default {
 	nameMaxLen: 30,
 	descriptionMaxLen: 300,
 	videoSizeLimit: 20971520,
+	pfpRegex: /jpg|jpeg|png/i,
+	pfpSizeLimit: 2097152,
 	musicMaxLen: 30,
 	captionMaxLen: 150,
 	tagsMaxLen: 200,

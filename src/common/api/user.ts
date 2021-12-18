@@ -32,3 +32,6 @@ export const getLikedVideos = (username: string) =>
 
 export const followUser = (toFollow: string, loggedInAs: string | null) =>
 	apiClient.post(userURL + "/follow", { toFollow, loggedInAs });
+
+export const updateUser = (username: string, data: any) =>
+	apiClient.patch(userURL + "/" + username, data);
