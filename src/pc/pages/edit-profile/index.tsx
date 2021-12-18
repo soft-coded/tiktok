@@ -103,7 +103,7 @@ export default function EditProfile() {
 					})
 				);
 				setIsLoading(false);
-				// !!!page needs to refresh, so cannot use navigate here!!!
+				// !!!page needs to refresh, do not use navigate here!!!
 				window.location.replace("/user/" + username);
 			} catch (err: any) {
 				dispatch(
