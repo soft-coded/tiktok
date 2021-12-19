@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, MouseEvent } from "react";
 
 import { followUser } from "../../../common/api/user";
 import { useAppSelector, useAppDispatch } from "../../../common/store";
@@ -24,37 +24,42 @@ export default function FollowButton(props: Props) {
 		setIsFollowing(props.isFollowing);
 	}, [props.isFollowing]);
 
-	const follow = useCallback(async () => {
-		try {
-			if (!loggedInAs) throw new Error("Log in to follow " + toFollow);
-			const res = await followUser(toFollow, loggedInAs);
-			await dispatch(fetchFollowing(loggedInAs)).unwrap();
-			setIsFollowing(res.data.followed);
-			if (onClick) onClick(res.data.followed);
-			if (res.data.followed) {
+	const follow = useCallback(
+		async (e: MouseEvent) => {
+			try {
+				if (!loggedInAs) throw new Error("Log in to follow " + toFollow);
+				const res = await followUser(toFollow, loggedInAs);
+				await dispatch(fetchFollowing(loggedInAs)).unwrap();
+				setIsFollowing(res.data.followed);
+				if (onClick) onClick(res.data.followed);
+				if (res.data.followed) {
+					dispatch(
+						notificationActions.showNotification({
+							type: "success",
+							message: "You started following " + toFollow
+						})
+					);
+				} else {
+					dispatch(
+						notificationActions.showNotification({
+							type: "success",
+							message: "You unfollowed " + toFollow
+						})
+					);
+				}
+			} catch (err: any) {
 				dispatch(
 					notificationActions.showNotification({
-						type: "success",
-						message: "You started following " + toFollow
-					})
-				);
-			} else {
-				dispatch(
-					notificationActions.showNotification({
-						type: "success",
-						message: "You unfollowed " + toFollow
+						type: "error",
+						message: err.message
 					})
 				);
 			}
-		} catch (err: any) {
-			dispatch(
-				notificationActions.showNotification({
-					type: "error",
-					message: err.message
-				})
-			);
-		}
-	}, [toFollow, loggedInAs, onClick, dispatch]);
+			e.stopPropagation();
+			e.preventDefault();
+		},
+		[toFollow, loggedInAs, onClick, dispatch]
+	);
 
 	return isFollowing ? (
 		!props.hideUnfollow ? (

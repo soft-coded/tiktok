@@ -1,0 +1,26 @@
+$container-width: 700px;
+
+.following-container {
+	display: flex;
+	justify-content: space-between;
+	gap: 5vw;
+	min-height: 100%;
+}
+
+.suggested-container {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 18px;
+	width: $container-width;
+	margin-top: 28px;
+
+	&.ungrid {
+		display: block;
+	}
+}
+
+.cards-container {
+	display: flex;
+	flex-direction: column;
+	width: $container-width;
+}

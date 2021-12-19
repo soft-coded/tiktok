@@ -7,3 +7,6 @@ export const getFeed = (username?: string | null) =>
 
 export const getSuggested = (limit?: number) =>
 	apiClient.get(feedURL + "/suggested", { params: { limit } });
+
+export const getFollowingVids = (username: string) =>
+	apiClient.get(feedURL + "/following", { params: { username } });

@@ -96,13 +96,6 @@ export default function EditProfile() {
 				}
 
 				await updateUser(username!, formData);
-				dispatch(
-					notificationActions.showNotification({
-						type: "success",
-						message: "Profile updated"
-					})
-				);
-				setIsLoading(false);
 				// !!!page needs to refresh, do not use navigate here!!!
 				window.location.replace("/user/" + username);
 			} catch (err: any) {

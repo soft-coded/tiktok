@@ -9,6 +9,7 @@ import Notification from "./components/notification";
 import AuthModal from "./components/auth-modal";
 import PrivateRoute from "./components/private-route";
 const Home = lazy(() => import("./pages/home"));
+const Following = lazy(() => import("./pages/following"));
 const Profile = lazy(() => import("./pages/profile"));
 const Video = lazy(() => import("./pages/video"));
 const Upload = lazy(() => import("./pages/upload"));
@@ -35,6 +36,7 @@ export default function PCLayout() {
 			<Suspense fallback={<FullscreenSpinner />}>
 				<Routes>
 					<Route path="/" element={<Home />} />
+					<Route path="/following" element={<Following />} />
 					<Route path="/user/:username" element={<Profile />} />
 					<Route path="/video/:videoId" element={<Video />} />
 					<Route element={<PrivateRoute />}>

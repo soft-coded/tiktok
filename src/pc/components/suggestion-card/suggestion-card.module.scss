@@ -1,0 +1,60 @@
+$card-width: 228px;
+$card-height: 304px;
+$pfp-size: 48px;
+
+.suggestion-card-container {
+	width: $card-width;
+	height: $card-height;
+	border-radius: 8px;
+	overflow: hidden;
+
+	.video-container {
+		position: relative;
+		width: 100%;
+		height: 100%;
+
+		video {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			background-color: var(--clr-secondary);
+		}
+	}
+
+	.info-container {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		z-index: 5;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		color: #fff;
+		padding: 35px 12px 20px;
+		text-align: center;
+
+		.rounded-photo {
+			width: $pfp-size;
+			height: $pfp-size;
+		}
+
+		strong {
+			margin-top: 8px;
+			font-size: 1rem;
+		}
+
+		p {
+			font-size: 0.85rem;
+			font-weight: 500;
+		}
+
+		button {
+			margin-top: 6px;
+			padding: 0;
+			height: 36px;
+			font-weight: 700;
+			width: 90%;
+		}
+	}
+}
