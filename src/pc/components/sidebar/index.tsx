@@ -124,28 +124,36 @@ export default function Sidebar() {
 					<div className="following">
 						<header>
 							<h5>Following</h5>
-							<h5 className="see-all">See all</h5>
+							{followingList && followingList.length > 0 && (
+								<h5 className="see-all">See all</h5>
+							)}
 						</header>
 						<div className="accounts">
 							{followingList ? (
-								followingList.map((acc, i) => (
-									<Link key={i} to={"/user/" + acc.username}>
-										<div
-											className={joinClasses("hoverable", "account-details")}
-										>
-											<div className="rounded-photo">
-												<img
-													src={constants.pfpLink + "/" + acc.username}
-													alt={acc.name}
-												/>
+								followingList.length > 0 ? (
+									followingList.map((acc, i) => (
+										<Link key={i} to={"/user/" + acc.username}>
+											<div
+												className={joinClasses("hoverable", "account-details")}
+											>
+												<div className="rounded-photo">
+													<img
+														src={constants.pfpLink + "/" + acc.username}
+														alt={acc.name}
+													/>
+												</div>
+												<div className="name-container">
+													<h5>{acc.username}</h5>
+													<h6>{acc.name}</h6>
+												</div>
 											</div>
-											<div className="name-container">
-												<h5>{acc.username}</h5>
-												<h6>{acc.name}</h6>
-											</div>
-										</div>
-									</Link>
-								))
+										</Link>
+									))
+								) : (
+									<span className="no-following">
+										Accounts you follow will appear here
+									</span>
+								)
 							) : (
 								<LoadingSpinner className="spinner" />
 							)}

@@ -114,4 +114,10 @@ $bg-transition: background-color 0.25s ease-out;
 	.spinner {
 		--circle-size: 12px;
 	}
+
+	.no-following {
+		font-size: 0.8rem;
+		color: rgba(var(--clr-secondary-values), 0.75);
+		font-weight: 300;
+	}
 }

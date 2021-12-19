@@ -18,13 +18,18 @@ export default function Following() {
 	);
 	const [videos, setVideos] = useState<VideoData[] | null>(null);
 	const [suggestions, setSuggestions] = useState<UserData[] | null>(null);
+	const [showVideos, setShowVideos] = useState(true);
 
 	useEffect(() => {
-		if (!isAuthed) return;
+		if (!isAuthed) {
+			setShowVideos(false);
+			return;
+		}
 		async function fetchVids() {
 			try {
 				const res = await getFollowingVids(username!);
-				setVideos(res.data.videos);
+				if (res.data.videos.length === 0) setShowVideos(false);
+				else setVideos(res.data.videos);
 			} catch (err: any) {
 				dispatch(
 					notificationActions.showNotification({
@@ -38,7 +43,7 @@ export default function Following() {
 	}, [dispatch, username, isAuthed]);
 
 	useEffect(() => {
-		if (isAuthed) return;
+		if (showVideos) return;
 		async function fetchSuggestions() {
 			try {
 				const res = await getSuggested();
@@ -53,11 +58,11 @@ export default function Following() {
 			}
 		}
 		fetchSuggestions();
-	}, [isAuthed, dispatch]);
+	}, [isAuthed, dispatch, showVideos]);
 
 	return (
 		<PageWithSidebar className="following-container">
-			{isAuthed ? (
+			{showVideos ? (
 				<div className="cards-container">
 					{!videos ? (
 						<LoadingSpinner />
