@@ -143,7 +143,6 @@ export default function VideoCard(props: VideoData) {
 						className="video-container"
 						src={constants.videoLink + "/" + props.videoId}
 						muted
-						autoPlay
 						controls
 						onClick={handleModalOpen}
 					/>

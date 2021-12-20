@@ -17,6 +17,7 @@ import CommentForm from "./CommentForm";
 import Likes from "./Likes";
 import Dropdown from "../dropdown";
 import UserDropdown from "../user-dropdown";
+import VideoTag from "../video-tag";
 import constants from "../../../common/constants";
 import { notificationActions } from "../../store/slices/notification-slice";
 import {
@@ -149,16 +150,12 @@ export default function VideoModal(props: ModalProps) {
 					<i className="fas fa-times" />
 				</button>
 				<div className="poster-container" />
-				<div className="video-container">
-					<video
-						src={constants.videoLink + "/" + curVidId}
-						playsInline
-						autoPlay
-						controls
-					>
-						Your browser does not support videos.
-					</video>
-				</div>
+				<VideoTag
+					className="video-container"
+					src={constants.videoLink + "/" + curVidId}
+					autoPlay
+					controls
+				/>
 			</div>
 			<div className="modal-content">
 				<div className="modal-top">
