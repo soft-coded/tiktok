@@ -6,6 +6,7 @@ import useVideoDynamics, { videoDynamicsActions } from "./useVideoDynamics";
 import ActionButton from "../action-button";
 import FollowButton from "../follow-button";
 import Likes from "../video-modal/Likes";
+import VideoTag from "../video-tag";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { modifyScrollbar, convertToDate } from "../../../common/utils";
 import { VideoData } from "../../../common/types";
@@ -138,17 +139,14 @@ export default function VideoCard(props: VideoData) {
 					<i className="fas fa-music" /> {props.music}
 				</p>
 				<div className="card-video">
-					<div className="video-container">
-						<video
-							src={constants.videoLink + "/" + props.videoId}
-							playsInline
-							muted
-							autoPlay
-							onClick={handleModalOpen}
-						>
-							Your browser does not support videos.
-						</video>
-					</div>
+					<VideoTag
+						className="video-container"
+						src={constants.videoLink + "/" + props.videoId}
+						muted
+						autoPlay
+						controls
+						onClick={handleModalOpen}
+					/>
 					<div className="action-buttons">
 						<Likes
 							likes={vidDynamics.likesNum}

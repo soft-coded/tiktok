@@ -44,3 +44,12 @@ export function convertToDate(date: string | Date) {
 		hour12: true
 	});
 }
+
+export function getTimeFromSeconds(seconds: number) {
+	const mins = Math.floor(seconds / 60);
+	const secs = Math.round(seconds % 60);
+	const str = `${mins < 10 ? "0" + mins : mins}:${
+		secs < 10 ? "0" + secs : secs
+	}`;
+	return str;
+}
