@@ -11,7 +11,13 @@ interface Props extends ComponentProps {
 	muted?: boolean;
 	loop?: boolean;
 	controls?: boolean;
-	onClick?: (a?: any) => void;
+	playOnScroll?: boolean;
+	onClick?: (a?: MouseEvent) => void;
+}
+
+function observerCb([entry]: IntersectionObserverEntry[]) {
+	if (entry.isIntersecting) (entry.target as HTMLVideoElement).play();
+	else (entry.target as HTMLVideoElement).pause();
 }
 
 export default function VideoTag({
@@ -21,22 +27,22 @@ export default function VideoTag({
 	muted,
 	loop,
 	controls,
+	playOnScroll,
 	onClick
 }: Props) {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const videoRef = useRef<HTMLVideoElement>(null);
 	const wasPlaying = useRef(false);
 	const vidDuration = useRef("00:00");
-	const [isMuted, setIsMuted] = useState(muted != null ? muted : false);
+	const [isMuted, setIsMuted] = useState(muted != null && muted);
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [showSpinner, setShowSpinner] = useState(true);
 	const [showControls, setShowControls] = useState(false);
 	const [curTime, setCurTime] = useState(0);
 
 	useEffect(() => {
-		if (!videoRef.current || !containerRef.current) return;
+		if (!videoRef.current) return;
 		const vid = videoRef.current;
-		const container = containerRef.current;
 
 		function toggleSpinnerOn() {
 			setShowSpinner(true);
@@ -49,12 +55,6 @@ export default function VideoTag({
 		}
 		function toggleIsPlayingOff() {
 			setIsPlaying(false);
-		}
-		function toggleControlsOff() {
-			setShowControls(false);
-		}
-		function toggleControlsOn() {
-			setShowControls(true);
 		}
 		function updateTime() {
 			setCurTime(vid.currentTime);
@@ -74,8 +74,6 @@ export default function VideoTag({
 		vid.addEventListener("pause", toggleIsPlayingOff);
 		vid.addEventListener("timeupdate", updateTime);
 		vid.addEventListener("click", handleClick);
-		container.addEventListener("mouseenter", toggleControlsOn);
-		container.addEventListener("mouseleave", toggleControlsOff);
 
 		return () => {
 			vid.removeEventListener("loadedmetadata", setDuration);
@@ -86,10 +84,39 @@ export default function VideoTag({
 			vid.removeEventListener("pause", toggleIsPlayingOff);
 			vid.removeEventListener("timeupdate", updateTime);
 			vid.removeEventListener("click", handleClick);
+		};
+	}, []);
+
+	useEffect(() => {
+		if (!playOnScroll || !videoRef.current) return;
+		const vid = videoRef.current;
+		const observer = new IntersectionObserver(observerCb, {
+			threshold: 0.75
+		});
+		observer.observe(vid);
+
+		return () => observer.unobserve(vid);
+	}, [playOnScroll]);
+
+	useEffect(() => {
+		if (!controls || !containerRef.current) return;
+		const container = containerRef.current;
+
+		function toggleControlsOff() {
+			setShowControls(false);
+		}
+		function toggleControlsOn() {
+			setShowControls(true);
+		}
+
+		container.addEventListener("mouseenter", toggleControlsOn);
+		container.addEventListener("mouseleave", toggleControlsOff);
+
+		return () => {
 			container.removeEventListener("mouseenter", toggleControlsOn);
 			container.removeEventListener("mouseleave", toggleControlsOff);
 		};
-	}, []);
+	}, [controls]);
 
 	const handlePlayPause = useCallback((e: MouseEvent) => {
 		if (!videoRef.current) return;
@@ -132,6 +159,7 @@ export default function VideoTag({
 				ref={videoRef}
 				src={src}
 				playsInline
+				preload="metadata"
 				disablePictureInPicture
 				autoPlay={autoPlay}
 				muted={muted}

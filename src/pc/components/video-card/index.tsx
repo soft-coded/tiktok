@@ -144,6 +144,7 @@ export default function VideoCard(props: VideoData) {
 						src={constants.videoLink + "/" + props.videoId}
 						muted
 						controls
+						playOnScroll
 						onClick={handleModalOpen}
 					/>
 					<div className="action-buttons">
