@@ -11,13 +11,7 @@ interface Props extends ComponentProps {
 	muted?: boolean;
 	loop?: boolean;
 	controls?: boolean;
-	playOnScroll?: boolean;
 	onClick?: (a?: MouseEvent) => void;
-}
-
-function observerCb([entry]: IntersectionObserverEntry[]) {
-	if (entry.isIntersecting) (entry.target as HTMLVideoElement).play();
-	else (entry.target as HTMLVideoElement).pause();
 }
 
 export default function VideoTag({
@@ -27,7 +21,6 @@ export default function VideoTag({
 	muted,
 	loop,
 	controls,
-	playOnScroll,
 	onClick
 }: Props) {
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -86,17 +79,6 @@ export default function VideoTag({
 			vid.removeEventListener("click", handleClick);
 		};
 	}, []);
-
-	useEffect(() => {
-		if (!playOnScroll || !videoRef.current) return;
-		const vid = videoRef.current;
-		const observer = new IntersectionObserver(observerCb, {
-			threshold: 0.75
-		});
-		observer.observe(vid);
-
-		return () => observer.unobserve(vid);
-	}, [playOnScroll]);
 
 	useEffect(() => {
 		if (!controls || !containerRef.current) return;

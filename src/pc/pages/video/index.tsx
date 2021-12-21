@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./video.scss";
 import PageWithSidebar from "../../components/page-with-sidebar";
 import VideoCard from "../../components/video-card";
+import playOnScroll from "../../components/play-on-scroll";
 import { VideoData } from "../../../common/types";
 import { getVideo } from "../../../common/api/video";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
@@ -36,6 +37,11 @@ export default function Video() {
 		}
 		fetchVideo();
 	}, [videoId, dispatch, navigate, username]);
+
+	useEffect(() => {
+		if (!videoData) return;
+		return playOnScroll("app-video-card");
+	}, [videoData]);
 
 	return (
 		<PageWithSidebar className="video-page-container">

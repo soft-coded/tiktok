@@ -1,4 +1,4 @@
-import { useState, Suspense, lazy, useCallback } from "react";
+import { useState, Suspense, lazy, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 
 import "./video-card.scss";
@@ -18,6 +18,7 @@ const VideoModal = lazy(() => import("../video-modal"));
 
 export default function VideoCard(props: VideoData) {
 	const dispatch = useAppDispatch();
+	const cardRef = useRef<HTMLDivElement>(null);
 	const [showVideoModal, setShowVideoModal] = useState(false);
 	const [showProfileDD, setShowProfileDD] = useState(false);
 	const loggedInAs = useAppSelector(state => state.auth.username);
@@ -68,7 +69,7 @@ export default function VideoCard(props: VideoData) {
 	}
 
 	return (
-		<div className="app-video-card">
+		<div className="app-video-card" ref={cardRef}>
 			{showVideoModal && (
 				<Suspense fallback={<FullscreenSpinner />}>
 					<VideoModal
@@ -144,7 +145,6 @@ export default function VideoCard(props: VideoData) {
 						src={constants.videoLink + "/" + props.videoId}
 						muted
 						controls
-						playOnScroll
 						onClick={handleModalOpen}
 					/>
 					<div className="action-buttons">

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import "./home.scss";
 import PageWithSidebar from "../../components/page-with-sidebar";
 import VideoCard from "../../components/video-card";
+import playOnScroll from "../../components/play-on-scroll";
 import { VideoData } from "../../../common/types";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { notificationActions } from "../../store/slices/notification-slice";
@@ -31,6 +32,11 @@ export default function Home() {
 		}
 		fetchFeed();
 	}, [dispatch, username]);
+
+	useEffect(() => {
+		if (!feed) return;
+		return playOnScroll("app-video-card");
+	}, [feed]);
 
 	return (
 		<PageWithSidebar className="homepage-container">
