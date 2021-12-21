@@ -26,7 +26,8 @@ export default function VideoTag({
 	const containerRef = useRef<HTMLDivElement>(null);
 	const videoRef = useRef<HTMLVideoElement>(null);
 	const wasPlaying = useRef(false);
-	const [isMuted, setIsMuted] = useState(muted ? muted : false);
+	const vidDuration = useRef("00:00");
+	const [isMuted, setIsMuted] = useState(muted != null ? muted : false);
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [showSpinner, setShowSpinner] = useState(true);
 	const [showControls, setShowControls] = useState(false);
@@ -59,9 +60,13 @@ export default function VideoTag({
 			setCurTime(vid.currentTime);
 		}
 		function handleClick() {
-			vid.pause();
+			if (!vid.paused) vid.pause();
+		}
+		function setDuration() {
+			vidDuration.current = getTimeFromSeconds(vid.duration);
 		}
 
+		vid.addEventListener("loadedmetadata", setDuration);
 		vid.addEventListener("loadeddata", toggleSpinnerOff);
 		vid.addEventListener("waiting", toggleSpinnerOn);
 		vid.addEventListener("playing", toggleSpinnerOff);
@@ -73,6 +78,7 @@ export default function VideoTag({
 		container.addEventListener("mouseleave", toggleControlsOff);
 
 		return () => {
+			vid.removeEventListener("loadedmetadata", setDuration);
 			vid.removeEventListener("loadeddata", toggleSpinnerOff);
 			vid.removeEventListener("waiting", toggleSpinnerOn);
 			vid.removeEventListener("playing", toggleSpinnerOff);
@@ -106,9 +112,7 @@ export default function VideoTag({
 			if (e.type === "mousedown") {
 				wasPlaying.current = isPlaying;
 				videoRef.current.pause();
-			} else {
-				if (wasPlaying.current) videoRef.current.play();
-			}
+			} else if (wasPlaying.current) videoRef.current.play();
 		},
 		[isPlaying]
 	);
@@ -160,7 +164,7 @@ export default function VideoTag({
 					<div className={joinClasses(classes["button"], classes["seek-bar"])}>
 						<input
 							type="range"
-							step={0.05}
+							step={0.01}
 							max={videoRef.current?.duration}
 							min={0}
 							value={curTime}
@@ -170,9 +174,7 @@ export default function VideoTag({
 						/>
 						<span>
 							{getTimeFromSeconds(curTime)}&nbsp;/&nbsp;
-							{videoRef.current
-								? getTimeFromSeconds(videoRef.current.duration)
-								: "00:00"}
+							{vidDuration.current}
 						</span>
 					</div>
 				</div>

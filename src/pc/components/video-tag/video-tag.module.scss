@@ -69,7 +69,7 @@ $fit-thumb-in-slider: -8px;
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			gap: 6px;
+			gap: 4px;
 			transform: translateX(-50%);
 			width: 100%;
 
@@ -157,6 +157,7 @@ $fit-thumb-in-slider: -8px;
 			span {
 				text-align: right;
 				font-size: 0.8rem;
+				min-width: 88px;
 			}
 		}
 	}
