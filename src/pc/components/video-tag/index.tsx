@@ -130,6 +130,20 @@ export default function VideoTag({
 					<i
 						className={joinClasses(
 							"fas",
+							videoRef.current && !videoRef.current.muted
+								? "fa-volume-up"
+								: "fa-volume-mute",
+							classes["button"],
+							classes["volume-btn"]
+						)}
+						onClick={() =>
+							videoRef.current &&
+							(videoRef.current.muted = !videoRef.current.muted)
+						}
+					/>
+					<i
+						className={joinClasses(
+							"fas",
 							isPlaying ? "fa-pause" : "fa-play",
 							classes["button"],
 							classes["center-btn"]

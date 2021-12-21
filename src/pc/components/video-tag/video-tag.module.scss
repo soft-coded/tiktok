@@ -53,6 +53,13 @@ $fit-thumb-in-slider: -8px;
 			transform: translate(-50%, -50%);
 		}
 
+		.volume-btn {
+			position: absolute;
+			top: 24px;
+			right: 16px;
+			font-size: 2rem;
+		}
+
 		.seek-bar {
 			position: absolute;
 			bottom: 0;
