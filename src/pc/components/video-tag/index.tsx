@@ -26,6 +26,7 @@ export default function VideoTag({
 	const containerRef = useRef<HTMLDivElement>(null);
 	const videoRef = useRef<HTMLVideoElement>(null);
 	const wasPlaying = useRef(false);
+	const [isMuted, setIsMuted] = useState(muted ? muted : false);
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [showSpinner, setShowSpinner] = useState(true);
 	const [showControls, setShowControls] = useState(false);
@@ -57,6 +58,9 @@ export default function VideoTag({
 		function updateTime() {
 			setCurTime(vid.currentTime);
 		}
+		function handleClick() {
+			vid.pause();
+		}
 
 		vid.addEventListener("loadeddata", toggleSpinnerOff);
 		vid.addEventListener("waiting", toggleSpinnerOn);
@@ -64,6 +68,7 @@ export default function VideoTag({
 		vid.addEventListener("play", toggleIsPlayingOn);
 		vid.addEventListener("pause", toggleIsPlayingOff);
 		vid.addEventListener("timeupdate", updateTime);
+		vid.addEventListener("click", handleClick);
 		container.addEventListener("mouseenter", toggleControlsOn);
 		container.addEventListener("mouseleave", toggleControlsOff);
 
@@ -74,6 +79,7 @@ export default function VideoTag({
 			vid.removeEventListener("play", toggleIsPlayingOn);
 			vid.removeEventListener("pause", toggleIsPlayingOff);
 			vid.removeEventListener("timeupdate", updateTime);
+			vid.removeEventListener("click", handleClick);
 			container.removeEventListener("mouseenter", toggleControlsOn);
 			container.removeEventListener("mouseleave", toggleControlsOff);
 		};
@@ -107,6 +113,12 @@ export default function VideoTag({
 		[isPlaying]
 	);
 
+	const handleMute = useCallback(() => {
+		if (!videoRef.current) return;
+		videoRef.current.muted = !isMuted;
+		setIsMuted(!isMuted);
+	}, [isMuted]);
+
 	return (
 		<div
 			className={joinClasses(classes["video-tag-container"], className)}
@@ -130,16 +142,11 @@ export default function VideoTag({
 					<i
 						className={joinClasses(
 							"fas",
-							videoRef.current && !videoRef.current.muted
-								? "fa-volume-up"
-								: "fa-volume-mute",
+							isMuted ? "fa-volume-mute" : "fa-volume-up",
 							classes["button"],
 							classes["volume-btn"]
 						)}
-						onClick={() =>
-							videoRef.current &&
-							(videoRef.current.muted = !videoRef.current.muted)
-						}
+						onClick={handleMute}
 					/>
 					<i
 						className={joinClasses(
