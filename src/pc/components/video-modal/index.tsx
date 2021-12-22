@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "./video-modal.scss";
@@ -57,6 +57,7 @@ export default function VideoModal(props: ModalProps) {
 		() => (props.videoId ? props.videoId : props._id!),
 		[props._id, props.videoId]
 	);
+	const closeBtnRef = useRef<HTMLButtonElement>(null);
 	const { setShowModal, handleCommentsChange } = props;
 
 	useEffect(() => {
@@ -145,11 +146,26 @@ export default function VideoModal(props: ModalProps) {
 
 	return (
 		<div className="app-video-modal">
-			<div className="video-container-wrapper">
-				<button className="close-btn" onClick={handleModalClose}>
+			<div
+				className="video-container-wrapper"
+				onMouseEnter={() =>
+					closeBtnRef.current
+						? (closeBtnRef.current.style.display = "block")
+						: null
+				}
+				onMouseLeave={() =>
+					closeBtnRef.current
+						? (closeBtnRef.current.style.display = "none")
+						: null
+				}
+			>
+				<button
+					className="close-btn"
+					onClick={handleModalClose}
+					ref={closeBtnRef}
+				>
 					<i className="fas fa-times" />
 				</button>
-				<div className="poster-container" />
 				<VideoTag
 					className="video-container"
 					src={constants.videoLink + "/" + curVidId}
@@ -231,9 +247,12 @@ export default function VideoModal(props: ModalProps) {
 							<span key={i}>#{tag} </span>
 						))}
 					</p>
-					<h5 className="music">
+					<h5 className="music" title="Music used in the video">
 						<i className="fas fa-music" /> {props.music}
 					</h5>
+					<div className="view-count" title="Views">
+						<i className="fas fa-eye" /> {props.views}
+					</div>
 					<div className="action-buttons">
 						<Likes
 							handleAuthModalOpen={handleAuthModalOpen}

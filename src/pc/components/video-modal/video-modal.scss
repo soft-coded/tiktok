@@ -39,18 +39,6 @@ $modal-content-width: 544px;
 			}
 		}
 
-		.poster-container {
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			width: 10%;
-			height: 10%;
-			transform: scale(11);
-			opacity: 0.3;
-			background: rgba(0, 0, 0, 0) none no-repeat scroll center center / cover;
-			filter: blur(2px);
-		}
-
 		.video-container {
 			width: 100%;
 			height: 100%;
@@ -74,7 +62,7 @@ $modal-content-width: 544px;
 		.modal-top {
 			display: flex;
 			flex-direction: column;
-			gap: 12px;
+			gap: 10px;
 			padding: 32px 32px 8px 32px;
 		}
 
@@ -125,7 +113,8 @@ $modal-content-width: 544px;
 			font-size: 0.9rem;
 		}
 
-		.music {
+		.music,
+		.view-count {
 			font-weight: 600;
 			font-size: 0.88rem;
 
@@ -138,7 +127,7 @@ $modal-content-width: 544px;
 		.action-buttons {
 			display: flex;
 			gap: 16px;
-			margin: 20px 0 12px;
+			margin: 8px 0 12px;
 
 			.action-btn-container {
 				flex-direction: row;

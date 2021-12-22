@@ -127,7 +127,10 @@ export default function UploadPage() {
 								autoComplete="off"
 							/>
 						</div>
-						<div className="form-group">
+						<div
+							className="form-group"
+							title="Space separated list of words.&#10;Hashtag (#) can be omitted.&#10;Used for recommendations (eventually they will be)"
+						>
 							<label htmlFor="tags">Tags</label>
 							<Input
 								id="tags"
@@ -139,7 +142,10 @@ export default function UploadPage() {
 								autoComplete="off"
 							/>
 						</div>
-						<div className="form-group">
+						<div
+							className="form-group"
+							title="Music used in the video, if any. (Please don't copy strike me)"
+						>
 							<label htmlFor="music">Music</label>
 							<Input
 								id="music"

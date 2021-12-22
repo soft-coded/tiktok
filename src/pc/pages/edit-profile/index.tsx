@@ -307,7 +307,7 @@ export default function EditProfile() {
 									{isLoading ? (
 										<LoadingSpinner className="save-spinner" />
 									) : (
-										"Post"
+										"Save"
 									)}
 								</button>
 								<button
