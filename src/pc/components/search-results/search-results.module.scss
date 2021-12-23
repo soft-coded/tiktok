@@ -1,0 +1,96 @@
+$acc-pfp-size: 60px;
+$vid-pfp-size: 24px;
+$video-container-height: 313px;
+
+.account-card {
+	display: flex;
+	padding: 16px 0;
+
+	.pfp {
+		flex: 0 0 64px;
+		margin: 0 16px 16px 16px;
+		width: $acc-pfp-size;
+		height: $acc-pfp-size;
+	}
+
+	.card-content {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+
+		h3 {
+			font-size: 1rem;
+			font-weight: 700;
+			line-height: 1rem;
+		}
+
+		h5 {
+			font-size: 0.8rem;
+			font-weight: 400;
+			color: rgba(var(--clr-secondary-values), 0.75);
+
+			span {
+				font-weight: 500;
+				color: var(--clr-text);
+			}
+		}
+
+		p {
+			font-size: 0.8rem;
+			font-weight: 400;
+		}
+	}
+}
+
+.video-card {
+	display: flex;
+	flex-direction: column;
+
+	.video-container {
+		overflow: hidden;
+		border-radius: 4px;
+		width: 100%;
+		height: $video-container-height;
+
+		video {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+	}
+
+	.card-content {
+		padding: 8px 0;
+		color: rgba(var(--clr-secondary-values), 0.75);
+		font-size: 0.9rem;
+
+		.clamp-text {
+			display: -webkit-box;
+			-webkit-line-clamp: 2;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			-moz-box-orient: vertical;
+			word-break: break-word;
+		}
+
+		.info {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-top: 6px;
+
+			.uploader {
+				display: flex;
+				align-items: center;
+				gap: 4px;
+				font-size: 1rem;
+			}
+		}
+
+		.pfp {
+			width: $vid-pfp-size;
+			height: $vid-pfp-size;
+		}
+	}
+}

@@ -31,4 +31,25 @@ $container-width: 700px;
 			}
 		}
 	}
+
+	.acc-results {
+		padding-top: 16px;
+	}
+
+	.vid-results {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 16px;
+		padding-top: 16px;
+
+		&.ungrid {
+			display: block;
+		}
+	}
+
+	.no-results {
+		margin-top: 12px;
+		color: rgba(var(--clr-secondary-values), 0.75);
+		text-align: center;
+	}
 }
