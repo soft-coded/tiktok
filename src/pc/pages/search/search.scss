@@ -1,0 +1,34 @@
+$container-width: 700px;
+
+.search-page-container {
+	display: flex;
+	justify-content: space-between;
+	gap: 5vw;
+	min-height: 100%;
+}
+
+.content-container {
+	display: flex;
+	flex-direction: column;
+	width: $container-width;
+	margin-top: 12px;
+
+	nav {
+		display: flex;
+		font-weight: 500;
+		color: rgba(var(--clr-secondary-values), 0.5);
+		font-size: 0.9rem;
+		border-bottom: 2px solid var(--clr-border);
+
+		span {
+			padding: 8px 0;
+			text-align: center;
+			width: 120px;
+
+			&.active {
+				color: var(--clr-text);
+				box-shadow: 0 1.8px 0 0 var(--clr-text);
+			}
+		}
+	}
+}

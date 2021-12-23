@@ -10,3 +10,6 @@ export const getSuggested = (limit?: number) =>
 
 export const getFollowingVids = (username: string) =>
 	apiClient.get(feedURL + "/following", { params: { username } });
+
+export const search = (query: string, send: "accounts" | "videos") =>
+	apiClient.post(feedURL + "/search", { query, send });
