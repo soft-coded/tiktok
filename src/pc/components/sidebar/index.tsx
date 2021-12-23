@@ -66,7 +66,7 @@ export default function Sidebar() {
 					<NavLink
 						to="/"
 						className={({ isActive }) =>
-							joinClasses("hoverable", "nav-link", isActive ? "active" : "")
+							joinClasses("hoverable", "nav-link", isActive && "active")
 						}
 					>
 						<i className="fas fa-home" />
@@ -75,7 +75,7 @@ export default function Sidebar() {
 					<NavLink
 						to="/following"
 						className={({ isActive }) =>
-							joinClasses("hoverable", "nav-link", isActive ? "active" : "")
+							joinClasses("hoverable", "nav-link", isActive && "active")
 						}
 					>
 						<i className="fas fa-user-friends" />

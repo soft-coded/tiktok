@@ -144,7 +144,7 @@ export default function Reply(props: Props) {
 								className={joinClasses(
 									likeStats.hasLiked ? "fas" : "far",
 									"fa-heart",
-									likeStats.hasLiked ? "liked" : ""
+									likeStats.hasLiked && "liked"
 								)}
 								onClick={likeRep}
 							/>

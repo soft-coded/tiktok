@@ -37,10 +37,7 @@ export default function Likes(props: Props) {
 		<ActionButton
 			icon={<i className="fas fa-heart" />}
 			number={props.likes}
-			className={joinClasses(
-				"action-btn-container",
-				props.hasLiked ? "liked" : ""
-			)}
+			className={joinClasses("action-btn-container", props.hasLiked && "liked")}
 			onClick={likeVid}
 		/>
 	);

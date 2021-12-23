@@ -270,7 +270,7 @@ export default function VideoModal(props: ModalProps) {
 						</label>
 					</div>
 				</div>
-				<div className={joinClasses("comments", isAuthed ? "container" : "")}>
+				<div className={joinClasses("comments", isAuthed && "container")}>
 					{isAuthed ? (
 						!comments ? (
 							<LoadingSpinner />

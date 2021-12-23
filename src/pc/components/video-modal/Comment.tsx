@@ -167,7 +167,7 @@ export default function Comment(props: Props) {
 								className={joinClasses(
 									likeStats.hasLiked ? "fas" : "far",
 									"fa-heart",
-									likeStats.hasLiked ? "liked" : ""
+									likeStats.hasLiked && "liked"
 								)}
 								onClick={likeComm}
 							/>

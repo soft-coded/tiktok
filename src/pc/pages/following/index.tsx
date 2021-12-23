@@ -76,7 +76,7 @@ export default function Following() {
 				<div
 					className={joinClasses(
 						"suggested-container",
-						!suggestions ? "ungrid" : ""
+						!suggestions && "ungrid"
 					)}
 				>
 					{!suggestions ? (
