@@ -53,7 +53,7 @@ export default function Search() {
 	useEffect(() => {
 		if (query !== storeQuery) dispatch(searchActions.putQuery(query));
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [dispatch]);
 
 	useEffect(() => {
 		return () => {
