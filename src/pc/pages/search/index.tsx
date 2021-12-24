@@ -5,19 +5,26 @@ import "./search.scss";
 import PageWithSidebar from "../../components/page-with-sidebar";
 import AccountCard from "../../components/search-results/AccountCard";
 import VideoCard from "../../components/search-results/VideoCard";
-import { useAppDispatch } from "../../../common/store";
+import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { search } from "../../../common/api/feed";
 import { notificationActions } from "../../store/slices/notification-slice";
 import { UserData, VideoData } from "../../../common/types";
 import { joinClasses } from "../../../common/utils";
 import LoadingSpinner from "../../components/loading-spinner";
+import { searchActions } from "../../store/slices/search-slice";
+
+type sendType = "accounts" | "videos";
+let prevQuery: string | null = null;
 
 export default function Search() {
-	const query = new URLSearchParams(useLocation().search).get("query");
+	const params = new URLSearchParams(useLocation().search);
+	const query = params.get("query");
+	const send = (params.get("send") as sendType) || "accounts";
+	const storeQuery = useAppSelector(state => state.pc.search.query);
 	const dispatch = useAppDispatch();
 	const [accounts, setAccounts] = useState<UserData[] | null>(null);
 	const [videos, setVideos] = useState<VideoData[] | null>(null);
-	const [activeTab, setActiveTab] = useState<"accounts" | "videos">("accounts");
+	const [activeTab, setActiveTab] = useState<sendType>(send);
 
 	const fetchResults = useCallback(
 		async (send: "accounts" | "videos") => {
@@ -39,13 +46,44 @@ export default function Search() {
 	);
 
 	useEffect(() => {
-		fetchResults("accounts");
-	}, [fetchResults]);
+		fetchResults(send);
+	}, [fetchResults, send]);
 
-	const handleVideosClick = useCallback(() => {
-		if (!videos) fetchResults("videos");
-		setActiveTab("videos");
-	}, [videos, fetchResults]);
+	// need this only when the component is mounted
+	useEffect(() => {
+		if (query !== storeQuery) dispatch(searchActions.putQuery(query));
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	useEffect(() => {
+		return () => {
+			dispatch(searchActions.dropQuery());
+		};
+	}, [dispatch]);
+
+	useEffect(() => {
+		if (prevQuery !== query) {
+			setAccounts(null);
+			setVideos(null);
+		}
+
+		return () => {
+			prevQuery = query;
+		};
+	}, [query]);
+
+	const handleNavClick = useCallback(
+		(send: sendType) => {
+			if (send === "videos") {
+				if (!videos) fetchResults("videos");
+				setActiveTab("videos");
+			} else {
+				if (!accounts) fetchResults("accounts");
+				setActiveTab("accounts");
+			}
+		},
+		[fetchResults, videos, accounts]
+	);
 
 	return (
 		<PageWithSidebar className="search-page-container">
@@ -56,7 +94,7 @@ export default function Search() {
 							"clickable",
 							activeTab === "accounts" && "active"
 						)}
-						onClick={() => setActiveTab("accounts")}
+						onClick={() => handleNavClick("accounts")}
 					>
 						Accounts
 					</span>
@@ -65,7 +103,7 @@ export default function Search() {
 							"clickable",
 							activeTab === "videos" && "active"
 						)}
-						onClick={handleVideosClick}
+						onClick={() => handleNavClick("videos")}
 					>
 						Videos
 					</span>
