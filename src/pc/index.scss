@@ -148,3 +148,21 @@ $scrollbar-track-color: rgba(var(--clr-secondary-values), 0.25);
 	cursor: pointer;
 	user-select: none;
 }
+
+.scrolled-all {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	gap: 4px;
+	margin: 48px 0;
+
+	span {
+		font-weight: 600;
+		font-size: 1.1rem;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
