@@ -28,19 +28,22 @@ export default function Following() {
 	const [suggestions, setSuggestions] = useState<UserData[] | null>(null);
 	const [showVideos, setShowVideos] = useState(true);
 
-	const fetchVids = useCallback(async (skip?: number) => {
-		try {
-			const res = await getFollowingVids(username!, skip);
-			return res.data;
-		} catch (err: any) {
-			dispatch(
-				notificationActions.showNotification({
-					type: "error",
-					message: err.message
-				})
-			);
-		}
-	}, []);
+	const fetchVids = useCallback(
+		async (skip?: number) => {
+			try {
+				const res = await getFollowingVids(username!, skip);
+				return res.data;
+			} catch (err: any) {
+				dispatch(
+					notificationActions.showNotification({
+						type: "error",
+						message: err.message
+					})
+				);
+			}
+		},
+		[username, dispatch]
+	);
 
 	useEffect(() => {
 		if (!isAuthed) {
@@ -53,7 +56,7 @@ export default function Following() {
 			else setVideos(res.videos);
 		}
 		fetchFunc();
-	}, [dispatch, username, isAuthed]);
+	}, [dispatch, isAuthed, fetchVids]);
 
 	useEffect(() => {
 		if (!videos) return;
