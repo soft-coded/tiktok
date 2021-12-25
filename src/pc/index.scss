@@ -78,12 +78,6 @@ $scrollbar-track-color: rgba(var(--clr-secondary-values), 0.25);
 	}
 }
 
-.see-all {
-	color: var(--clr-primary);
-	cursor: pointer;
-	user-select: none;
-}
-
 .backdrop {
 	position: fixed;
 	inset: 0;

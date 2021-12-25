@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useCallback, useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 
 import "./sidebar.scss";
@@ -20,6 +20,7 @@ export default function Sidebar() {
 	);
 	const { following: followingList, suggested: suggestedAccounts } =
 		useAppSelector(state => state.pc.sidebar);
+	const [showingAll, setShowingAll] = useState(false);
 
 	useEffect(() => {
 		if (!isAuthed || followingList) return;
@@ -36,13 +37,13 @@ export default function Sidebar() {
 			}
 		}
 		getFollowing();
-	}, [isAuthed, username, followingList, dispatch]);
+		// eslint-disable-next-line
+	}, [isAuthed, username, dispatch]);
 
-	useEffect(() => {
-		if (suggestedAccounts) return;
-		async function getSuggested() {
+	const getSuggested = useCallback(
+		async (limit: number) => {
 			try {
-				await dispatch(fetchSuggested(5)).unwrap();
+				await dispatch(fetchSuggested(limit)).unwrap();
 			} catch (err: any) {
 				dispatch(
 					notificationActions.showNotification({
@@ -51,11 +52,17 @@ export default function Sidebar() {
 					})
 				);
 			}
-		}
-		getSuggested();
-	}, [dispatch, suggestedAccounts]);
+		},
+		[dispatch]
+	);
 
-	function handleClick() {
+	useEffect(() => {
+		if (suggestedAccounts) return;
+		getSuggested(15);
+		// eslint-disable-next-line
+	}, [getSuggested]);
+
+	function handleLogIn() {
 		dispatch(authModalActions.showModal());
 	}
 
@@ -87,7 +94,7 @@ export default function Sidebar() {
 						<span>
 							Log in to follow creators, like videos, and view comments.
 						</span>
-						<button className="secondary-button" onClick={handleClick}>
+						<button className="secondary-button" onClick={handleLogIn}>
 							Log In
 						</button>
 					</div>
@@ -95,38 +102,42 @@ export default function Sidebar() {
 				<div className="suggested">
 					<header>
 						<h5>Suggested accounts</h5>
-						<h5 className="see-all">See all</h5>
 					</header>
 					<div className="accounts">
 						{suggestedAccounts ? (
-							suggestedAccounts.map((acc, i) => (
-								<Link key={i} to={"/user/" + acc.username}>
-									<div className="hoverable account-details">
-										<div className="rounded-photo">
-											<img
-												src={constants.pfpLink + "/" + acc.username}
-												alt={acc.name}
-											/>
+							suggestedAccounts
+								.slice(0, showingAll ? undefined : 5)
+								.map((acc, i) => (
+									<Link key={i} to={"/user/" + acc.username}>
+										<div className="hoverable account-details">
+											<div className="rounded-photo">
+												<img
+													src={constants.pfpLink + "/" + acc.username}
+													alt={acc.name}
+												/>
+											</div>
+											<div className="name-container">
+												<h5>{acc.username}</h5>
+												<h6>{acc.name}</h6>
+											</div>
 										</div>
-										<div className="name-container">
-											<h5>{acc.username}</h5>
-											<h6>{acc.name}</h6>
-										</div>
-									</div>
-								</Link>
-							))
+									</Link>
+								))
 						) : (
 							<LoadingSpinner className="spinner" />
 						)}
 					</div>
+					<h5
+						className="clickable see-all"
+						onClick={() => setShowingAll(!showingAll)}
+					>
+						{showingAll ? "See less" : "See all"}
+					</h5>
 				</div>
 				{isAuthed && (
 					<div className="following">
 						<header>
 							<h5>Following</h5>
-							{followingList && followingList.length > 0 && (
-								<h5 className="see-all">See all</h5>
-							)}
 						</header>
 						<div className="accounts">
 							{followingList ? (

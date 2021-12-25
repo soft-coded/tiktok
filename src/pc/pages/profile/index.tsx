@@ -116,7 +116,6 @@ export default function Profile() {
 						<div className="suggested">
 							<h5>
 								<span>Suggested accounts</span>
-								<span className="see-all">See all</span>
 							</h5>
 							<div className="account-buttons">
 								{suggestedAccounts ? (
