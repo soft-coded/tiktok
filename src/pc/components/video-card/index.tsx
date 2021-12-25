@@ -14,6 +14,8 @@ import CardDropdown from "../user-dropdown";
 import constants from "../../../common/constants";
 import { authModalActions } from "../../store/slices/auth-modal-slice";
 import FullscreenSpinner from "../fullscreen-spinner";
+import { share } from "../../../common/api/video";
+import { notificationActions } from "../../store/slices/notification-slice";
 const VideoModal = lazy(() => import("../video-modal"));
 
 export default function VideoCard(props: VideoData) {
@@ -60,6 +62,28 @@ export default function VideoCard(props: VideoData) {
 		[vidDispatch]
 	);
 
+	const handleShare = useCallback(async () => {
+		try {
+			await share(props.videoId!);
+			await navigator.clipboard.writeText(
+				window.location.origin + "/video/" + props.videoId
+			);
+			dispatch(
+				notificationActions.showNotification({
+					type: "success",
+					message: "Video link copied to clipboard"
+				})
+			);
+		} catch (err: any) {
+			dispatch(
+				notificationActions.showNotification({
+					type: "error",
+					message: err.message
+				})
+			);
+		}
+	}, [dispatch, props.videoId]);
+
 	function showDD() {
 		setShowProfileDD(true);
 	}
@@ -79,6 +103,7 @@ export default function VideoCard(props: VideoData) {
 						handleLike={handleLike}
 						handleFollow={handleFollow}
 						handleCommentsChange={handleCommentsChange}
+						handleShare={handleShare}
 					/>
 				</Suspense>
 			)}
@@ -164,6 +189,7 @@ export default function VideoCard(props: VideoData) {
 							icon={<i className="fas fa-share" />}
 							number={props.shares as number}
 							className="action-btn-container"
+							onClick={handleShare}
 						/>
 					</div>
 				</div>

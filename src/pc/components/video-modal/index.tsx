@@ -33,6 +33,7 @@ export interface ModalProps extends VideoData {
 	handleLike: (hasLiked: boolean) => void;
 	handleFollow: (isFollowing: boolean) => void;
 	handleCommentsChange: (commentsNum: number) => void;
+	handleShare: () => void;
 }
 
 // does not work with plain string, had to use an object instead
@@ -268,6 +269,12 @@ export default function VideoModal(props: ModalProps) {
 								className="action-btn-container"
 							/>
 						</label>
+						<ActionButton
+							icon={<i className="fas fa-share" />}
+							number={props.shares as number}
+							className="action-btn-container"
+							onClick={props.handleShare}
+						/>
 					</div>
 				</div>
 				<div className={joinClasses("comments", isAuthed && "container")}>

@@ -79,6 +79,7 @@ export default function Home() {
 						hasMore={hasMoreVids}
 						loader={<LoadingSpinner />}
 						endMessage={<EndMessage />}
+						className="infinite-scroll-div"
 					>
 						{feed.map(video => (
 							<VideoCard key={video.videoId} {...video} />

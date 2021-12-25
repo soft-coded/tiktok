@@ -101,6 +101,7 @@ export default function Following() {
 							hasMore={hasMoreVids}
 							loader={<LoadingSpinner />}
 							endMessage={<EndMessage />}
+							className="infinite-scroll-div"
 						>
 							{videos.map((vid, i) => (
 								<VideoCard key={i} {...vid} isFollowing={true} />

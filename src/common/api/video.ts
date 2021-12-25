@@ -108,3 +108,6 @@ export const likeReply = (
 		replyId,
 		username
 	});
+
+export const share = (videoId: string) =>
+	apiClient.post(videoURL + "/share", { videoId });

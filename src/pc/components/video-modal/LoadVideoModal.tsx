@@ -8,7 +8,7 @@ import useVideoDynamics, {
 } from "../video-card/useVideoDynamics";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { VideoData } from "../../../common/types";
-import { getVideo } from "../../../common/api/video";
+import { getVideo, share } from "../../../common/api/video";
 import { notificationActions } from "../../store/slices/notification-slice";
 
 export interface ModalProps {
@@ -81,6 +81,28 @@ export default function LoadVideoModal({ videoId, setShowModal }: ModalProps) {
 		[vidDispatch]
 	);
 
+	const handleShare = useCallback(async () => {
+		try {
+			await share(videoId);
+			await navigator.clipboard.writeText(
+				window.location.origin + "/video/" + videoId
+			);
+			dispatch(
+				notificationActions.showNotification({
+					type: "success",
+					message: "Video link copied to clipboard"
+				})
+			);
+		} catch (err: any) {
+			dispatch(
+				notificationActions.showNotification({
+					type: "error",
+					message: err.message
+				})
+			);
+		}
+	}, [dispatch, videoId]);
+
 	return videoData ? (
 		<Modal
 			{...videoData}
@@ -89,6 +111,7 @@ export default function LoadVideoModal({ videoId, setShowModal }: ModalProps) {
 			handleLike={handleLike}
 			handleFollow={handleFollow}
 			handleCommentsChange={handleCommentsChange}
+			handleShare={handleShare}
 		/>
 	) : (
 		<FullscreenSpinner />
