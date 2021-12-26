@@ -122,7 +122,8 @@ $scrollbar-track-color: rgba(var(--clr-secondary-values), 0.25);
 	font-size: 0.85rem;
 	font-weight: 600;
 
-	span:hover {
+	span:hover,
+	a:hover {
 		cursor: pointer;
 		text-decoration: underline;
 	}

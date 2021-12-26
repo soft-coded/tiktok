@@ -158,7 +158,12 @@ export default function VideoCard(props: VideoData) {
 				<p className="caption">{props.caption}</p>
 				<p className="tags">
 					{props.tags!.map((tag, i) => (
-						<span key={i}>#{tag} </span>
+						<>
+							<Link key={i} to={"/search?query=" + tag + "&send=videos"}>
+								#{tag}
+							</Link>
+							&nbsp;
+						</>
 					))}
 				</p>
 				<p className="music">

@@ -145,6 +145,13 @@ export default function VideoModal(props: ModalProps) {
 		}
 	}, [dispatch, curVidId, username, token, handleModalClose, navigate]);
 
+	function searchTag(tag: string) {
+		const link = "/search?query=" + tag + "&send=videos";
+		url.prevURL = link;
+		handleModalClose();
+		navigate(link);
+	}
+
 	return (
 		<div className="app-video-modal">
 			<div
@@ -245,7 +252,12 @@ export default function VideoModal(props: ModalProps) {
 					<p className="caption">{props.caption}</p>
 					<p className="tags">
 						{props.tags!.map((tag, i) => (
-							<span key={i}>#{tag} </span>
+							<>
+								<span key={i} onClick={() => searchTag(tag)}>
+									#{tag}
+								</span>
+								&nbsp;
+							</>
 						))}
 					</p>
 					<h5 className="music" title="Music used in the video">
