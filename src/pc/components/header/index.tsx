@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { authModalActions } from "../../store/slices/auth-modal-slice";
 import { authActions } from "../../../common/store/slices/auth";
 import { joinClasses } from "../../../common/utils";
-import { hasNewNotifs } from "../../../common/api/user";
+import { hasNewNotifs, readAllNotifs } from "../../../common/api/user";
 import constants from "../../../common/constants";
 import { notificationActions } from "../../store/slices/notification-slice";
 
@@ -26,6 +26,8 @@ export default function Header() {
 	} = useAppSelector(state => state.auth);
 
 	useEffect(() => {
+		if (!username) return;
+
 		async function fetchHasNew() {
 			try {
 				const res = await hasNewNotifs(username!, token!);
@@ -49,6 +51,14 @@ export default function Header() {
 	function handleLogOut() {
 		setShowOptions(false);
 		dispatch(authActions.logout());
+	}
+
+	function handleNotifsClose() {
+		setShowNotifs(false);
+		if (hasNotifs) {
+			setHasNotifs(false);
+			readAllNotifs(username!, token!).catch(err => console.error(err));
+		}
 	}
 
 	return (
@@ -82,7 +92,7 @@ export default function Header() {
 								/>
 								{hasNotifs && <span className={classes["dot"]} />}
 								{showNotifs && (
-									<UserNotifications setShowDropdown={setShowNotifs} />
+									<UserNotifications setShowDropdown={handleNotifsClose} />
 								)}
 							</div>
 							<div

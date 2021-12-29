@@ -36,7 +36,7 @@ export default function UserNotifications({ setShowDropdown }: Props) {
 		}
 		fetchNotifs();
 	}, [username, token, dispatch]);
-	console.log(notifs);
+
 	return (
 		<Dropdown
 			className={classes["inbox-card"]}
@@ -47,15 +47,28 @@ export default function UserNotifications({ setShowDropdown }: Props) {
 				<LoadingSpinner className={classes["notif-spinner"]} />
 			) : (
 				notifs.map((notif, i) => (
-					<div key={i} className={classes["notif-container"]}>
-						<div
-							className={joinClasses("rounded-photo", classes["rounded-photo"])}
-						>
-							<img
-								src={constants.pfpLink + "/" + notif.by.username}
-								alt={notif.by.username}
-							/>
-						</div>
+					<div
+						key={i}
+						className={joinClasses(
+							"hoverable",
+							classes["notif-container"],
+							!notif.read && classes["unread"]
+						)}
+						title={notif.message}
+					>
+						<Link to={"/user/" + notif.by.username}>
+							<div
+								className={joinClasses(
+									"rounded-photo",
+									classes["rounded-photo"]
+								)}
+							>
+								<img
+									src={constants.pfpLink + "/" + notif.by.username}
+									alt={notif.by.username}
+								/>
+							</div>
+						</Link>
 						<div className={classes["content"]}>
 							<Link to={"/user/" + notif.by.username}>
 								<h4>{notif.by.username}</h4>
@@ -63,7 +76,7 @@ export default function UserNotifications({ setShowDropdown }: Props) {
 							<p className="clamp-text">{notif.message}</p>
 							<span>{convertToDate(notif.createdAt)}</span>
 						</div>
-						{notif.type !== "followed" && (
+						{(notif.meta || notif.type === "likedVideo") && (
 							<div className={classes["video-container"]}>
 								<video
 									src={
@@ -80,6 +93,9 @@ export default function UserNotifications({ setShowDropdown }: Props) {
 								/>
 							</div>
 						)}
+						<div className={classes["delete-btn"]} title="Delete notification">
+							<i className="fas fa-close" />
+						</div>
 					</div>
 				))
 			)}

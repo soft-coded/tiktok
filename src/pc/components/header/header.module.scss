@@ -166,24 +166,29 @@ $notification-dd-width: 376px;
 		h1 {
 			font-size: 1.3rem;
 			font-weight: 600;
-			padding: 8px 0 0 16px;
+			padding: 8px 0 8px 16px;
 		}
 
 		.notif-container {
 			display: flex;
 			padding: 10px 16px;
 
+			&.unread {
+				background-color: rgba(var(--clr-secondary-values), 0.05);
+			}
+
 			.rounded-photo {
 				width: 48px;
 				height: 48px;
+				flex-shrink: 0;
 			}
 
 			.content {
 				padding: 0 12px;
-				flex: 1 1 auto;
 				font-size: 0.8rem;
 				line-height: 1.12rem;
 				font-weight: 400;
+				width: 100%;
 
 				h4 {
 					font-weight: 600;
@@ -202,13 +207,24 @@ $notification-dd-width: 376px;
 			.video-container {
 				max-width: 42px;
 				height: 56px;
-				flex: 1 1 42px;
-				margin-left: auto;
+				flex: 1 0 42px;
+				align-self: center;
 
 				video {
 					width: 100%;
 					height: 100%;
 					object-fit: cover;
+				}
+			}
+
+			.delete-btn {
+				margin-left: 20px;
+				align-self: center;
+				font-size: 1rem;
+				cursor: default;
+
+				i {
+					color: rgba(var(--clr-shadow-values), 0.5);
 				}
 			}
 		}

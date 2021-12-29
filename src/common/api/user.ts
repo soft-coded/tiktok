@@ -40,3 +40,6 @@ const notifRoute = "/notifications";
 
 export const hasNewNotifs = (username: string, token: string) =>
 	apiClient.post(userURL + notifRoute + "/hasNew", { username, token });
+
+export const readAllNotifs = (username: string, token: string) =>
+	apiClient.post(userURL + notifRoute + "/readAll", { username, token });
