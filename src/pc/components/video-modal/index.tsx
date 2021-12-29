@@ -1,4 +1,10 @@
-import { useState, useEffect, useCallback, useMemo, useRef } from "react";
+import React, {
+	useState,
+	useEffect,
+	useCallback,
+	useMemo,
+	useRef
+} from "react";
 import { useNavigate } from "react-router-dom";
 
 import "./video-modal.scss";
@@ -252,12 +258,10 @@ export default function VideoModal(props: ModalProps) {
 					<p className="caption">{props.caption}</p>
 					<p className="tags">
 						{props.tags!.map((tag, i) => (
-							<>
-								<span key={i} onClick={() => searchTag(tag)}>
-									#{tag}
-								</span>
+							<React.Fragment key={i}>
+								<span onClick={() => searchTag(tag)}>#{tag}</span>
 								&nbsp;
-							</>
+							</React.Fragment>
 						))}
 					</p>
 					<h5 className="music" title="Music used in the video">

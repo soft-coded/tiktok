@@ -1,4 +1,4 @@
-import { useState, Suspense, lazy, useCallback, useRef } from "react";
+import React, { useState, Suspense, lazy, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 
 import "./video-card.scss";
@@ -158,12 +158,10 @@ export default function VideoCard(props: VideoData) {
 				<p className="caption">{props.caption}</p>
 				<p className="tags">
 					{props.tags!.map((tag, i) => (
-						<>
-							<Link key={i} to={"/search?query=" + tag + "&send=videos"}>
-								#{tag}
-							</Link>
+						<React.Fragment key={i}>
+							<Link to={"/search?query=" + tag + "&send=videos"}>#{tag}</Link>
 							&nbsp;
-						</>
+						</React.Fragment>
 					))}
 				</p>
 				<p className="music">

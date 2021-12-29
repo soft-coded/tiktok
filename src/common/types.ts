@@ -78,10 +78,23 @@ export interface UserQuery {
 	description?: "1";
 	totalLikes?: "1";
 	createdAt?: "1";
+	notifications?: "1";
 	following?: "list" | "num";
 	followers?: "list" | "num";
 	videos?: "uploaded" | "liked";
 	loggedInAs?: string;
+}
+
+export interface UserNotification {
+	_id?: string;
+	notificationId?: string;
+	type: "likedVideo" | "followed" | "commented" | "replied";
+	message: string;
+	refId: UserData | VideoData | string;
+	by: UserData;
+	meta?: any;
+	read: boolean;
+	createdAt: Date;
 }
 
 export interface VideoDynamics {

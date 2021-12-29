@@ -2,6 +2,8 @@
 
 $sidebar-width: 356px;
 $profile-icon-size: 32px;
+$notification-dd-height: 640px;
+$notification-dd-width: 376px;
 
 .header-wrapper {
 	height: $header-height;
@@ -100,6 +102,10 @@ $profile-icon-size: 32px;
 		font-size: 1.2rem;
 		position: relative;
 
+		i {
+			color: rgba(var(--clr-secondary-values), 0.85);
+		}
+
 		.icon {
 			cursor: pointer;
 		}
@@ -125,6 +131,86 @@ $profile-icon-size: 32px;
 
 		i {
 			width: 14px;
+		}
+	}
+}
+
+.inbox {
+	position: relative;
+
+	.dot {
+		position: absolute;
+		top: 0;
+		left: 100%;
+		background-color: red;
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+	}
+
+	.notif-spinner {
+		--circle-size: 12px;
+		--wrapper-padding: 8px;
+	}
+}
+
+.inbox {
+	.inbox-card {
+		position: absolute;
+		right: 0;
+		top: 130%;
+		z-index: 12;
+		width: $notification-dd-width;
+		height: $notification-dd-height;
+
+		h1 {
+			font-size: 1.3rem;
+			font-weight: 600;
+			padding: 8px 0 0 16px;
+		}
+
+		.notif-container {
+			display: flex;
+			padding: 10px 16px;
+
+			.rounded-photo {
+				width: 48px;
+				height: 48px;
+			}
+
+			.content {
+				padding: 0 12px;
+				flex: 1 1 auto;
+				font-size: 0.8rem;
+				line-height: 1.12rem;
+				font-weight: 400;
+
+				h4 {
+					font-weight: 600;
+
+					&:hover {
+						text-decoration: underline;
+					}
+				}
+
+				span {
+					font-size: 0.75rem;
+					color: rgba(var(--clr-secondary-values), 0.75);
+				}
+			}
+
+			.video-container {
+				max-width: 42px;
+				height: 56px;
+				flex: 1 1 42px;
+				margin-left: auto;
+
+				video {
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+				}
+			}
 		}
 	}
 }

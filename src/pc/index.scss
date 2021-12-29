@@ -165,3 +165,14 @@ $scrollbar-track-color: rgba(var(--clr-secondary-values), 0.25);
 .infinite-scroll-div {
 	overflow: unset !important;
 }
+
+.clamp-text {
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	-moz-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-moz-box-orient: vertical;
+	word-break: break-word;
+}

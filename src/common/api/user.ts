@@ -35,3 +35,8 @@ export const followUser = (toFollow: string, loggedInAs: string | null) =>
 
 export const updateUser = (username: string, data: any) =>
 	apiClient.patch(userURL + "/" + username, data);
+
+const notifRoute = "/notifications";
+
+export const hasNewNotifs = (username: string, token: string) =>
+	apiClient.post(userURL + notifRoute + "/hasNew", { username, token });

@@ -64,17 +64,6 @@ $video-container-height: 313px;
 		color: rgba(var(--clr-secondary-values), 0.75);
 		font-size: 0.9rem;
 
-		.clamp-text {
-			display: -webkit-box;
-			-webkit-line-clamp: 2;
-			-webkit-box-orient: vertical;
-			-moz-box-orient: vertical;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			-moz-box-orient: vertical;
-			word-break: break-word;
-		}
-
 		.info {
 			display: flex;
 			justify-content: space-between;
