@@ -43,3 +43,12 @@ export const hasNewNotifs = (username: string, token: string) =>
 
 export const readAllNotifs = (username: string, token: string) =>
 	apiClient.post(userURL + notifRoute + "/readAll", { username, token });
+
+export const deleteNotif = (
+	username: string,
+	token: string,
+	notificationId: string
+) =>
+	apiClient.delete(userURL + notifRoute, {
+		data: { username, token, notificationId }
+	});

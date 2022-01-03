@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 
 import classes from "./header.module.scss";
@@ -6,7 +6,7 @@ import Dropdown from "../dropdown";
 import { UserNotification } from "../../../common/types";
 import { useAppSelector, useAppDispatch } from "../../../common/store";
 import { notificationActions } from "../../store/slices/notification-slice";
-import { getCustom } from "../../../common/api/user";
+import { deleteNotif, getCustom } from "../../../common/api/user";
 import LoadingSpinner from "../loading-spinner";
 import constants from "../../../common/constants";
 import { convertToDate, joinClasses } from "../../../common/utils";
@@ -20,22 +20,47 @@ export default function UserNotifications({ setShowDropdown }: Props) {
 	const [notifs, setNotifs] = useState<null | UserNotification[]>(null);
 	const { username, token } = useAppSelector(state => state.auth);
 
+	const fetchNotifs = useCallback(async () => {
+		try {
+			const res = await getCustom({ notifications: "1" }, username!);
+			setNotifs(res.data.notifications);
+		} catch (err: any) {
+			dispatch(
+				notificationActions.showNotification({
+					type: "error",
+					message: "Couldn't fetch notifications: " + err.message
+				})
+			);
+		}
+	}, [username, dispatch]);
+
 	useEffect(() => {
-		async function fetchNotifs() {
+		fetchNotifs();
+	}, [fetchNotifs]);
+
+	const delNotif = useCallback(
+		async (notificationId: string) => {
 			try {
-				const res = await getCustom({ notifications: "1" }, username!);
-				setNotifs(res.data.notifications);
+				await deleteNotif(username!, token!, notificationId);
+				setNotifs(null);
+				fetchNotifs();
+				dispatch(
+					notificationActions.showNotification({
+						type: "success",
+						message: "Notification deleted"
+					})
+				);
 			} catch (err: any) {
 				dispatch(
 					notificationActions.showNotification({
 						type: "error",
-						message: "Couldn't fetch notifications: " + err.message
+						message: "Couldn't delete notification: " + err.message
 					})
 				);
 			}
-		}
-		fetchNotifs();
-	}, [username, token, dispatch]);
+		},
+		[dispatch, fetchNotifs, token, username]
+	);
 
 	return (
 		<Dropdown
@@ -94,7 +119,10 @@ export default function UserNotifications({ setShowDropdown }: Props) {
 							</div>
 						)}
 						<div className={classes["delete-btn"]} title="Delete notification">
-							<i className="fas fa-close" />
+							<i
+								className="fas fa-close"
+								onClick={() => delNotif(notif._id!)}
+							/>
 						</div>
 					</div>
 				))
