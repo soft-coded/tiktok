@@ -9,11 +9,7 @@ $default-fonts: "Poppins", Arial, Tahoma, sans-serif, "Segoe UI Emoji",
 	box-sizing: border-box;
 }
 
-/* 
-Base light theme class for the website. Define everything 
-light-theme related in this class and *nowhere* else. The 
-class is added to the root (html) tag. 
-*/
+/* Base light theme class for the website. Define everything light-theme related in this class and *nowhere* else. The class is added to the root (html) tag. */
 
 :root.light {
 	--clr-background: #ffffff;
@@ -31,6 +27,23 @@ class is added to the root (html) tag.
 }
 
 /* light theme end */
+
+/* Base dark theme class for the website. Define everything dark-theme related in this class and *nowhere* else. The class is added to the root (html) tag. */
+
+:root.dark {
+	--clr-background: #181a1b;
+	--clr-shadow-values: 255, 255, 255;
+	--clr-shadow: rgba(var(--clr-shadow-values), 0.2);
+	--clr-border: #494949;
+
+	--clr-primary-values: 254, 44, 85;
+	--clr-primary: rgb(var(--clr-primary-values));
+
+	--clr-secondary-values: 214, 210, 205;
+	--clr-secondary: rgb(var(--clr-secondary-values));
+
+	--clr-text: rgb(var(--clr-secondary-values));
+}
 
 html,
 body {
