@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import classes from "./header.module.scss";
 import Dropdown from "../dropdown";
@@ -17,6 +17,7 @@ interface Props {
 
 export default function UserNotifications({ setShowDropdown }: Props) {
 	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
 	const [notifs, setNotifs] = useState<null | UserNotification[]>(null);
 	const { username, token } = useAppSelector(state => state.auth);
 
@@ -62,6 +63,18 @@ export default function UserNotifications({ setShowDropdown }: Props) {
 		[dispatch, fetchNotifs, token, username]
 	);
 
+	function handleRedirect(notif: UserNotification) {
+		navigate(
+			notif.meta
+				? "/video/" + notif.meta.videoId
+				: notif.type === "likedVideo"
+				? "/video/" + notif.refId
+				: "/user/" + notif.by.username
+		);
+
+		setShowDropdown(false);
+	}
+
 	return (
 		<Dropdown
 			className={classes["inbox-card"]}
@@ -80,6 +93,7 @@ export default function UserNotifications({ setShowDropdown }: Props) {
 							!notif.read && classes["unread"]
 						)}
 						title={notif.message}
+						onClick={() => handleRedirect(notif)}
 					>
 						<Link to={"/user/" + notif.by.username}>
 							<div
