@@ -4,7 +4,7 @@ import * as yup from "yup";
 import { FormProps } from ".";
 import Input from "../input-field";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
-import LoadingSpinner from "../loading-spinner";
+import LoadingSpinner from "../../../common/components/loading-spinner";
 import { loginThunk } from "../../../common/store/slices/auth";
 import { notificationActions } from "../../store/slices/notification-slice";
 import constants from "../../../common/constants";

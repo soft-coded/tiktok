@@ -1,7 +1,7 @@
 import { useState, Suspense, lazy } from "react";
 
 import "./profile-card.scss";
-import FullscreenSpinner from "../../components/fullscreen-spinner";
+import FullscreenSpinner from "../../../common/components/fullscreen-spinner";
 import { modifyScrollbar } from "../../../common/utils";
 import constants from "../../../common/constants";
 const LoadVideoModal = lazy(

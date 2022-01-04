@@ -10,7 +10,7 @@ import { search } from "../../../common/api/feed";
 import { notificationActions } from "../../store/slices/notification-slice";
 import { UserData, VideoData } from "../../../common/types";
 import { joinClasses } from "../../../common/utils";
-import LoadingSpinner from "../../components/loading-spinner";
+import LoadingSpinner from "../../../common/components/loading-spinner";
 import { searchActions } from "../../store/slices/search-slice";
 
 type sendType = "accounts" | "videos";

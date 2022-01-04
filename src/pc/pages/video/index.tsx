@@ -9,7 +9,7 @@ import { VideoData } from "../../../common/types";
 import { getVideo } from "../../../common/api/video";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { notificationActions } from "../../store/slices/notification-slice";
-import LoadingSpinner from "../../components/loading-spinner";
+import LoadingSpinner from "../../../common/components/loading-spinner";
 
 export default function Video() {
 	const [videoData, setVideoData] = useState<VideoData | null>(null);

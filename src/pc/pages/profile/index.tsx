@@ -12,7 +12,7 @@ import { getLikedVideos, getUser } from "../../../common/api/user";
 import { UserData } from "../../../common/types";
 import { notificationActions } from "../../store/slices/notification-slice";
 import constants from "../../../common/constants";
-import LoadingSpinner from "../../components/loading-spinner";
+import LoadingSpinner from "../../../common/components/loading-spinner";
 
 export default function Profile() {
 	const { username } = useParams();

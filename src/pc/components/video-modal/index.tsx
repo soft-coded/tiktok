@@ -31,7 +31,7 @@ import {
 	deleteVideo,
 	getCustom
 } from "../../../common/api/video";
-import LoadingSpinner from "../loading-spinner";
+import LoadingSpinner from "../../../common/components/loading-spinner";
 
 export interface ModalProps extends VideoData {
 	setShowModal: React.Dispatch<React.SetStateAction<boolean>>;

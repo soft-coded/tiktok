@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import ReplyForm from "./ReplyForm";
 import Reply from "./Reply";
-import LoadingSpinner from "../loading-spinner";
+import LoadingSpinner from "../../../common/components/loading-spinner";
 import Dropdown from "../dropdown";
 import UserDropdown from "../user-dropdown";
 import constants from "../../../common/constants";

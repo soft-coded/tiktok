@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useCallback, MouseEvent } from "react";
 
 import classes from "./video-tag.module.scss";
-import LoadingSpinner from "../loading-spinner";
+import LoadingSpinner from "../../../common/components/loading-spinner";
 import { ComponentProps } from "../../../common/types";
 import { joinClasses, getTimeFromSeconds } from "../../../common/utils";
 

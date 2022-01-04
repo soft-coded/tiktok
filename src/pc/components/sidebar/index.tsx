@@ -11,7 +11,7 @@ import {
 	fetchSuggested
 } from "../../store/slices/sidebar-slice";
 import constants from "../../../common/constants";
-import LoadingSpinner from "../loading-spinner";
+import LoadingSpinner from "../../../common/components/loading-spinner";
 
 export default function Sidebar() {
 	const dispatch = useAppDispatch();

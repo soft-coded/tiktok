@@ -7,7 +7,7 @@ import { UserNotification } from "../../../common/types";
 import { useAppSelector, useAppDispatch } from "../../../common/store";
 import { notificationActions } from "../../store/slices/notification-slice";
 import { deleteNotif, getCustom } from "../../../common/api/user";
-import LoadingSpinner from "../loading-spinner";
+import LoadingSpinner from "../../../common/components/loading-spinner";
 import constants from "../../../common/constants";
 import { convertToDate, joinClasses } from "../../../common/utils";
 

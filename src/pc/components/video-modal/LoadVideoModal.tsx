@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 
 import "./video-modal.scss";
 import Modal from ".";
-import FullscreenSpinner from "../fullscreen-spinner";
+import FullscreenSpinner from "../../../common/components/fullscreen-spinner";
 import useVideoDynamics, {
 	videoDynamicsActions
 } from "../video-card/useVideoDynamics";

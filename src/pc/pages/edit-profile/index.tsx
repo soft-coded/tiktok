@@ -6,7 +6,7 @@ import * as yup from "yup";
 import "./edit-profile.scss";
 import Container from "../../components/container";
 import Input from "../../components/input-field";
-import LoadingSpinner from "../../components/loading-spinner";
+import LoadingSpinner from "../../../common/components/loading-spinner";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { UserData } from "../../../common/types";
 import { getCustom, updateUser } from "../../../common/api/user";

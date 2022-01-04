@@ -4,7 +4,7 @@ import PCLayout from "./pc";
 import "./common/styles.scss";
 import { authActions } from "./common/store/slices/auth";
 import { useAppDispatch, useAppSelector } from "./common/store";
-import FullscreenSpinner from "./pc/components/fullscreen-spinner";
+import FullscreenSpinner from "./common/components/fullscreen-spinner";
 
 export default function App() {
 	const dispatch = useAppDispatch();

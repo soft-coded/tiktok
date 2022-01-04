@@ -3,7 +3,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 
 import "./index.scss";
 import { useAppSelector } from "../common/store";
-import FullscreenSpinner from "./components/fullscreen-spinner";
+import FullscreenSpinner from "../common/components/fullscreen-spinner";
 import Header from "./components/header";
 import Notification from "./components/notification";
 import AuthModal from "./components/auth-modal";

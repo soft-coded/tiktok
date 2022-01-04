@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 
 import "./following.scss";
 import PageWithSidebar from "../../components/page-with-sidebar";
-import LoadingSpinner from "../../components/loading-spinner";
+import LoadingSpinner from "../../../common/components/loading-spinner";
 import VideoCard from "../../components/video-card";
 import SuggestionCard from "../../components/suggestion-card";
 import InfiniteScroll from "react-infinite-scroll-component";

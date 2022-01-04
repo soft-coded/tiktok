@@ -3,7 +3,7 @@ import * as yup from "yup";
 
 import { FormProps } from ".";
 import Input from "../input-field";
-import LoadingSpinner from "../loading-spinner";
+import LoadingSpinner from "../../../common/components/loading-spinner";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { signupThunk } from "../../../common/store/slices/auth";
 import { notificationActions } from "../../store/slices/notification-slice";
