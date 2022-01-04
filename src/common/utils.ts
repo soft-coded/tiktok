@@ -9,7 +9,7 @@ export function joinClasses(...classes: Array<string | false | undefined>) {
 
 export function modifyScrollbar(fn: "hide" | "show") {
 	const scrollbarWidth =
-		window.innerWidth - document.documentElement.clientWidth;
+		window.innerWidth - document.documentElement.clientWidth || 8;
 	const styleObj = document.documentElement.style;
 	const header = document.querySelector(".app-header header") as HTMLElement;
 	if (fn === "hide") {

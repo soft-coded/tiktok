@@ -18,6 +18,7 @@ export default function Header() {
 	const [showOptions, setShowOptions] = useState(false);
 	const [showNotifs, setShowNotifs] = useState(false);
 	const [hasNotifs, setHasNotifs] = useState(false);
+	const [darkTheme, setDarkTheme] = useState(false);
 	const dispatch = useAppDispatch();
 	const {
 		isAuthenticated: isAuthed,
@@ -44,6 +45,19 @@ export default function Header() {
 		fetchHasNew();
 	}, [dispatch, username, token]);
 
+	useEffect(() => {
+		let usesDarkTheme: any = localStorage.getItem("usesDarkTheme");
+		if (usesDarkTheme) {
+			usesDarkTheme = JSON.parse(usesDarkTheme);
+		} else {
+			usesDarkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+			localStorage.setItem("usesDarkTheme", JSON.stringify(usesDarkTheme));
+		}
+
+		document.documentElement.className = usesDarkTheme ? "dark" : "light";
+		setDarkTheme(usesDarkTheme);
+	}, []);
+
 	function handleShowModal() {
 		dispatch(authModalActions.showModal());
 	}
@@ -59,6 +73,12 @@ export default function Header() {
 			setHasNotifs(false);
 			readAllNotifs(username!, token!).catch(err => console.error(err));
 		}
+	}
+
+	function changeTheme() {
+		document.documentElement.className = darkTheme ? "light" : "dark";
+		setDarkTheme(!darkTheme);
+		localStorage.setItem("usesDarkTheme", JSON.stringify(!darkTheme));
 	}
 
 	return (
@@ -126,6 +146,15 @@ export default function Header() {
 										<i className="fas fa-user-edit" />
 										<span>Edit profile</span>
 									</Link>
+									<div className="hoverable" onClick={changeTheme}>
+										<i
+											className={joinClasses(
+												"fas",
+												darkTheme ? "fa-sun" : "fa-moon"
+											)}
+										/>
+										<span>Change theme</span>
+									</div>
 									<div className="hoverable" onClick={handleLogOut}>
 										<i className="fas fa-sign-out-alt" />
 										<span>Log out</span>

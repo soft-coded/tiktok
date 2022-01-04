@@ -33,6 +33,7 @@ $notification-dd-width: 376px;
 
 	.logo {
 		height: 100%;
+		filter: var(--logo-filter, none);
 	}
 
 	.search-bar {

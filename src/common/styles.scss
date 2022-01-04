@@ -24,6 +24,9 @@ $default-fonts: "Poppins", Arial, Tahoma, sans-serif, "Segoe UI Emoji",
 	--clr-secondary: rgb(var(--clr-secondary-values));
 
 	--clr-text: rgb(var(--clr-secondary-values));
+
+	--clr-scrollbar-thumb: rgba(var(--clr-primary-values), 0.85);
+	--clr-scrollbar-track: rgba(var(--clr-secondary-values), 0.25);
 }
 
 /* light theme end */
@@ -43,11 +46,17 @@ $default-fonts: "Poppins", Arial, Tahoma, sans-serif, "Segoe UI Emoji",
 	--clr-secondary: rgb(var(--clr-secondary-values));
 
 	--clr-text: rgb(var(--clr-secondary-values));
+
+	--clr-scrollbar-thumb: rgba(var(--clr-primary-values), 0.85);
+	--clr-scrollbar-track: rgb(65, 65, 65);
+
+	--logo-filter: invert(1);
 }
 
 html,
 body {
 	overflow-x: hidden;
+	background-color: var(--clr-background);
 }
 
 body {
