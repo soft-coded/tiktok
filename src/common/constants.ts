@@ -19,5 +19,6 @@ export default {
 	notificationAnimDuration: 1000,
 	searchQueryMaxLen: 25,
 	pfpLink: baseURL + "/user/profilePhoto",
-	videoLink: baseURL + "/video/stream"
+	videoLink: baseURL + "/video/stream",
+	mobileWidth: 600 // any screen <= 600px will be considered mobile
 };
