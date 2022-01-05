@@ -4,7 +4,7 @@ import {
 	SwiperProps,
 	SwiperSlide,
 	SwiperSlideProps
-} from "swiper/react";
+} from "swiper/react/swiper-react";
 import "swiper/swiper.scss";
 
 import classes from "./swiper.module.scss";

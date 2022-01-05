@@ -17,7 +17,7 @@ export default function MobileLayout() {
 	}, [pathname]);
 
 	return (
-		<main className="page-container">
+		<main className="root-container">
 			{notification.show && (
 				<Notification
 					type={notification.type!}

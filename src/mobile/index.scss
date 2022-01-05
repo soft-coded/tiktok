@@ -1,4 +1,8 @@
-// cur-max-z-index: 5 (navbar)
+// cur-max-z-index: 10 (notification)
+
+:root {
+	--navbar-height: 49px;
+}
 
 :root.light {
 	--create-icon-filter: invert(1);
@@ -10,8 +14,12 @@
 	--clr-navbar-bg: #000;
 }
 
-.page-container {
+.root-container {
 	width: 100vw;
 	height: 100vh;
-	position: relative;
+}
+
+.page-container {
+	width: 100%;
+	height: calc(100% - var(--navbar-height));
 }

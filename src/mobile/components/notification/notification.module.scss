@@ -1,18 +1,20 @@
+$top: 24px;
+
 .notif-container {
 	position: fixed;
-	top: 30px;
+	top: $top;
 	left: 50%;
 	transform: translateX(-50%);
-	z-index: 25;
+	z-index: 10;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	font-size: 1rem;
+	width: 90%;
+	font-size: 0.9rem;
 	font-weight: 600;
-	padding: 16px;
+	padding: 12px;
 	border-radius: 8px;
 	color: #ffffff;
-	width: 1100px;
 	animation: notif-anim 1s ease-in-out;
 	transition: top 1s ease-in-out;
 
@@ -44,6 +46,6 @@
 		top: -50%;
 	}
 	to {
-		top: 30px;
+		top: $top;
 	}
 }
