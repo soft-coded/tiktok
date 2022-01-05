@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 
 import "./home.scss";
 import Swiper from "../../components/swiper";
+import Video from "../../components/video";
 import { joinClasses } from "../../../common/utils";
 import { VideoData } from "../../../common/types";
 import LoadingSpinner from "../../../common/components/loading-spinner";
@@ -17,9 +18,8 @@ export default function HomePage() {
 
 	useEffect(() => {
 		errorNotification(async () => {
-			// const res = await getFeed(username);
-			// setFeed(res.data.videos);
-			throw new Error("Not available");
+			const res = await getFeed(username);
+			setFeed(res.data.videos);
 		}, dispatch);
 	}, [dispatch, username]);
 
@@ -49,9 +49,15 @@ export default function HomePage() {
 				</nav>
 			</header>
 			{!feed ? (
-				<div className="loader">{/* <LoadingSpinner /> */}</div>
+				<div className="loader">
+					<LoadingSpinner />
+				</div>
 			) : (
-				<Swiper slides={[]} />
+				<Swiper
+					slides={feed.map(vid => (
+						<Video {...vid} />
+					))}
+				/>
 			)}
 		</div>
 	);
