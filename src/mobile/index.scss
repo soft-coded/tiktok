@@ -1,0 +1,17 @@
+// cur-max-z-index: 5 (navbar)
+
+:root.light {
+	--create-icon-filter: invert(1);
+	--clr-navbar-bg: var(--clr-background);
+	--navbar-border: 1px solid #d0d0d3;
+}
+
+:root.dark {
+	--clr-navbar-bg: #000;
+}
+
+.page-container {
+	width: 100vw;
+	height: 100vh;
+	position: relative;
+}

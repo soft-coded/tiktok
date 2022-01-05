@@ -1,0 +1,44 @@
+$navbar-height: 49px;
+$icon-container-size: 40px;
+
+.navbar-container {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 5;
+	background-color: var(--clr-navbar-bg);
+	color: var(--clr-text);
+	height: $navbar-height;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 16px;
+	border-top: var(--navbar-border, none);
+
+	.icon-container {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: $icon-container-size;
+		width: $icon-container-size;
+		padding: 4px;
+
+		&.active {
+			color: var(--clr-primary);
+		}
+
+		i {
+			font-size: 1.5rem;
+		}
+	}
+
+	.image-container {
+		width: 75px;
+		height: 100%;
+
+		img {
+			filter: var(--create-icon-filter, none);
+		}
+	}
+}
