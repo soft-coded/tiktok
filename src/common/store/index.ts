@@ -3,9 +3,10 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import authReducer from "./slices/auth";
 import PCReducer from "../../pc/store";
+import MobileReducer from "../../mobile/store";
 
 const store = configureStore({
-	reducer: { auth: authReducer, pc: PCReducer }
+	reducer: { auth: authReducer, pc: PCReducer, mobile: MobileReducer }
 });
 
 export default store;
