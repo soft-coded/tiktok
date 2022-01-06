@@ -33,6 +33,37 @@ export default function Video(props: VideoData) {
 						</div>
 					</div>
 				</aside>
+				<div className="video-info-wrapper">
+					<div className="video-info">
+						<div className="info-container">
+							<a
+								href={"/user/" + props.uploader!.username}
+								className="username"
+							>
+								@{props.uploader!.username}
+							</a>
+							<p className="break-word">{props.caption}</p>
+							<div className="music-container">
+								<span>
+									<i className="fas fa-music" />
+								</span>
+								<div className="music">
+									<p>
+										<span>{props.music}</span>
+										<span>{props.music}</span>
+										<span>{props.music}</span>
+									</p>
+								</div>
+							</div>
+						</div>
+						<div className="rounded-photo album-icon">
+							<img
+								src={constants.pfpLink + "/" + props.uploader!.username}
+								alt={props.uploader!.name}
+							/>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	);

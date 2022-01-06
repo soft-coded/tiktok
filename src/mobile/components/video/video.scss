@@ -1,4 +1,6 @@
 $pfp-size: 49px;
+$album-icon-size: 48px;
+$music-span-width: 181px;
 
 .video-component-container {
 	width: 100%;
@@ -60,5 +62,92 @@ $pfp-size: 49px;
 				}
 			}
 		}
+
+		.video-info-wrapper {
+			position: absolute;
+			bottom: 0;
+			width: 100%;
+			z-index: 5;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-end;
+			background: linear-gradient(transparent, rgba(0, 0, 0, 0.5));
+			height: 180px;
+			font-size: 0.85rem;
+			pointer-events: none;
+		}
+
+		.video-info {
+			display: flex;
+			justify-content: space-between;
+			align-items: flex-end;
+			padding: 0 10px 12px;
+		}
+
+		.info-container {
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+			width: 274px;
+
+			.username {
+				font-weight: 600;
+				pointer-events: auto;
+				font-size: 0.9rem;
+			}
+
+			.music-container {
+				white-space: nowrap;
+				overflow: hidden;
+				display: flex;
+				gap: 8px;
+			}
+
+			span {
+				display: inline-block;
+			}
+
+			.music {
+				overflow: hidden;
+
+				p {
+					animation: music-anim 3s linear 0s infinite normal none running;
+					width: max-content;
+				}
+
+				span {
+					padding-right: 12px;
+					width: $music-span-width;
+				}
+			}
+		}
+
+		.album-icon {
+			background: url(https://lf16-tiktok-web.ttwstatic.com/obj/tiktok-web-us/tiktok/web/node/_next/static/images/album-628a1f27c2ed684e4454d53f4c042f7a.svg);
+			background-repeat: no-repeat;
+			background-size: 100% 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: $album-icon-size;
+			height: $album-icon-size;
+			pointer-events: auto;
+			flex-shrink: 0;
+
+			img {
+				width: calc(0.5625 * #{$album-icon-size});
+				height: calc(0.5625 * #{$album-icon-size});
+				border-radius: 50%;
+			}
+		}
+	}
+}
+
+@keyframes music-anim {
+	0% {
+		transform: translate(0, 0);
+	}
+	100% {
+		transform: translate(-$music-span-width, 0);
 	}
 }
