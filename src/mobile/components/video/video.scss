@@ -31,6 +31,11 @@ $music-span-width: 181px;
 				--circle-size: 20px;
 			}
 		}
+	}
+
+	.video-content {
+		pointer-events: none;
+		transition: opacity 0.1s ease-out;
 
 		.play-btn {
 			position: absolute;
@@ -38,12 +43,7 @@ $music-span-width: 181px;
 			left: 50%;
 			font-size: 3.5rem;
 			transform: translate(-50%, -50%);
-			pointer-events: none;
 		}
-	}
-
-	.video-content {
-		pointer-events: none;
 
 		aside {
 			display: flex;

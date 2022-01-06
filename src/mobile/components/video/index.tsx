@@ -6,10 +6,11 @@ import { VideoData } from "../../../common/types";
 import constants from "../../../common/constants";
 
 export default function Video(props: VideoData) {
+	const cancelClickRef = useRef(false);
 	const videoRef = useRef<HTMLVideoElement>(null);
+	const infoDivRef = useRef<HTMLDivElement>(null);
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [showSpinner, setShowSpinner] = useState(true);
-	const [showInfo, setShowInfo] = useState(true);
 
 	useEffect(() => {
 		if (!videoRef.current) return;
@@ -28,6 +29,7 @@ export default function Video(props: VideoData) {
 			setIsPlaying(false);
 		}
 		function handleClick() {
+			if (cancelClickRef.current) return;
 			if (vid.paused) vid.play();
 			else vid.pause();
 		}
@@ -50,19 +52,24 @@ export default function Video(props: VideoData) {
 	}, []);
 
 	useEffect(() => {
-		if (!videoRef.current) return;
+		if (!videoRef.current || !infoDivRef.current) return;
 		const vid = videoRef.current;
+		const infoDiv = infoDivRef.current;
 		let hideTimeout: NodeJS.Timeout;
 
 		function handleMouseDown() {
 			hideTimeout = setTimeout(() => {
-				setShowInfo(false);
-				vid.pause();
+				cancelClickRef.current = true;
+				infoDiv.classList.remove("fade-in");
+				infoDiv.classList.add("fade-out");
 			}, 300);
 		}
 		function handleMouseUp() {
 			clearTimeout(hideTimeout);
-			if (!showInfo) setShowInfo(true);
+			if (infoDiv.classList.contains("fade-out")) {
+				infoDiv.classList.remove("fade-out");
+				infoDiv.classList.add("fade-in");
+			} else cancelClickRef.current = false;
 		}
 
 		vid.addEventListener("mousedown", handleMouseDown);
@@ -72,7 +79,7 @@ export default function Video(props: VideoData) {
 			vid.removeEventListener("mousedown", handleMouseDown);
 			vid.removeEventListener("mouseup", handleMouseUp);
 		};
-	}, [showInfo]);
+	}, []);
 
 	return (
 		<div className="video-component-container">
@@ -91,69 +98,67 @@ export default function Video(props: VideoData) {
 						<LoadingSpinner className="spinner" />
 					</div>
 				)}
-				{!showSpinner && !isPlaying && <i className="fas fa-play play-btn" />}
 			</div>
-			{showInfo && (
-				<div className="video-content">
-					<aside>
-						<div className="rounded-photo">
+			<div className="video-content" ref={infoDivRef}>
+				{!showSpinner && !isPlaying && <i className="fas fa-play play-btn" />}
+				<aside>
+					<div className="rounded-photo">
+						<img
+							src={constants.pfpLink + "/" + props.uploader!.username}
+							alt={props.uploader!.name}
+						/>
+					</div>
+					<div className="action-btns">
+						<div className="likes">
+							<i className="fas fa-heart" />
+							<span>{props.likes}</span>
+						</div>
+						<div className="comments">
+							<i className="fas fa-comment-dots" />
+							<span>{props.comments}</span>
+						</div>
+						<div className="comments">
+							<i className="fas fa-share" />
+							<span>{props.shares}</span>
+						</div>
+					</div>
+				</aside>
+				<div className="video-info-wrapper">
+					<div className="video-info">
+						<div className="info-container">
+							<a
+								href={"/user/" + props.uploader!.username}
+								className="username"
+							>
+								@{props.uploader!.username}
+							</a>
+							<p className="break-word">{props.caption}</p>
+							<p className="views">
+								<i className="fas fa-eye" />
+								<span>{props.views}</span>
+							</p>
+							<div className="music-container">
+								<span>
+									<i className="fas fa-music" />
+								</span>
+								<div className="music">
+									<p>
+										<span>{props.music}</span>
+										<span>{props.music}</span>
+										<span>{props.music}</span>
+									</p>
+								</div>
+							</div>
+						</div>
+						<div className="rounded-photo album-icon">
 							<img
 								src={constants.pfpLink + "/" + props.uploader!.username}
 								alt={props.uploader!.name}
 							/>
 						</div>
-						<div className="action-btns">
-							<div className="likes">
-								<i className="fas fa-heart" />
-								<span>{props.likes}</span>
-							</div>
-							<div className="comments">
-								<i className="fas fa-comment-dots" />
-								<span>{props.comments}</span>
-							</div>
-							<div className="comments">
-								<i className="fas fa-share" />
-								<span>{props.shares}</span>
-							</div>
-						</div>
-					</aside>
-					<div className="video-info-wrapper">
-						<div className="video-info">
-							<div className="info-container">
-								<a
-									href={"/user/" + props.uploader!.username}
-									className="username"
-								>
-									@{props.uploader!.username}
-								</a>
-								<p className="break-word">{props.caption}</p>
-								<p className="views">
-									<i className="fas fa-eye" />
-									<span>{props.views}</span>
-								</p>
-								<div className="music-container">
-									<span>
-										<i className="fas fa-music" />
-									</span>
-									<div className="music">
-										<p>
-											<span>{props.music}</span>
-											<span>{props.music}</span>
-											<span>{props.music}</span>
-										</p>
-									</div>
-								</div>
-							</div>
-							<div className="rounded-photo album-icon">
-								<img
-									src={constants.pfpLink + "/" + props.uploader!.username}
-									alt={props.uploader!.name}
-								/>
-							</div>
-						</div>
 					</div>
 				</div>
-			)}
+			</div>
 		</div>
 	);
 }

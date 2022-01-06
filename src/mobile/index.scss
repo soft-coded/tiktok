@@ -23,3 +23,11 @@
 	width: 100%;
 	height: calc(100% - var(--navbar-height));
 }
+
+.fade-out {
+	opacity: 0;
+}
+
+.fade-in {
+	opacity: 1;
+}
