@@ -17,6 +17,29 @@ $music-span-width: 181px;
 			height: 100%;
 			object-fit: contain;
 		}
+
+		.spinner-cont {
+			position: absolute;
+			inset: 0;
+			z-index: 6;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background-color: rgba(0, 0, 0, 0.3);
+
+			.spinner {
+				--circle-size: 20px;
+			}
+		}
+
+		.play-btn {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			font-size: 3.5rem;
+			transform: translate(-50%, -50%);
+			pointer-events: none;
+		}
 	}
 
 	.video-content {
@@ -28,7 +51,7 @@ $music-span-width: 181px;
 			align-items: center;
 			position: absolute;
 			right: 10px;
-			bottom: 100px;
+			bottom: 110px;
 			z-index: 2;
 			height: 300px;
 
@@ -87,13 +110,20 @@ $music-span-width: 181px;
 		.info-container {
 			display: flex;
 			flex-direction: column;
-			gap: 8px;
+			gap: 10px;
 			width: 274px;
+			line-height: 1rem;
 
 			.username {
 				font-weight: 600;
 				pointer-events: auto;
 				font-size: 0.9rem;
+			}
+
+			.views {
+				display: flex;
+				gap: 6px;
+				align-items: center;
 			}
 
 			.music-container {
@@ -133,6 +163,7 @@ $music-span-width: 181px;
 			height: $album-icon-size;
 			pointer-events: auto;
 			flex-shrink: 0;
+			animation: album-anim 8s linear 0s infinite normal none running;
 
 			img {
 				width: calc(0.5625 * #{$album-icon-size});
@@ -149,5 +180,14 @@ $music-span-width: 181px;
 	}
 	100% {
 		transform: translate(-$music-span-width, 0);
+	}
+}
+
+@keyframes album-anim {
+	0% {
+		transform: rotate(0);
+	}
+	100% {
+		transform: rotate(360deg);
 	}
 }

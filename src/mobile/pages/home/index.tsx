@@ -54,9 +54,14 @@ export default function HomePage() {
 				</div>
 			) : (
 				<Swiper
-					slides={feed.map(vid => (
-						<Video {...vid} />
-					))}
+					// slides={feed.map(vid => (
+					// 	<Video {...vid} />
+					// ))}
+					slides={[
+						<Video {...feed[0]} />,
+						<Video {...feed[0]} />,
+						<Video {...feed[0]} />
+					]}
 				/>
 			)}
 		</div>
