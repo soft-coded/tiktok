@@ -2,15 +2,19 @@ import { useState, useEffect, useRef } from "react";
 
 import "./video.scss";
 import LoadingSpinner from "../../../common/components/loading-spinner";
+import CommentsModal from "../comments-modal";
 import { VideoData } from "../../../common/types";
 import constants from "../../../common/constants";
 
 export default function Video(props: VideoData) {
 	const cancelClickRef = useRef(false);
 	const videoRef = useRef<HTMLVideoElement>(null);
+	const albumRef = useRef<HTMLDivElement>(null);
+	const musicRef = useRef<HTMLDivElement>(null);
 	const infoDivRef = useRef<HTMLDivElement>(null);
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [showSpinner, setShowSpinner] = useState(true);
+	const [showComments, setShowComments] = useState(false);
 
 	useEffect(() => {
 		if (!videoRef.current) return;
@@ -22,32 +26,41 @@ export default function Video(props: VideoData) {
 		function toggleSpinnerOff() {
 			setShowSpinner(false);
 		}
-		function toggleIsPlayingOn() {
+		function handlePlay() {
 			setIsPlaying(true);
+			albumRef.current!.style.animationPlayState = "running";
+			musicRef.current!.style.animationPlayState = "running";
 		}
-		function toggleIsPlayingOff() {
+		function handlePause() {
 			setIsPlaying(false);
+			albumRef.current!.style.animationPlayState = "paused";
+			musicRef.current!.style.animationPlayState = "paused";
 		}
 		function handleClick() {
 			if (cancelClickRef.current) return;
 			if (vid.paused) vid.play();
 			else vid.pause();
 		}
+		function disableContextMenu(e: Event) {
+			e.preventDefault();
+		}
 
 		vid.addEventListener("loadeddata", toggleSpinnerOff);
 		vid.addEventListener("waiting", toggleSpinnerOn);
 		vid.addEventListener("playing", toggleSpinnerOff);
-		vid.addEventListener("play", toggleIsPlayingOn);
-		vid.addEventListener("pause", toggleIsPlayingOff);
+		vid.addEventListener("play", handlePlay);
+		vid.addEventListener("pause", handlePause);
 		vid.addEventListener("click", handleClick);
+		vid.addEventListener("contextmenu", disableContextMenu);
 
 		return () => {
 			vid.removeEventListener("loadeddata", toggleSpinnerOff);
 			vid.removeEventListener("waiting", toggleSpinnerOn);
 			vid.removeEventListener("playing", toggleSpinnerOff);
-			vid.removeEventListener("play", toggleIsPlayingOn);
-			vid.removeEventListener("pause", toggleIsPlayingOff);
+			vid.removeEventListener("play", handlePlay);
+			vid.removeEventListener("pause", handlePause);
 			vid.removeEventListener("click", handleClick);
+			vid.removeEventListener("contextmenu", disableContextMenu);
 		};
 	}, []);
 
@@ -57,14 +70,14 @@ export default function Video(props: VideoData) {
 		const infoDiv = infoDivRef.current;
 		let hideTimeout: NodeJS.Timeout;
 
-		function handleMouseDown() {
+		function handleTouchStart() {
 			hideTimeout = setTimeout(() => {
 				cancelClickRef.current = true;
 				infoDiv.classList.remove("fade-in");
 				infoDiv.classList.add("fade-out");
 			}, 300);
 		}
-		function handleMouseUp() {
+		function handleTouchEnd() {
 			clearTimeout(hideTimeout);
 			if (infoDiv.classList.contains("fade-out")) {
 				infoDiv.classList.remove("fade-out");
@@ -72,12 +85,12 @@ export default function Video(props: VideoData) {
 			} else cancelClickRef.current = false;
 		}
 
-		vid.addEventListener("mousedown", handleMouseDown);
-		vid.addEventListener("mouseup", handleMouseUp);
+		vid.addEventListener("touchstart", handleTouchStart);
+		vid.addEventListener("touchend", handleTouchEnd);
 
 		return () => {
-			vid.removeEventListener("mousedown", handleMouseDown);
-			vid.removeEventListener("mouseup", handleMouseUp);
+			vid.removeEventListener("touchstart", handleTouchStart);
+			vid.removeEventListener("touchend", handleTouchEnd);
 		};
 	}, []);
 
@@ -114,7 +127,10 @@ export default function Video(props: VideoData) {
 							<span>{props.likes}</span>
 						</div>
 						<div className="comments">
-							<i className="fas fa-comment-dots" />
+							<i
+								className="fas fa-comment-dots"
+								onClick={() => setShowComments(true)}
+							/>
 							<span>{props.comments}</span>
 						</div>
 						<div className="comments">
@@ -142,7 +158,7 @@ export default function Video(props: VideoData) {
 									<i className="fas fa-music" />
 								</span>
 								<div className="music">
-									<p>
+									<p ref={musicRef}>
 										<span>{props.music}</span>
 										<span>{props.music}</span>
 										<span>{props.music}</span>
@@ -150,7 +166,7 @@ export default function Video(props: VideoData) {
 								</div>
 							</div>
 						</div>
-						<div className="rounded-photo album-icon">
+						<div className="rounded-photo album-icon" ref={albumRef}>
 							<img
 								src={constants.pfpLink + "/" + props.uploader!.username}
 								alt={props.uploader!.name}
@@ -159,6 +175,13 @@ export default function Video(props: VideoData) {
 					</div>
 				</div>
 			</div>
+			{showComments && (
+				<CommentsModal
+					videoId={props.videoId!}
+					setShowComments={setShowComments}
+					totalComments={props.comments as number}
+				/>
+			)}
 		</div>
 	);
 }

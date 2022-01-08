@@ -83,7 +83,7 @@ $video-player-height: calc(450px + (100vw - 768px) / 1152 * 100);
 					height: 100%;
 					cursor: pointer;
 					object-fit: contain;
-					background: var(--clr-secondary);
+					background-color: #000;
 				}
 			}
 

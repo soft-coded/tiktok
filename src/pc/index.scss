@@ -76,13 +76,6 @@ $scrollbar-width: 8px;
 	}
 }
 
-.backdrop {
-	position: fixed;
-	inset: 0;
-	background: rgba(0, 0, 0, 0.6);
-	user-select: none;
-}
-
 .hoverable {
 	cursor: pointer;
 	transition: background-color 0.25s ease-out;

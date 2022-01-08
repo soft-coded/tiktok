@@ -141,7 +141,7 @@ $music-span-width: 181px;
 				overflow: hidden;
 
 				p {
-					animation: music-anim 3s linear 0s infinite normal none running;
+					animation: music-anim 3s linear 0s infinite normal none paused;
 					width: max-content;
 				}
 
@@ -163,7 +163,7 @@ $music-span-width: 181px;
 			height: $album-icon-size;
 			pointer-events: auto;
 			flex-shrink: 0;
-			animation: album-anim 8s linear 0s infinite normal none running;
+			animation: album-anim 8s linear 0s infinite normal none paused;
 
 			img {
 				width: calc(0.5625 * #{$album-icon-size});

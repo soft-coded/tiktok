@@ -8,7 +8,7 @@ export async function errorNotification(
 	errMessage?: string | null
 ) {
 	try {
-		return await fn();
+		await fn();
 	} catch (err: any) {
 		dispatch(
 			notificationActions.showNotification({

@@ -30,6 +30,7 @@ export default function MobileLayout() {
 				</Routes>
 			</Suspense>
 			<Navbar />
+			<div id="portal" />
 		</main>
 	);
 }
