@@ -7,40 +7,41 @@ import { joinClasses } from "../../../common/utils";
 interface Props extends ComponentProps {
 	type?: "text" | "password" | "email";
 	id?: string;
+	name?: string;
 	error?: string | null;
 	placeholder?: string;
 	value?: string;
-	onChange?: () => void;
-	onBlur?: () => void;
+	autoComplete?: "off";
+	onChange?: (e?: any) => void;
+	onBlur?: (e?: any) => void;
 }
 
-function Input(
-	{ className, type, id, error, placeholder, value, onBlur, onChange }: Props,
-	inputRef: ForwardedRef<HTMLInputElement>
-) {
+function Input(props: Props, inputRef: ForwardedRef<HTMLInputElement>) {
 	return (
 		<div className={classes["input-wrapper"]}>
 			<div
 				className={joinClasses(
 					classes["input-container"],
-					error && classes["error"],
-					className
+					props.error && classes["error"],
+					props.className
 				)}
 			>
 				<input
 					ref={inputRef}
-					type={type || "text"}
-					id={id}
-					placeholder={placeholder}
-					value={value}
-					onChange={onChange}
-					onBlur={onBlur}
-					onKeyUp={onBlur}
+					type={props.type || "text"}
+					id={props.id}
+					name={props.name}
+					placeholder={props.placeholder}
+					value={props.value}
+					autoComplete={props.autoComplete}
+					onChange={props.onChange}
+					onBlur={props.onBlur}
+					onKeyUp={props.onBlur}
 				/>
 			</div>
-			{error && (
+			{props.error && (
 				<p className={joinClasses(classes["input-error"], "input-error")}>
-					{error}
+					{props.error}
 				</p>
 			)}
 		</div>

@@ -177,6 +177,7 @@ export default function Video(props: VideoData) {
 			</div>
 			{showComments && (
 				<CommentsModal
+					uploader={props.uploader!.username!}
 					videoId={props.videoId!}
 					setShowComments={setShowComments}
 					totalComments={props.comments as number}

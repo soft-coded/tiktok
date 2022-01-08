@@ -11,6 +11,7 @@ import { errorNotification } from "../../helpers/error-notification";
 import { getVidComments } from "../../../common/api/video";
 
 interface Props {
+	uploader: string;
 	setShowComments: React.Dispatch<React.SetStateAction<boolean>>;
 	videoId: string;
 	totalComments: number;
@@ -20,6 +21,7 @@ const animationTime = 199; // milliseconds to reveal/hide modal
 
 export default function CommentsModal({
 	videoId,
+	uploader,
 	setShowComments,
 	totalComments
 }: Props) {
@@ -29,7 +31,7 @@ export default function CommentsModal({
 	const backdropRef = useRef<HTMLDivElement>(null);
 	const [comments, setComments] = useState<CommentData[] | null>(null);
 
-	useEffect(() => {
+	const fetchComments = useCallback(() => {
 		errorNotification(
 			async () => {
 				const res = await getVidComments(videoId, username);
@@ -40,6 +42,10 @@ export default function CommentsModal({
 			"Couldn't load comments:"
 		);
 	}, [username, dispatch, videoId]);
+
+	useEffect(() => {
+		fetchComments();
+	}, [fetchComments]);
 
 	useEffect(() => {
 		if (!modalRef.current || !backdropRef.current) return;
@@ -75,11 +81,20 @@ export default function CommentsModal({
 				) : (
 					<div className="comments-container">
 						{comments.map((comment, i) => (
-							<Comment key={i} {...comment} />
+							<Comment
+								key={i}
+								{...comment}
+								uploader={uploader}
+								videoId={videoId}
+							/>
 						))}
 					</div>
 				)}
-				<AddComment />
+				<AddComment
+					fetchComments={fetchComments}
+					setComments={setComments}
+					videoId={videoId}
+				/>
 			</div>
 		</>,
 		document.querySelector("#portal")!
