@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 
 import "./comments-modal.scss";
 import Comment from "./Comment";
+import AddComment from "./AddComment";
 import { CommentData } from "../../../common/types";
 import LoadingSpinner from "../../../common/components/loading-spinner";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
@@ -15,7 +16,7 @@ interface Props {
 	totalComments: number;
 }
 
-const animationTime = 200; // milliseconds to reveal modal
+const animationTime = 199; // milliseconds to reveal/hide modal
 
 export default function CommentsModal({
 	videoId,
@@ -55,7 +56,7 @@ export default function CommentsModal({
 
 		setTimeout(() => {
 			setShowComments(false);
-		}, animationTime - 1);
+		}, animationTime);
 	}, [setShowComments]);
 
 	return createPortal(
@@ -78,6 +79,7 @@ export default function CommentsModal({
 						))}
 					</div>
 				)}
+				<AddComment />
 			</div>
 		</>,
 		document.querySelector("#portal")!

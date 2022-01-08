@@ -1,4 +1,6 @@
-export function joinClasses(...classes: Array<string | false | undefined>) {
+export function joinClasses(
+	...classes: Array<string | false | null | undefined>
+) {
 	let res = "";
 	for (let i = 0; i < classes.length - 1; i++) {
 		if (classes[i]) res += classes[i] + " ";

@@ -31,3 +31,16 @@
 .fade-in {
 	opacity: 1;
 }
+
+.primary-button {
+	color: #ffffff;
+	background-color: var(--clr-primary);
+	border-radius: 4px;
+	padding: 8px;
+	font-weight: 600;
+
+	&:disabled {
+		background: rgba(var(--clr-secondary-values), 0.06);
+		color: rgba(var(--clr-secondary-values), 0.34);
+	}
+}
