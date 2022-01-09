@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
@@ -6,14 +7,17 @@ import Input from "../input";
 import constants from "../../../common/constants";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { errorNotification } from "../../helpers/error-notification";
-import { postComment } from "../../../common/api/video";
+import { postComment, reply } from "../../../common/api/video";
 import { notificationActions } from "../../store/slices/notification-slice";
 import { CommentData } from "../../../common/types";
+import { ReplyTo } from ".";
 
 interface Props {
 	videoId: string;
 	fetchComments: () => void;
 	setComments: React.Dispatch<React.SetStateAction<CommentData[] | null>>;
+	replyTo: ReplyTo | null;
+	setReplyTo: React.Dispatch<React.SetStateAction<ReplyTo | null>>;
 }
 
 const validationSchema = yup.object().shape({
@@ -29,10 +33,13 @@ const validationSchema = yup.object().shape({
 export default function AddComment({
 	fetchComments,
 	videoId,
-	setComments
+	setComments,
+	replyTo,
+	setReplyTo
 }: Props) {
 	const dispatch = useAppDispatch();
 	const username = useAppSelector(state => state.auth.username!);
+	const inputRef = useRef<HTMLInputElement>(null);
 	const formik = useFormik({
 		initialValues: {
 			comment: ""
@@ -41,6 +48,22 @@ export default function AddComment({
 		onSubmit: ({ comment }) => {
 			errorNotification(
 				async () => {
+					if (replyTo) {
+						await reply(comment, replyTo.commentId, videoId, username);
+						dispatch(
+							notificationActions.showNotification({
+								type: "success",
+								message: "Reply posted"
+							})
+						);
+						formik.setFieldValue("comment", "");
+						replyTo.setRepliesNum(prev => prev + 1);
+						replyTo.setReplies(null);
+						replyTo.setShowReplies(true);
+						replyTo.fetchReplies();
+						setReplyTo(null);
+						return;
+					}
 					await postComment(username, comment, videoId);
 					dispatch(
 						notificationActions.showNotification({
@@ -54,15 +77,21 @@ export default function AddComment({
 				},
 				dispatch,
 				null,
-				"Couldn't post comment:"
+				"Couldn't post " + (replyTo ? "reply:" : "comment:")
 			);
 		}
 	});
 
+	useEffect(() => {
+		if (!replyTo || !inputRef.current) return;
+		inputRef.current.focus();
+	}, [replyTo]);
+
 	return (
 		<form className="add-comment-container" onSubmit={formik.handleSubmit}>
 			<Input
-				placeholder="Add a comment"
+				ref={inputRef}
+				placeholder={replyTo ? "Reply to @" + replyTo.name : "Add a comment"}
 				name="comment"
 				autoComplete="off"
 				value={formik.values.comment}
@@ -77,6 +106,16 @@ export default function AddComment({
 			>
 				<i className="fas fa-arrow-up" />
 			</button>
+			{replyTo && (
+				<button
+					type="button"
+					className="cancel-reply"
+					onClick={() => setReplyTo(null)}
+					title="Cancel reply"
+				>
+					<i className="fas fa-close" />
+				</button>
+			)}
 		</form>
 	);
 }

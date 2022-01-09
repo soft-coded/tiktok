@@ -156,6 +156,13 @@ $transition-timings: 0.2s ease-out;
 			padding: 0;
 			flex-shrink: 0;
 			font-size: 0.9rem;
+
+			&.cancel-reply {
+				width: 31px;
+				height: 31px;
+				border: 1px solid rgba(var(--clr-secondary-values), 0.7);
+				color: rgba(var(--clr-secondary-values), 0.7);
+			}
 		}
 	}
 

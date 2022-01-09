@@ -1,13 +1,48 @@
+import { useState } from "react";
+
 import "./comments-modal.scss";
 import { CommentData } from "../../../common/types";
 import constants from "../../../common/constants";
 import { convertToDate, joinClasses } from "../../../common/utils";
+import { likeReply } from "../../../common/api/video";
+import { useAppDispatch, useAppSelector } from "../../../common/store";
+import { errorNotification } from "../../helpers/error-notification";
+import { LikesInfo } from "./Comment";
 
 interface Props extends CommentData {
 	uploader: string;
+	commentId: string;
+	videoId: string;
 }
 
 export default function Reply(props: Props) {
+	const dispatch = useAppDispatch();
+	const username = useAppSelector(state => state.auth.username!);
+	const [likesInfo, setLikesInfo] = useState<LikesInfo>({
+		hasLiked: props.hasLiked!,
+		likesNum: props.likes!
+	});
+
+	function likeRep() {
+		errorNotification(
+			async () => {
+				const res = await likeReply(
+					props.videoId,
+					props.commentId!,
+					props.replyId!,
+					username
+				);
+				setLikesInfo(prev => ({
+					hasLiked: res.data.liked,
+					likesNum: prev.likesNum + (res.data.liked ? 1 : -1)
+				}));
+			},
+			dispatch,
+			null,
+			"Couldn't like comment:"
+		);
+	}
+
 	return (
 		<div className="comment-box reply-box">
 			<div className="rounded-photo">
@@ -33,13 +68,13 @@ export default function Reply(props: Props) {
 					<div className="likes-container">
 						<i
 							className={joinClasses(
-								props.hasLiked ? "fas" : "far",
+								likesInfo.hasLiked ? "fas" : "far",
 								"fa-heart",
-								props.hasLiked && "liked"
+								likesInfo.hasLiked && "liked"
 							)}
-							// onClick={likeComm}
+							onClick={likeRep}
 						/>
-						<span>{props.likes}</span>
+						<span>{likesInfo.likesNum}</span>
 					</div>
 				</div>
 			</div>

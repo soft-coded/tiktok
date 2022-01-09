@@ -7,19 +7,31 @@ import constants from "../../../common/constants";
 import { convertToDate, joinClasses } from "../../../common/utils";
 import { errorNotification } from "../../helpers/error-notification";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
-import { getReplies } from "../../../common/api/video";
+import { getReplies, likeComment } from "../../../common/api/video";
 import LoadingSpinner from "../../../common/components/loading-spinner";
+import { ReplyTo } from ".";
 
 interface Props extends CommentData {
 	uploader: string;
 	videoId: string;
+	setReplyTo: React.Dispatch<React.SetStateAction<ReplyTo | null>>;
 }
+
+export type LikesInfo = {
+	likesNum: number;
+	hasLiked: boolean;
+};
 
 export default function Comment(props: Props) {
 	const dispatch = useAppDispatch();
 	const username = useAppSelector(state => state.auth.username!);
 	const [showReplies, setShowReplies] = useState(false);
+	const [likesInfo, setLikesInfo] = useState<LikesInfo>({
+		hasLiked: props.hasLiked!,
+		likesNum: props.likes!
+	});
 	const [replies, setReplies] = useState<CommentData[] | null>(null);
+	const [repliesNum, setRepliesNum] = useState(props.replies as number);
 
 	const fetchReplies = useCallback(() => {
 		errorNotification(
@@ -42,6 +54,25 @@ export default function Comment(props: Props) {
 		setShowReplies(true);
 	}
 
+	function likeComm() {
+		errorNotification(
+			async () => {
+				const res = await likeComment(
+					props.videoId,
+					props.commentId!,
+					username
+				);
+				setLikesInfo(prev => ({
+					hasLiked: res.data.liked,
+					likesNum: prev.likesNum + (res.data.liked ? 1 : -1)
+				}));
+			},
+			dispatch,
+			null,
+			"Couldn't like comment:"
+		);
+	}
+
 	return (
 		<div className="comment-box">
 			<div className="rounded-photo">
@@ -62,7 +93,18 @@ export default function Comment(props: Props) {
 						<p className="break-word">{props.comment}</p>
 						<div className="time-reply">
 							<span>{convertToDate(props.createdAt!)}</span>
-							<span>
+							<span
+								onClick={() =>
+									props.setReplyTo({
+										name: props.postedBy!.name!,
+										commentId: props.commentId!,
+										fetchReplies,
+										setReplies,
+										setShowReplies,
+										setRepliesNum
+									})
+								}
+							>
 								<i className="fas fa-reply" /> Reply
 							</span>
 						</div>
@@ -70,13 +112,13 @@ export default function Comment(props: Props) {
 					<div className="likes-container">
 						<i
 							className={joinClasses(
-								props.hasLiked ? "fas" : "far",
+								likesInfo.hasLiked ? "fas" : "far",
 								"fa-heart",
-								props.hasLiked && "liked"
+								likesInfo.hasLiked && "liked"
 							)}
-							// onClick={likeComm}
+							onClick={likeComm}
 						/>
-						<span>{props.likes}</span>
+						<span>{likesInfo.likesNum}</span>
 					</div>
 				</div>
 				{showReplies &&
@@ -85,15 +127,21 @@ export default function Comment(props: Props) {
 					) : (
 						<div className="replies-container">
 							{replies.map((reply, i) => (
-								<Reply key={i} {...reply} uploader={props.uploader} />
+								<Reply
+									key={i}
+									{...reply}
+									uploader={props.uploader}
+									videoId={props.videoId}
+									commentId={props.commentId!}
+								/>
 							))}
 						</div>
 					))}
-				{props.replies! > 0 && (
+				{repliesNum > 0 && (
 					<p className="trigger-replies" onClick={toggleReplies}>
 						{!showReplies ? (
 							<>
-								View replies ({props.replies})&nbsp;
+								View replies ({repliesNum})&nbsp;
 								<i className="fas fa-caret-down" />
 							</>
 						) : (

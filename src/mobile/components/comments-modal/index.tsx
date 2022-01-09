@@ -17,6 +17,15 @@ interface Props {
 	totalComments: number;
 }
 
+export type ReplyTo = {
+	name: string;
+	commentId: string;
+	setShowReplies: React.Dispatch<React.SetStateAction<boolean>>;
+	setReplies: React.Dispatch<React.SetStateAction<CommentData[] | null>>;
+	setRepliesNum: React.Dispatch<React.SetStateAction<number>>;
+	fetchReplies: () => void;
+};
+
 const animationTime = 199; // milliseconds to reveal/hide modal
 
 export default function CommentsModal({
@@ -30,6 +39,7 @@ export default function CommentsModal({
 	const modalRef = useRef<HTMLDivElement>(null);
 	const backdropRef = useRef<HTMLDivElement>(null);
 	const [comments, setComments] = useState<CommentData[] | null>(null);
+	const [replyTo, setReplyTo] = useState<ReplyTo | null>(null);
 
 	const fetchComments = useCallback(() => {
 		errorNotification(
@@ -76,24 +86,27 @@ export default function CommentsModal({
 				<header>
 					{totalComments} {totalComments === 1 ? "comment" : "comments"}
 				</header>
-				{!comments ? (
-					<LoadingSpinner className="spinner" />
-				) : (
-					<div className="comments-container">
-						{comments.map((comment, i) => (
+				<div className="comments-container">
+					{!comments ? (
+						<LoadingSpinner className="spinner" />
+					) : (
+						comments.map((comment, i) => (
 							<Comment
 								key={i}
 								{...comment}
 								uploader={uploader}
 								videoId={videoId}
+								setReplyTo={setReplyTo}
 							/>
-						))}
-					</div>
-				)}
+						))
+					)}
+				</div>
 				<AddComment
 					fetchComments={fetchComments}
 					setComments={setComments}
 					videoId={videoId}
+					replyTo={replyTo}
+					setReplyTo={setReplyTo}
 				/>
 			</div>
 		</>,
