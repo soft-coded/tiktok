@@ -21,7 +21,7 @@ import { authModalActions } from "../../store/slices/auth-modal-slice";
 import Comment from "./Comment";
 import CommentForm from "./CommentForm";
 import Likes from "./Likes";
-import Dropdown from "../dropdown";
+import Dropdown from "../../../common/components/dropdown";
 import UserDropdown from "../user-dropdown";
 import VideoTag from "../video-tag";
 import constants from "../../../common/constants";

@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Dropdown from "../dropdown";
+import Dropdown from "../../../common/components/dropdown";
 import UserDropdown from "../user-dropdown";
 import constants from "../../../common/constants";
 import { CommentData } from "../../../common/types";

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import "./user-dropdown.scss";
-import Dropdown from "../dropdown";
+import Dropdown from "../../../common/components/dropdown";
 import LoadingSpinner from "../../../common/components/loading-spinner";
 import FollowButton from "../follow-button";
 import { useAppDispatch, useAppSelector } from "../../../common/store";

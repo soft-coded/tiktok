@@ -1,8 +1,8 @@
 import { useEffect, useRef, ReactNode } from "react";
 
 import classes from "./dropdown.module.scss";
-import { joinClasses, handleClickOutside } from "../../../common/utils";
-import { ComponentProps } from "../../../common/types";
+import { joinClasses, handleClickOutside } from "../../utils";
+import { ComponentProps } from "../../types";
 
 export interface DropdownProps extends ComponentProps {
 	children: ReactNode;

@@ -119,11 +119,21 @@ $transition-timings: 0.2s ease-out;
 			}
 		}
 
-		.likes-container {
+		.buttons-container {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
 			color: rgba(var(--clr-secondary-values), 0.6);
+
+			> div {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+			}
+
+			.options-container {
+				padding-bottom: 4px;
+			}
 
 			i {
 				font-size: 1.1rem;

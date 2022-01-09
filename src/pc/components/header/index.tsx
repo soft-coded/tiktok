@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import classes from "./header.module.scss";
 import Container from "../container";
 import SearchBar from "./SearchBar";
-import Dropdown from "../dropdown";
+import Dropdown from "../../../common/components/dropdown";
 import UserNotifications from "./UserNotifications";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { authModalActions } from "../../store/slices/auth-modal-slice";

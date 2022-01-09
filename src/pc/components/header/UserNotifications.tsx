@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import classes from "./header.module.scss";
-import Dropdown from "../dropdown";
+import Dropdown from "../../../common/components/dropdown";
 import { UserNotification } from "../../../common/types";
 import { useAppSelector, useAppDispatch } from "../../../common/store";
 import { notificationActions } from "../../store/slices/notification-slice";

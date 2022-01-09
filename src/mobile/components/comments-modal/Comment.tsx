@@ -109,16 +109,23 @@ export default function Comment(props: Props) {
 							</span>
 						</div>
 					</div>
-					<div className="likes-container">
-						<i
-							className={joinClasses(
-								likesInfo.hasLiked ? "fas" : "far",
-								"fa-heart",
-								likesInfo.hasLiked && "liked"
-							)}
-							onClick={likeComm}
-						/>
-						<span>{likesInfo.likesNum}</span>
+					<div className="buttons-container">
+						{props.postedBy!.username === username && (
+							<div className="options-container">
+								<i className="fas fa-ellipsis-h" />
+							</div>
+						)}
+						<div className="like-button">
+							<i
+								className={joinClasses(
+									likesInfo.hasLiked ? "fas" : "far",
+									"fa-heart",
+									likesInfo.hasLiked && "liked"
+								)}
+								onClick={likeComm}
+							/>
+							<span>{likesInfo.likesNum}</span>
+						</div>
 					</div>
 				</div>
 				{showReplies &&

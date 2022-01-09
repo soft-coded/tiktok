@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import Dropdown from "./DD";
-import { DDAnimationTime } from "../dropdown";
+import { DDAnimationTime } from "../../../common/components/dropdown";
 
 interface Props {
 	onMouseOver: () => void;
