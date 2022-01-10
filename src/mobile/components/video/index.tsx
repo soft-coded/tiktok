@@ -6,12 +6,21 @@ import CommentsModal from "../comments-modal";
 import { VideoData } from "../../../common/types";
 import constants from "../../../common/constants";
 import { errorNotification } from "../../helpers/error-notification";
-import { useAppDispatch } from "../../../common/store";
+import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { notificationActions } from "../../store/slices/notification-slice";
-import { share } from "../../../common/api/video";
+import { likeVideo, share } from "../../../common/api/video";
+import { joinClasses } from "../../../common/utils";
+
+type LikesInfo = {
+	hasLiked: boolean;
+	likesNum: number;
+};
 
 export default function Video(props: VideoData) {
 	const dispatch = useAppDispatch();
+	const { isAuthenticated: isAuthed, username } = useAppSelector(
+		state => state.auth
+	);
 	const cancelClickRef = useRef(false);
 	const videoRef = useRef<HTMLVideoElement>(null);
 	const albumRef = useRef<HTMLDivElement>(null);
@@ -20,6 +29,10 @@ export default function Video(props: VideoData) {
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [showSpinner, setShowSpinner] = useState(true);
 	const [showComments, setShowComments] = useState(false);
+	const [likesInfo, setLikesInfo] = useState<LikesInfo>({
+		hasLiked: props.hasLiked || false,
+		likesNum: props.likes as number
+	});
 
 	useEffect(() => {
 		if (!videoRef.current) return;
@@ -99,7 +112,23 @@ export default function Video(props: VideoData) {
 		};
 	}, []);
 
-	const handleShare = useCallback(async () => {
+	const handleLike = useCallback(() => {
+		errorNotification(
+			async () => {
+				if (!isAuthed) throw new Error("Log in to continue");
+				const res = await likeVideo(username!, props.videoId!);
+				setLikesInfo(prev => ({
+					hasLiked: res.data.liked,
+					likesNum: prev.likesNum + (res.data.liked ? 1 : -1)
+				}));
+			},
+			dispatch,
+			null,
+			"Couldn't like video:"
+		);
+	}, [isAuthed, dispatch, username, props.videoId]);
+
+	const handleShare = useCallback(() => {
 		errorNotification(
 			async () => {
 				await share(props.videoId!);
@@ -147,18 +176,24 @@ export default function Video(props: VideoData) {
 						/>
 					</div>
 					<div className="action-btns">
-						<div className="likes">
-							<i className="fas fa-heart" />
-							<span>{props.likes}</span>
+						<div>
+							<i
+								className={joinClasses(
+									"fas fa-heart",
+									likesInfo.hasLiked && "liked"
+								)}
+								onClick={handleLike}
+							/>
+							<span>{likesInfo.likesNum}</span>
 						</div>
-						<div className="comments">
+						<div>
 							<i
 								className="fas fa-comment-dots"
 								onClick={() => setShowComments(true)}
 							/>
 							<span>{props.comments}</span>
 						</div>
-						<div className="comments">
+						<div>
 							<i className="fas fa-share" onClick={handleShare} />
 							<span>{props.shares}</span>
 						</div>

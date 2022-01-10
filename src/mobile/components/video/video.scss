@@ -1,6 +1,7 @@
 $pfp-size: 49px;
 $album-icon-size: 48px;
 $music-span-width: 181px;
+$like-anim-timing: 0.35s ease-in-out;
 
 .video-component-container {
 	width: 100%;
@@ -77,6 +78,15 @@ $music-span-width: 181px;
 
 					i {
 						pointer-events: auto;
+					}
+
+					.fa-heart {
+						transition: color $like-anim-timing;
+
+						&.liked {
+							color: var(--clr-primary);
+							animation: like-anim $like-anim-timing;
+						}
 					}
 
 					span {
@@ -189,5 +199,14 @@ $music-span-width: 181px;
 	}
 	100% {
 		transform: rotate(360deg);
+	}
+}
+
+@keyframes like-anim {
+	50% {
+		transform: scale(1.5) rotateY(180deg);
+	}
+	100% {
+		transform: scale(1);
 	}
 }
