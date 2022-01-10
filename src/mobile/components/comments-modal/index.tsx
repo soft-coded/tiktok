@@ -8,7 +8,7 @@ import { CommentData } from "../../../common/types";
 import LoadingSpinner from "../../../common/components/loading-spinner";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { errorNotification } from "../../helpers/error-notification";
-import { getVidComments } from "../../../common/api/video";
+import { getCustom, getVidComments } from "../../../common/api/video";
 
 interface Props {
 	uploader: string;
@@ -97,6 +97,8 @@ export default function CommentsModal({
 								uploader={uploader}
 								videoId={videoId}
 								setReplyTo={setReplyTo}
+								setComments={setComments}
+								fetchComments={fetchComments}
 							/>
 						))
 					)}

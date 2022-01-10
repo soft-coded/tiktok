@@ -7,15 +7,22 @@ import constants from "../../../common/constants";
 import { convertToDate, joinClasses } from "../../../common/utils";
 import { errorNotification } from "../../helpers/error-notification";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
-import { getReplies, likeComment } from "../../../common/api/video";
+import {
+	deleteComment,
+	getReplies,
+	likeComment
+} from "../../../common/api/video";
 import LoadingSpinner from "../../../common/components/loading-spinner";
 import { ReplyTo } from ".";
 import Dropdown from "../../../common/components/dropdown";
+import { notificationActions } from "../../store/slices/notification-slice";
 
 interface Props extends CommentData {
 	uploader: string;
 	videoId: string;
 	setReplyTo: React.Dispatch<React.SetStateAction<ReplyTo | null>>;
+	setComments: React.Dispatch<React.SetStateAction<CommentData[] | null>>;
+	fetchComments: () => void;
 }
 
 export type LikesInfo = {
@@ -25,7 +32,7 @@ export type LikesInfo = {
 
 export default function Comment(props: Props) {
 	const dispatch = useAppDispatch();
-	const username = useAppSelector(state => state.auth.username!);
+	const { username, token } = useAppSelector(state => state.auth);
 	const [showReplies, setShowReplies] = useState(false);
 	const [likesInfo, setLikesInfo] = useState<LikesInfo>({
 		hasLiked: props.hasLiked!,
@@ -62,7 +69,7 @@ export default function Comment(props: Props) {
 				const res = await likeComment(
 					props.videoId,
 					props.commentId!,
-					username
+					username!
 				);
 				setLikesInfo(prev => ({
 					hasLiked: res.data.liked,
@@ -72,6 +79,25 @@ export default function Comment(props: Props) {
 			dispatch,
 			null,
 			"Couldn't like comment:"
+		);
+	}
+
+	function delComm() {
+		errorNotification(
+			async () => {
+				await deleteComment(props.commentId!, props.videoId, username!, token!);
+				dispatch(
+					notificationActions.showNotification({
+						type: "success",
+						message: "Comment deleted"
+					})
+				);
+				props.setComments(null);
+				props.fetchComments();
+			},
+			dispatch,
+			null,
+			"Couldn't delete comment:"
 		);
 	}
 
@@ -126,7 +152,7 @@ export default function Comment(props: Props) {
 										className="dropdown"
 										setShowDropdown={setShowOptions}
 									>
-										<span>
+										<span onClick={delComm}>
 											<i className="fas fa-trash-alt" /> Delete
 										</span>
 									</Dropdown>
@@ -158,6 +184,9 @@ export default function Comment(props: Props) {
 									uploader={props.uploader}
 									videoId={props.videoId}
 									commentId={props.commentId!}
+									setReplies={setReplies}
+									fetchReplies={fetchReplies}
+									setRepliesNum={setRepliesNum}
 								/>
 							))}
 						</div>
