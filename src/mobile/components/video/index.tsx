@@ -1,12 +1,17 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 
 import "./video.scss";
 import LoadingSpinner from "../../../common/components/loading-spinner";
 import CommentsModal from "../comments-modal";
 import { VideoData } from "../../../common/types";
 import constants from "../../../common/constants";
+import { errorNotification } from "../../helpers/error-notification";
+import { useAppDispatch } from "../../../common/store";
+import { notificationActions } from "../../store/slices/notification-slice";
+import { share } from "../../../common/api/video";
 
 export default function Video(props: VideoData) {
+	const dispatch = useAppDispatch();
 	const cancelClickRef = useRef(false);
 	const videoRef = useRef<HTMLVideoElement>(null);
 	const albumRef = useRef<HTMLDivElement>(null);
@@ -94,6 +99,26 @@ export default function Video(props: VideoData) {
 		};
 	}, []);
 
+	const handleShare = useCallback(async () => {
+		errorNotification(
+			async () => {
+				await share(props.videoId!);
+				await navigator.clipboard.writeText(
+					window.location.origin + "/video/" + props.videoId
+				);
+				dispatch(
+					notificationActions.showNotification({
+						type: "success",
+						message: "Video link copied to clipboard"
+					})
+				);
+			},
+			dispatch,
+			null,
+			"Couldn't copy video link:"
+		);
+	}, [dispatch, props.videoId]);
+
 	return (
 		<div className="video-component-container">
 			<div className="video-container">
@@ -134,7 +159,7 @@ export default function Video(props: VideoData) {
 							<span>{props.comments}</span>
 						</div>
 						<div className="comments">
-							<i className="fas fa-share" />
+							<i className="fas fa-share" onClick={handleShare} />
 							<span>{props.shares}</span>
 						</div>
 					</div>
