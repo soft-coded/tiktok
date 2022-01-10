@@ -25,20 +25,19 @@ export default function Dropdown({
 	const dropdownRef = useRef<HTMLDivElement | null>(null);
 
 	useEffect(() => {
-		if (trigger === "click") {
-			const dropdown = dropdownRef.current!;
-			let timeOut: NodeJS.Timeout;
+		if (trigger !== "click") return;
+		const dropdown = dropdownRef.current!;
+		let timeOut: NodeJS.Timeout;
 
-			const eventRemover = handleClickOutside(dropdown, () => {
-				dropdown.classList.add(classes["hide"]);
-				timeOut = setTimeout(() => setShowDropdown!(false), DDAnimationTime);
-			});
+		const eventRemover = handleClickOutside(dropdown, () => {
+			dropdown.classList.add(classes["hide"]);
+			timeOut = setTimeout(() => setShowDropdown!(false), DDAnimationTime);
+		});
 
-			return () => {
-				eventRemover();
-				clearTimeout(timeOut);
-			};
-		}
+		return () => {
+			eventRemover();
+			clearTimeout(timeOut);
+		};
 	}, [setShowDropdown, trigger]);
 
 	return (
