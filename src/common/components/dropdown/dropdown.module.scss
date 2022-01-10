@@ -1,5 +1,5 @@
 $dropdown-width: 223px;
-$animation-time: 0.1s;
+$animation-time: 0.1s ease-in-out;
 
 .dropdown {
 	position: absolute;
@@ -13,8 +13,8 @@ $animation-time: 0.1s;
 	border-radius: 8px;
 	font-size: 0.9rem;
 	font-weight: 500;
-	transition: opacity $animation-time ease-in-out;
-	animation: dropdown-anim $animation-time ease-in-out;
+	transition: opacity $animation-time;
+	animation: dropdown-anim $animation-time;
 
 	&.hide {
 		opacity: 0;

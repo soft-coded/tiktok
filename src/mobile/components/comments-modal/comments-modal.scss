@@ -132,7 +132,28 @@ $transition-timings: 0.2s ease-out;
 			}
 
 			.options-container {
+				position: relative;
 				padding-bottom: 4px;
+
+				.dropdown {
+					top: 30%;
+					bottom: unset;
+					right: 110%;
+					z-index: 12;
+					width: unset;
+					font-size: 0.75rem;
+
+					span {
+						display: flex;
+						align-items: center;
+						gap: 8px;
+						padding: 4px 12px;
+
+						i {
+							font-size: 0.9rem;
+						}
+					}
+				}
 			}
 
 			i {

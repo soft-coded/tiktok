@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { getReplies, likeComment } from "../../../common/api/video";
 import LoadingSpinner from "../../../common/components/loading-spinner";
 import { ReplyTo } from ".";
+import Dropdown from "../../../common/components/dropdown";
 
 interface Props extends CommentData {
 	uploader: string;
@@ -32,6 +33,7 @@ export default function Comment(props: Props) {
 	});
 	const [replies, setReplies] = useState<CommentData[] | null>(null);
 	const [repliesNum, setRepliesNum] = useState(props.replies as number);
+	const [showOptions, setShowOptions] = useState(false);
 
 	const fetchReplies = useCallback(() => {
 		errorNotification(
@@ -112,7 +114,23 @@ export default function Comment(props: Props) {
 					<div className="buttons-container">
 						{props.postedBy!.username === username && (
 							<div className="options-container">
-								<i className="fas fa-ellipsis-h" />
+								<i
+									className="fas fa-ellipsis-h"
+									onClick={e => {
+										setShowOptions(true);
+										e.stopPropagation(); // required because of createPortal
+									}}
+								/>
+								{showOptions && (
+									<Dropdown
+										className="dropdown"
+										setShowDropdown={setShowOptions}
+									>
+										<span>
+											<i className="fas fa-trash-alt" /> Delete
+										</span>
+									</Dropdown>
+								)}
 							</div>
 						)}
 						<div className="like-button">
