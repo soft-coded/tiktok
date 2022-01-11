@@ -11,7 +11,7 @@ import playOnScroll from "../../components/play-on-scroll";
 import { useAppSelector, useAppDispatch } from "../../../common/store";
 import { getFollowingVids, getSuggested } from "../../../common/api/feed";
 import { UserData, VideoData } from "../../../common/types";
-import { notificationActions } from "../../store/slices/notification-slice";
+import { notificationActions } from "../../../common/store/slices/notification-slice";
 import { joinClasses } from "../../../common/utils";
 
 // should always match the "followingLimit" in the backend

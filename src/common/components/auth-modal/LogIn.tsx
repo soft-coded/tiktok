@@ -6,7 +6,7 @@ import Input from "../../../pc/components/input-field";
 import { useAppDispatch, useAppSelector } from "../../store";
 import LoadingSpinner from "../loading-spinner";
 import { loginThunk } from "../../store/slices/auth";
-import { notificationActions } from "../../../pc/store/slices/notification-slice";
+import { notificationActions } from "../../store/slices/notification-slice";
 import constants from "../../constants";
 
 const validationSchema = yup.object().shape({

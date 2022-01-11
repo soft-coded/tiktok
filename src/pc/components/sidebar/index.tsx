@@ -5,7 +5,7 @@ import "./sidebar.scss";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { authModalActions } from "../../store/slices/auth-modal-slice";
 import { joinClasses } from "../../../common/utils";
-import { notificationActions } from "../../store/slices/notification-slice";
+import { notificationActions } from "../../../common/store/slices/notification-slice";
 import {
 	fetchFollowing,
 	fetchSuggested

@@ -5,7 +5,7 @@ import "./index.scss";
 import { useAppSelector } from "../common/store";
 import FullscreenSpinner from "../common/components/fullscreen-spinner";
 import Header from "./components/header";
-import Notification from "./components/notification";
+import Notification from "../common/components/notification";
 import AuthModal from "../common/components/auth-modal";
 import PrivateRoute from "./components/private-route";
 const Home = lazy(() => import("./pages/home"));
@@ -18,7 +18,8 @@ const Search = lazy(() => import("./pages/search"));
 
 export default function PCLayout() {
 	const { pathname } = useLocation();
-	const { notification, authModal } = useAppSelector(state => state.pc);
+	const { authModal } = useAppSelector(state => state.pc);
+	const notification = useAppSelector(state => state.notification);
 
 	useEffect(() => {
 		window.scrollTo(0, 0);

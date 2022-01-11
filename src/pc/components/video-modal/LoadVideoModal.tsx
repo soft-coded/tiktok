@@ -9,7 +9,7 @@ import useVideoDynamics, {
 import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { VideoData } from "../../../common/types";
 import { getVideo, share } from "../../../common/api/video";
-import { notificationActions } from "../../store/slices/notification-slice";
+import { notificationActions } from "../../../common/store/slices/notification-slice";
 
 export interface ModalProps {
 	videoId: string;

@@ -8,7 +8,7 @@ import constants from "../../../common/constants";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { errorNotification } from "../../helpers/error-notification";
 import { postComment, reply } from "../../../common/api/video";
-import { notificationActions } from "../../store/slices/notification-slice";
+import { notificationActions } from "../../../common/store/slices/notification-slice";
 import { CommentData } from "../../../common/types";
 import { ReplyTo } from ".";
 

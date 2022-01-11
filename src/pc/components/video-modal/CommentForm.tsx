@@ -4,7 +4,7 @@ import * as yup from "yup";
 import Input from "../input-field";
 import { useAppSelector, useAppDispatch } from "../../../common/store";
 import constants from "../../../common/constants";
-import { notificationActions } from "../../store/slices/notification-slice";
+import { notificationActions } from "../../../common/store/slices/notification-slice";
 import { postComment } from "../../../common/api/video";
 import { CommentData } from "../../../common/types";
 

@@ -1,4 +1,4 @@
-import { notificationActions } from "../../store/slices/notification-slice";
+import { notificationActions } from "../../../common/store/slices/notification-slice";
 import { useAppDispatch } from "../../../common/store";
 
 export async function errorNotification(

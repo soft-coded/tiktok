@@ -1,7 +1,7 @@
 import ActionButton from "../action-button";
 import { useAppSelector, useAppDispatch } from "../../../common/store";
 import { likeVideo } from "../../../common/api/video";
-import { notificationActions } from "../../store/slices/notification-slice";
+import { notificationActions } from "../../../common/store/slices/notification-slice";
 import { joinClasses } from "../../../common/utils";
 
 interface Props {

@@ -6,7 +6,7 @@ import constants from "../../../common/constants";
 import { reply } from "../../../common/api/video";
 import { useAppSelector, useAppDispatch } from "../../../common/store";
 import { CommentData } from "../../../common/types";
-import { notificationActions } from "../../store/slices/notification-slice";
+import { notificationActions } from "../../../common/store/slices/notification-slice";
 
 const validationSchema = yup.object().shape({
 	comment: yup

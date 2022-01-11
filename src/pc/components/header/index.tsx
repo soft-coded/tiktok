@@ -12,7 +12,7 @@ import { authActions } from "../../../common/store/slices/auth";
 import { joinClasses } from "../../../common/utils";
 import { hasNewNotifs, readAllNotifs } from "../../../common/api/user";
 import constants from "../../../common/constants";
-import { notificationActions } from "../../store/slices/notification-slice";
+import { notificationActions } from "../../../common/store/slices/notification-slice";
 
 export default function Header() {
 	const [showOptions, setShowOptions] = useState(false);

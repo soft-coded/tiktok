@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
 import { useAppSelector, useAppDispatch } from "../../../common/store";
-import { notificationActions } from "../../store/slices/notification-slice";
+import { notificationActions } from "../../../common/store/slices/notification-slice";
 
 export default function PrivateRoute() {
 	const isAuthed = useAppSelector(state => state.auth.isAuthenticated);

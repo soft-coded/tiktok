@@ -7,7 +7,7 @@ import { VideoData } from "../../../common/types";
 import constants from "../../../common/constants";
 import { errorNotification } from "../../helpers/error-notification";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
-import { notificationActions } from "../../store/slices/notification-slice";
+import { notificationActions } from "../../../common/store/slices/notification-slice";
 import { likeVideo, share } from "../../../common/api/video";
 import { joinClasses } from "../../../common/utils";
 

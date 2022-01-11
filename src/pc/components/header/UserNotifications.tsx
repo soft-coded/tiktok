@@ -5,7 +5,7 @@ import classes from "./header.module.scss";
 import Dropdown from "../../../common/components/dropdown";
 import { UserNotification } from "../../../common/types";
 import { useAppSelector, useAppDispatch } from "../../../common/store";
-import { notificationActions } from "../../store/slices/notification-slice";
+import { notificationActions } from "../../../common/store/slices/notification-slice";
 import { deleteNotif, getCustom } from "../../../common/api/user";
 import LoadingSpinner from "../../../common/components/loading-spinner";
 import constants from "../../../common/constants";

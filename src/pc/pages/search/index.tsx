@@ -7,7 +7,7 @@ import AccountCard from "../../components/search-results/AccountCard";
 import VideoCard from "../../components/search-results/VideoCard";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { search } from "../../../common/api/feed";
-import { notificationActions } from "../../store/slices/notification-slice";
+import { notificationActions } from "../../../common/store/slices/notification-slice";
 import { UserData, VideoData } from "../../../common/types";
 import { joinClasses } from "../../../common/utils";
 import LoadingSpinner from "../../../common/components/loading-spinner";

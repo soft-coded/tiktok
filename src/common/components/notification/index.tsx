@@ -1,17 +1,23 @@
 import { useEffect } from "react";
 
 import classes from "./notification.module.scss";
-import { useAppDispatch } from "../../../common/store";
-import { joinClasses } from "../../../common/utils";
+import Container from "../../../pc/components/container";
+import { useAppDispatch } from "../../store";
+import { joinClasses } from "../../utils";
 import { notificationActions } from "../../store/slices/notification-slice";
-import constants from "../../../common/constants";
+import constants from "../../constants";
 
 export interface NotificationProps {
 	type: "success" | "error" | "warning" | "info";
 	message: string;
+	isMobile?: boolean;
 }
 
-export default function Notification({ type, message }: NotificationProps) {
+export default function Notification({
+	type,
+	message,
+	isMobile
+}: NotificationProps) {
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
@@ -30,9 +36,21 @@ export default function Notification({ type, message }: NotificationProps) {
 		};
 	}, [dispatch]);
 
-	return (
-		<div className={joinClasses(classes["notif-container"], classes[type])}>
+	return isMobile ? (
+		<div
+			className={joinClasses(
+				classes["notif-container"],
+				classes["mobile-notification"],
+				classes[type]
+			)}
+		>
 			{message}
 		</div>
+	) : (
+		<Container
+			className={joinClasses(classes["notif-container"], classes[type])}
+		>
+			{message}
+		</Container>
 	);
 }

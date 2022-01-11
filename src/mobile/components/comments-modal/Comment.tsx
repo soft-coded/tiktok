@@ -15,7 +15,7 @@ import {
 import LoadingSpinner from "../../../common/components/loading-spinner";
 import { ReplyTo } from ".";
 import Dropdown from "../../../common/components/dropdown";
-import { notificationActions } from "../../store/slices/notification-slice";
+import { notificationActions } from "../../../common/store/slices/notification-slice";
 
 interface Props extends CommentData {
 	uploader: string;

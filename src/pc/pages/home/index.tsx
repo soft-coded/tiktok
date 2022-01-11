@@ -7,7 +7,7 @@ import playOnScroll from "../../components/play-on-scroll";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { VideoData } from "../../../common/types";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
-import { notificationActions } from "../../store/slices/notification-slice";
+import { notificationActions } from "../../../common/store/slices/notification-slice";
 import { getFeed } from "../../../common/api/feed";
 import LoadingSpinner from "../../../common/components/loading-spinner";
 

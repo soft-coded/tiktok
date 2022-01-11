@@ -10,7 +10,7 @@ import LoadingSpinner from "../../../common/components/loading-spinner";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { UserData } from "../../../common/types";
 import { getCustom, updateUser } from "../../../common/api/user";
-import { notificationActions } from "../../store/slices/notification-slice";
+import { notificationActions } from "../../../common/store/slices/notification-slice";
 import constants from "../../../common/constants";
 
 const validationSchema = yup.object().shape({

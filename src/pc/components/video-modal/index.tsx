@@ -25,7 +25,7 @@ import Dropdown from "../../../common/components/dropdown";
 import UserDropdown from "../user-dropdown";
 import VideoTag from "../video-tag";
 import constants from "../../../common/constants";
-import { notificationActions } from "../../store/slices/notification-slice";
+import { notificationActions } from "../../../common/store/slices/notification-slice";
 import {
 	getVidComments,
 	deleteVideo,

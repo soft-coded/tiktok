@@ -2,11 +2,17 @@ import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 
 import authReducer from "./slices/auth";
+import notificationReducer from "./slices/notification-slice";
 import PCReducer from "../../pc/store";
-import MobileReducer from "../../mobile/store";
+// import MobileReducer from "../../mobile/store";
 
 const store = configureStore({
-	reducer: { auth: authReducer, pc: PCReducer, mobile: MobileReducer }
+	reducer: {
+		auth: authReducer,
+		notification: notificationReducer,
+		pc: PCReducer
+		// mobile: MobileReducer
+	}
 });
 
 export default store;

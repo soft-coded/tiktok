@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { joinClasses } from "../../../common/utils";
 import { getLikedVideos, getUser } from "../../../common/api/user";
 import { UserData } from "../../../common/types";
-import { notificationActions } from "../../store/slices/notification-slice";
+import { notificationActions } from "../../../common/store/slices/notification-slice";
 import constants from "../../../common/constants";
 import LoadingSpinner from "../../../common/components/loading-spinner";
 

@@ -8,7 +8,7 @@ import { CommentData } from "../../../common/types";
 import { convertToDate, joinClasses } from "../../../common/utils";
 import { likeReply, deleteReply } from "../../../common/api/video";
 import { useAppSelector, useAppDispatch } from "../../../common/store";
-import { notificationActions } from "../../store/slices/notification-slice";
+import { notificationActions } from "../../../common/store/slices/notification-slice";
 
 interface Props extends CommentData {
 	handleModalClose: () => void;

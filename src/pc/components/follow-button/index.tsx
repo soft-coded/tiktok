@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect, MouseEvent } from "react";
 
 import { followUser } from "../../../common/api/user";
 import { useAppSelector, useAppDispatch } from "../../../common/store";
-import { notificationActions } from "../../store/slices/notification-slice";
+import { notificationActions } from "../../../common/store/slices/notification-slice";
 import { fetchFollowing } from "../../store/slices/sidebar-slice";
 
 interface Props {
