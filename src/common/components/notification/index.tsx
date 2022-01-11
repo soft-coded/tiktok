@@ -35,18 +35,14 @@ export default function Notification({
 		};
 	}, [dispatch]);
 
-	return isMobile ? (
+	return (
 		<div
 			className={joinClasses(
 				classes["notif-container"],
-				classes["mobile-notification"],
+				isMobile && classes["mobile-notification"],
 				classes[type]
 			)}
 		>
-			{message}
-		</div>
-	) : (
-		<div className={joinClasses(classes["notif-container"], classes[type])}>
 			{message}
 		</div>
 	);
