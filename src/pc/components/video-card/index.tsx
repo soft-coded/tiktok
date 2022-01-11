@@ -12,7 +12,7 @@ import { modifyScrollbar, convertToDate } from "../../../common/utils";
 import { VideoData } from "../../../common/types";
 import CardDropdown from "../user-dropdown";
 import constants from "../../../common/constants";
-import { authModalActions } from "../../store/slices/auth-modal-slice";
+import { authModalActions } from "../../../common/store/slices/auth-modal-slice";
 import FullscreenSpinner from "../../../common/components/fullscreen-spinner";
 import { share } from "../../../common/api/video";
 import { notificationActions } from "../../../common/store/slices/notification-slice";

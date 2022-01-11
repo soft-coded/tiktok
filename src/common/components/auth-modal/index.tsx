@@ -5,7 +5,7 @@ import LogIn from "./LogIn";
 import SignUp from "./SignUp";
 import { useAppDispatch } from "../../store";
 import { joinClasses, modifyScrollbar } from "../../utils";
-import { authModalActions } from "../../../pc/store/slices/auth-modal-slice";
+import { authModalActions } from "../../store/slices/auth-modal-slice";
 import { ComponentProps } from "../../types";
 
 export interface FormProps {
@@ -22,11 +22,12 @@ export default function AuthModal({ isMobile, className }: Props) {
 	const dispatch = useAppDispatch();
 
 	useLayoutEffect(() => {
+		if (isMobile) return;
 		modifyScrollbar("hide");
-	}, []);
+	}, [isMobile]);
 
 	function handleModalClose() {
-		modifyScrollbar("show");
+		if (!isMobile) modifyScrollbar("show");
 		dispatch(authModalActions.hideModal());
 	}
 

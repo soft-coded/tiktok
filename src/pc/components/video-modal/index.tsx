@@ -17,7 +17,7 @@ import {
 } from "../../../common/utils";
 import ActionButton from "../action-button";
 import FollowButton from "../follow-button";
-import { authModalActions } from "../../store/slices/auth-modal-slice";
+import { authModalActions } from "../../../common/store/slices/auth-modal-slice";
 import Comment from "./Comment";
 import CommentForm from "./CommentForm";
 import Likes from "./Likes";

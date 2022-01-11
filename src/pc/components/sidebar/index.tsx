@@ -3,7 +3,7 @@ import { NavLink, Link } from "react-router-dom";
 
 import "./sidebar.scss";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
-import { authModalActions } from "../../store/slices/auth-modal-slice";
+import { authModalActions } from "../../../common/store/slices/auth-modal-slice";
 import { joinClasses } from "../../../common/utils";
 import { notificationActions } from "../../../common/store/slices/notification-slice";
 import {

@@ -18,8 +18,7 @@ const Search = lazy(() => import("./pages/search"));
 
 export default function PCLayout() {
 	const { pathname } = useLocation();
-	const { authModal } = useAppSelector(state => state.pc);
-	const notification = useAppSelector(state => state.notification);
+	const { notification, authModal } = useAppSelector(state => state);
 
 	useEffect(() => {
 		window.scrollTo(0, 0);

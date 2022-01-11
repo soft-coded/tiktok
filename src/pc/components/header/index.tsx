@@ -7,7 +7,7 @@ import SearchBar from "./SearchBar";
 import Dropdown from "../../../common/components/dropdown";
 import UserNotifications from "./UserNotifications";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
-import { authModalActions } from "../../store/slices/auth-modal-slice";
+import { authModalActions } from "../../../common/store/slices/auth-modal-slice";
 import { authActions } from "../../../common/store/slices/auth";
 import { joinClasses } from "../../../common/utils";
 import { hasNewNotifs, readAllNotifs } from "../../../common/api/user";
