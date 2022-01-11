@@ -9,6 +9,7 @@ import LoadingSpinner from "../../../common/components/loading-spinner";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { errorNotification } from "../../helpers/error-notification";
 import { getVidComments } from "../../../common/api/video";
+import { joinClasses } from "../../../common/utils";
 
 interface Props {
 	uploader: string;
@@ -35,7 +36,9 @@ export default function CommentsModal({
 	totalComments
 }: Props) {
 	const dispatch = useAppDispatch();
-	const username = useAppSelector(state => state.auth.username);
+	const { username, isAuthenticated: isAuthed } = useAppSelector(
+		state => state.auth
+	);
 	const modalRef = useRef<HTMLDivElement>(null);
 	const backdropRef = useRef<HTMLDivElement>(null);
 	const [comments, setComments] = useState<CommentData[] | null>(null);
@@ -82,34 +85,56 @@ export default function CommentsModal({
 				ref={backdropRef}
 				onClick={handleModalClose}
 			/>
-			<div className="comments-modal-container" ref={modalRef}>
-				<header>
-					{totalComments} {totalComments === 1 ? "comment" : "comments"}
-				</header>
-				<div className="comments-container">
-					{!comments ? (
-						<LoadingSpinner className="spinner" />
-					) : (
-						comments.map((comment, i) => (
-							<Comment
-								key={i}
-								{...comment}
-								uploader={uploader}
-								videoId={videoId}
-								setReplyTo={setReplyTo}
-								setComments={setComments}
-								fetchComments={fetchComments}
+			<div
+				className={joinClasses(
+					"comments-modal-container",
+					!isAuthed && "unauthed"
+				)}
+				ref={modalRef}
+			>
+				{!isAuthed ? (
+					<>
+						<div className="image-container">
+							<img
+								src="https://lf16-tiktok-common.ibytedtos.com/obj/tiktok-web-common-sg/mtact/static/pwa/icon_128x128.png"
+								alt="tiktok logo"
 							/>
-						))
-					)}
-				</div>
-				<AddComment
-					fetchComments={fetchComments}
-					setComments={setComments}
-					videoId={videoId}
-					replyTo={replyTo}
-					setReplyTo={setReplyTo}
-				/>
+						</div>
+						<h3>Join the conversation</h3>
+						<p>View and add comments with a TikTok account</p>
+						<button className="primary-button">Log in</button>
+					</>
+				) : (
+					<>
+						<header>
+							{totalComments} {totalComments === 1 ? "comment" : "comments"}
+						</header>
+						<div className="comments-container">
+							{!comments ? (
+								<LoadingSpinner className="spinner" />
+							) : (
+								comments.map((comment, i) => (
+									<Comment
+										key={i}
+										{...comment}
+										uploader={uploader}
+										videoId={videoId}
+										setReplyTo={setReplyTo}
+										setComments={setComments}
+										fetchComments={fetchComments}
+									/>
+								))
+							)}
+						</div>
+						<AddComment
+							fetchComments={fetchComments}
+							setComments={setComments}
+							videoId={videoId}
+							replyTo={replyTo}
+							setReplyTo={setReplyTo}
+						/>
+					</>
+				)}
 			</div>
 		</>,
 		document.querySelector("#portal")!
