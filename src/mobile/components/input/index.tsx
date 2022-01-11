@@ -8,7 +8,7 @@ interface Props extends ComponentProps {
 	type?: "text" | "password" | "email";
 	id?: string;
 	name?: string;
-	error?: string | null;
+	error?: string | false | null;
 	placeholder?: string;
 	value?: string;
 	autoComplete?: "off";

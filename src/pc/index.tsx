@@ -6,7 +6,7 @@ import { useAppSelector } from "../common/store";
 import FullscreenSpinner from "../common/components/fullscreen-spinner";
 import Header from "./components/header";
 import Notification from "./components/notification";
-import AuthModal from "./components/auth-modal";
+import AuthModal from "../common/components/auth-modal";
 import PrivateRoute from "./components/private-route";
 const Home = lazy(() => import("./pages/home"));
 const Following = lazy(() => import("./pages/following"));

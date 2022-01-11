@@ -3,16 +3,21 @@ import { useState, useLayoutEffect } from "react";
 import "./auth-modal.scss";
 import LogIn from "./LogIn";
 import SignUp from "./SignUp";
-import { useAppDispatch } from "../../../common/store";
-import { modifyScrollbar } from "../../../common/utils";
-import { authModalActions } from "../../store/slices/auth-modal-slice";
+import { useAppDispatch } from "../../store";
+import { joinClasses, modifyScrollbar } from "../../utils";
+import { authModalActions } from "../../../pc/store/slices/auth-modal-slice";
+import { ComponentProps } from "../../types";
 
 export interface FormProps {
 	setAuthType: React.Dispatch<React.SetStateAction<"login" | "signup">>;
 	handleModalClose: () => void;
 }
 
-export default function AuthModal() {
+interface Props extends ComponentProps {
+	isMobile?: boolean;
+}
+
+export default function AuthModal({ isMobile, className }: Props) {
 	const [authType, setAuthType] = useState<"login" | "signup">("login");
 	const dispatch = useAppDispatch();
 
@@ -27,8 +32,10 @@ export default function AuthModal() {
 
 	return (
 		<>
-			<div className="backdrop auth-backdrop" onClick={handleModalClose} />
-			<div className="auth-modal-container">
+			{!isMobile && (
+				<div className="backdrop auth-backdrop" onClick={handleModalClose} />
+			)}
+			<div className={joinClasses("auth-modal-container", className)}>
 				{authType === "login" ? (
 					<LogIn
 						setAuthType={setAuthType}
