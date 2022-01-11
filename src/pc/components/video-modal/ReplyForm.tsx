@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-import Input from "../input-field";
+import Input from "../../../common/components/input-field";
 import constants from "../../../common/constants";
 import { reply } from "../../../common/api/video";
 import { useAppSelector, useAppDispatch } from "../../../common/store";

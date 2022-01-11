@@ -5,7 +5,7 @@ import * as yup from "yup";
 
 import "./upload-page.scss";
 import Container from "../../components/container";
-import Input from "../../components/input-field";
+import Input from "../../../common/components/input-field";
 import LoadingSpinner from "../../../common/components/loading-spinner";
 import { createVideo } from "../../../common/api/video";
 import { useAppDispatch, useAppSelector } from "../../../common/store";

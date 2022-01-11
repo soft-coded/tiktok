@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-import Input from "../input-field";
+import Input from "../../../common/components/input-field";
 import { useAppSelector, useAppDispatch } from "../../../common/store";
 import constants from "../../../common/constants";
 import { notificationActions } from "../../../common/store/slices/notification-slice";

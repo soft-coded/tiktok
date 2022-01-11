@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 
 import { FormProps } from ".";
-import Input from "../../../pc/components/input-field";
+import Input from "../input-field";
 import { useAppDispatch, useAppSelector } from "../../store";
 import LoadingSpinner from "../loading-spinner";
 import { loginThunk } from "../../store/slices/auth";

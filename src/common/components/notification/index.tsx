@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 
 import classes from "./notification.module.scss";
-import Container from "../../../pc/components/container";
 import { useAppDispatch } from "../../store";
 import { joinClasses } from "../../utils";
 import { notificationActions } from "../../store/slices/notification-slice";
@@ -47,10 +46,8 @@ export default function Notification({
 			{message}
 		</div>
 	) : (
-		<Container
-			className={joinClasses(classes["notif-container"], classes[type])}
-		>
+		<div className={joinClasses(classes["notif-container"], classes[type])}>
 			{message}
-		</Container>
+		</div>
 	);
 }
