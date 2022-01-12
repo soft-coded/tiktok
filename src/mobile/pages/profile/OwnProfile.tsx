@@ -1,12 +1,12 @@
-import "./profile.scss";
+import Profile from ".";
 import { useAppSelector } from "../../../common/store";
 import UnauthedPage from "../../components/unauthed-page";
 
 export default function OwnProfile() {
-	const isAuthed = useAppSelector(state => state.auth.isAuthenticated);
+	const { isAuthenticated: isAuthed } = useAppSelector(state => state.auth);
 
 	return isAuthed ? (
-		<div className="own-profile"></div>
+		<Profile isOwn={true} />
 	) : (
 		<UnauthedPage
 			header="Profile"
