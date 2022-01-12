@@ -15,8 +15,6 @@ export default {
 	captionMaxLen: 150,
 	tagsMaxLen: 200,
 	commentMaxLen: 300,
-	notificationDuration: 5000,
-	notificationAnimDuration: 1000,
 	searchQueryMaxLen: 25,
 	pfpLink: baseURL + "/user/profilePhoto",
 	videoLink: baseURL + "/video/stream",

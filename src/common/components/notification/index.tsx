@@ -1,10 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import classes from "./notification.module.scss";
 import { useAppDispatch } from "../../store";
 import { joinClasses } from "../../utils";
 import { notificationActions } from "../../store/slices/notification-slice";
-import constants from "../../constants";
 
 export interface NotificationProps {
 	type: "success" | "error" | "warning" | "info";
@@ -12,22 +11,29 @@ export interface NotificationProps {
 	isMobile?: boolean;
 }
 
+const notifDuration = 5000; // stays visible for 5s
+const notifAnimDuration = 1000; // hide animation plays for 1s
+
 export default function Notification({
 	type,
 	message,
 	isMobile
 }: NotificationProps) {
 	const dispatch = useAppDispatch();
+	const notifRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		const container = document.querySelector("." + classes["notif-container"])!;
+		if (!notifRef.current) return;
+		const classList = notifRef.current.classList;
+		classList.add(classes["reveal"]);
+
 		const hideTimeout = setTimeout(() => {
-			container.classList.add(classes["hide"]);
-		}, constants.notificationDuration);
-		// the hide animation plays for 1 second
+			classList.remove(classes["reveal"]);
+			classList.add(classes["hide"]);
+		}, notifDuration);
 		const removeTimeout = setTimeout(() => {
 			dispatch(notificationActions.hideNotification());
-		}, constants.notificationAnimDuration + constants.notificationDuration);
+		}, notifAnimDuration + notifDuration);
 
 		return () => {
 			clearTimeout(hideTimeout);
@@ -37,9 +43,10 @@ export default function Notification({
 
 	return (
 		<div
+			ref={notifRef}
 			className={joinClasses(
-				classes["notif-container"],
-				isMobile && classes["mobile-notification"],
+				classes["notification"],
+				isMobile && classes["mobile"],
 				classes[type]
 			)}
 		>
