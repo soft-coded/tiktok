@@ -36,7 +36,14 @@ export default function AuthModal({ isMobile, className }: Props) {
 			{!isMobile && (
 				<div className="backdrop auth-backdrop" onClick={handleModalClose} />
 			)}
-			<div className={joinClasses("auth-modal-container", className)}>
+			<div
+				className={joinClasses(
+					"auth-modal-container",
+					isMobile && "mobile",
+					className
+				)}
+			>
+				{isMobile && <i className="fas fa-close" onClick={handleModalClose} />}
 				{authType === "login" ? (
 					<LogIn
 						setAuthType={setAuthType}

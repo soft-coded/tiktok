@@ -16,6 +16,22 @@ $button-height: 42px;
 	border-radius: 8px;
 	padding: 16px 42px;
 
+	&.mobile {
+		inset: 0;
+		transform: none;
+		padding: 16px;
+		width: 100vw;
+		height: 100vh;
+
+		.fa-close {
+			position: absolute;
+			right: 24px;
+			top: 17px;
+			font-size: 1.3rem;
+			color: rgba(var(--clr-secondary-values), 0.7);
+		}
+	}
+
 	h1 {
 		font-size: 1.4rem;
 		font-weight: 700;

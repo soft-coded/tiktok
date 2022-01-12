@@ -10,7 +10,7 @@ export default function OwnProfile() {
 	) : (
 		<UnauthedPage
 			header="Profile"
-			description="Sign up for an account"
+			description="Log in to view your profile"
 			icon={<i className="fas fa-user" />}
 		/>
 	);
