@@ -122,5 +122,15 @@ $pfp-size: 96px;
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		gap: 1px;
+
+		&.ungrid {
+			display: block;
+		}
+	}
+
+	.no-videos {
+		text-align: center;
+		margin-top: 20px;
+		color: rgba(var(--clr-secondary-values), 0.7);
 	}
 }
