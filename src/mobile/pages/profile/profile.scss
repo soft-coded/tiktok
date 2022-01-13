@@ -3,6 +3,7 @@ $pfp-size: 96px;
 
 .profile-page {
 	height: calc(100% - var(--navbar-height));
+	overflow: auto;
 
 	.profile-header {
 		text-align: center;
@@ -89,5 +90,37 @@ $pfp-size: 96px;
 				padding: 0 40px;
 			}
 		}
+	}
+
+	.video-buttons {
+		display: flex;
+		justify-content: space-around;
+		align-items: center;
+		position: sticky;
+		top: 0;
+		z-index: 5;
+		background-color: var(--clr-background);
+		height: 40px;
+		width: 100%;
+		border-bottom: 2px solid var(--clr-border);
+		margin-bottom: 1px;
+
+		button {
+			font-size: 1.2rem;
+			color: rgba(var(--clr-secondary-values), 0.3);
+			height: 95%;
+			padding: 0 12px;
+
+			&.active {
+				color: rgba(var(--clr-secondary-values), 0.8);
+				box-shadow: 0 2px 0 0 rgba(var(--clr-secondary-values), 0.8);
+			}
+		}
+	}
+
+	.videos-container {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1px;
 	}
 }
