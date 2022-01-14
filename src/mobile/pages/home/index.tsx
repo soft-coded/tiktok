@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
+import PageWithNavbar from "../../components/page-with-navbar";
 import "./home.scss";
 import Swiper from "../../components/swiper";
 import Video from "../../components/video";
@@ -24,7 +25,7 @@ export default function HomePage() {
 	}, [dispatch, username]);
 
 	return (
-		<div className="page-container homepage-container">
+		<PageWithNavbar containerClassName="homepage-container">
 			<header>
 				<button className="menu-btn">
 					<i className="fas fa-bars" />
@@ -59,6 +60,6 @@ export default function HomePage() {
 					))}
 				/>
 			)}
-		</div>
+		</PageWithNavbar>
 	);
 }

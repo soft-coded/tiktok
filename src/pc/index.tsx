@@ -7,7 +7,7 @@ import FullscreenSpinner from "../common/components/fullscreen-spinner";
 import Header from "./components/header";
 import Notification from "../common/components/notification";
 import AuthModal from "../common/components/auth-modal";
-import PrivateRoute from "./components/private-route";
+import PrivateRoute from "../common/components/private-route";
 const Home = lazy(() => import("./pages/home"));
 const Following = lazy(() => import("./pages/following"));
 const Profile = lazy(() => import("./pages/profile"));

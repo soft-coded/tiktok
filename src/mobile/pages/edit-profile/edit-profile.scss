@@ -1,0 +1,14 @@
+$header-height: 44px;
+
+.edit-profile {
+	background: var(--clr-background);
+
+	header {
+		height: $header-height;
+		line-height: $header-height;
+		font-size: 17px;
+		font-weight: 600;
+		border-bottom: 2px solid var(--clr-border);
+		text-align: center;
+	}
+}

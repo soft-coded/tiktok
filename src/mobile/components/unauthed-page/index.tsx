@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 
+import PageWithNavbar from "../page-with-navbar";
 import "./unauthed-page.scss";
 import { ComponentProps } from "../../../common/types";
 import { useAppDispatch } from "../../../common/store";
@@ -25,7 +26,7 @@ export default function UnauthedPage({
 	}
 
 	return (
-		<div className="unauthed-page">
+		<PageWithNavbar containerClassName="unauthed-page">
 			<header>
 				<div />
 				<h4>{header}</h4>
@@ -40,6 +41,6 @@ export default function UnauthedPage({
 					</button>
 				</div>
 			</div>
-		</div>
+		</PageWithNavbar>
 	);
 }

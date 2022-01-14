@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 import "./profile.scss";
+import PageWithNavbar from "../../components/page-with-navbar";
 import { UserData } from "../../../common/types";
 import constants from "../../../common/constants";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
@@ -80,7 +81,7 @@ export default function Profile({ isOwn }: Props) {
 	}
 
 	return (
-		<div className="profile-page">
+		<PageWithNavbar containerClassName="profile-page">
 			{!user ? (
 				<LoadingSpinner />
 			) : (
@@ -91,7 +92,9 @@ export default function Profile({ isOwn }: Props) {
 							<h4>{user.name}</h4>
 							<div>
 								{isOwn ? (
-									<i className="fas fa-ellipsis-h" />
+									<Link to="/edit-profile">
+										<i className="fas fa-ellipsis-h" />
+									</Link>
 								) : (
 									<i className="fas fa-share" onClick={shareProfile} />
 								)}
@@ -173,6 +176,6 @@ export default function Profile({ isOwn }: Props) {
 					</div>
 				</>
 			)}
-		</div>
+		</PageWithNavbar>
 	);
 }

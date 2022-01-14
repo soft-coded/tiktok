@@ -2,7 +2,6 @@ $header-height: 44px;
 $pfp-size: 96px;
 
 .profile-page {
-	height: calc(100% - var(--navbar-height));
 	overflow: auto;
 
 	.profile-header {

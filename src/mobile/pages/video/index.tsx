@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+import PageWithNavbar from "../../components/page-with-navbar";
 import "./video.scss";
 import Video from "../../components/video";
 import { VideoData } from "../../../common/types";
@@ -31,8 +32,8 @@ export default function VideoPage() {
 	}, [dispatch, videoId, username]);
 
 	return (
-		<div className="video-page">
+		<PageWithNavbar containerClassName="video-page">
 			{!vid ? <FullscreenSpinner /> : <Swiper slides={[<Video {...vid} />]} />}
-		</div>
+		</PageWithNavbar>
 	);
 }
