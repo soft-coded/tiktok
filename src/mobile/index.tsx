@@ -10,6 +10,7 @@ import AuthModal from "../common/components/auth-modal";
 const Home = lazy(() => import("./pages/home"));
 const Profile = lazy(() => import("./pages/profile"));
 const OwnProfile = lazy(() => import("./pages/profile/OwnProfile"));
+const Video = lazy(() => import("./pages/video"));
 
 export default function MobileLayout() {
 	const { notification, authModal } = useAppSelector(state => state);
@@ -29,6 +30,7 @@ export default function MobileLayout() {
 					<Route path="/" element={<Home />} />
 					<Route path="/profile" element={<OwnProfile />} />
 					<Route path="/user/:username" element={<Profile />} />
+					<Route path="/video/:videoId" element={<Video />} />
 				</Routes>
 			</Suspense>
 			<Navbar />
