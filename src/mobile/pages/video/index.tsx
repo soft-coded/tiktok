@@ -10,8 +10,6 @@ import { getVideo } from "../../../common/api/video";
 import Swiper from "../../components/swiper";
 import FullscreenSpinner from "../../../common/components/fullscreen-spinner";
 
-// temp id = 61d952c6f3b0c65b2ba47ab3
-
 export default function VideoPage() {
 	const { videoId } = useParams();
 	const dispatch = useAppDispatch();
