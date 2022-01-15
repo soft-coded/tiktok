@@ -3,6 +3,8 @@ $pfp-size: 96px;
 
 .profile-page {
 	overflow: auto;
+	color: var(--clr-text);
+	background: var(--clr-background);
 
 	.profile-header {
 		text-align: center;

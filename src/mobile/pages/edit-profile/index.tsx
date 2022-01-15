@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 import PageWithNavbar from "../../components/page-with-navbar";
 import "./edit-profile.scss";
@@ -8,11 +8,20 @@ import { errorNotification } from "../../helpers/error-notification";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { getCustom } from "../../../common/api/user";
 import constants from "../../../common/constants";
+import { joinClasses } from "../../../common/utils";
+import { authActions } from "../../../common/store/slices/auth";
+
+function usesDarkTheme(): boolean {
+	let stored: any = localStorage.getItem("usesDarkTheme");
+	if (stored) return JSON.parse(stored);
+	return false;
+}
 
 export default function EditProfile() {
 	const dispatch = useAppDispatch();
 	const username = useAppSelector(state => state.auth.username);
 	const [user, setUser] = useState<UserData | null>(null);
+	const [darkTheme, setDarkTheme] = useState(usesDarkTheme());
 
 	useEffect(() => {
 		errorNotification(async () => {
@@ -24,6 +33,20 @@ export default function EditProfile() {
 			setUser(res.data);
 		}, dispatch);
 	}, [dispatch, username]);
+
+	const toggleTheme = useCallback(() => {
+		const classList = document.documentElement.classList;
+		if (darkTheme) {
+			classList.remove("dark");
+			classList.add("light");
+		} else {
+			classList.remove("light");
+			classList.add("dark");
+		}
+
+		localStorage.setItem("usesDarkTheme", JSON.stringify(!darkTheme));
+		setDarkTheme(!darkTheme);
+	}, [darkTheme]);
 
 	return (
 		<PageWithNavbar containerClassName="edit-profile">
@@ -76,15 +99,23 @@ export default function EditProfile() {
 					<section>
 						<h4>WEBSITE</h4>
 						<div className="section-content">
-							<div className="form-group">
+							<div className="form-group" onClick={toggleTheme}>
 								<label>Theme</label>
 								<div className="data">
 									<p>
-										<i className="fas fa-sun" />
+										<i
+											className={joinClasses(
+												"fas",
+												darkTheme ? "fa-moon" : "fa-sun"
+											)}
+										/>
 									</p>
 								</div>
 							</div>
-							<div className="form-group">
+							<div
+								className="form-group"
+								onClick={() => dispatch(authActions.logout())}
+							>
 								<label>Logout</label>
 								<div className="data">
 									<p>

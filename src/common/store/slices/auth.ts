@@ -53,7 +53,7 @@ const authSlice = createSlice({
 		logout() {
 			localStorage.removeItem("userData");
 			// reload automatically resets all state
-			window.location.reload();
+			window.location.href = "/";
 		},
 		loginOnLoad(state) {
 			if (localStorage.getItem("userData")) {

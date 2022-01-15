@@ -93,7 +93,7 @@ export default function Profile({ isOwn }: Props) {
 							<div>
 								{isOwn ? (
 									<Link to="/edit-profile">
-										<i className="fas fa-ellipsis-h" />
+										<i className="fas fa-cog" />
 									</Link>
 								) : (
 									<i className="fas fa-share" onClick={shareProfile} />

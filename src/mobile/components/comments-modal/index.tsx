@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { errorNotification } from "../../helpers/error-notification";
 import { getVidComments } from "../../../common/api/video";
 import { joinClasses } from "../../../common/utils";
+import { authModalActions } from "../../../common/store/slices/auth-modal-slice";
 
 interface Props {
 	uploader: string;
@@ -102,7 +103,12 @@ export default function CommentsModal({
 						</div>
 						<h3>Join the conversation</h3>
 						<p>View and add comments with a TikTok account</p>
-						<button className="primary-button">Log in</button>
+						<button
+							className="primary-button"
+							onClick={() => dispatch(authModalActions.showModal())}
+						>
+							Log in
+						</button>
 					</>
 				) : (
 					<>
