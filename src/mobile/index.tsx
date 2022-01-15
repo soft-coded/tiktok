@@ -1,4 +1,4 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 
 import "./index.scss";
@@ -16,16 +16,28 @@ const EditProfile = lazy(() => import("./pages/edit-profile"));
 export default function MobileLayout() {
 	const { notification, authModal } = useAppSelector(state => state);
 
+	useEffect(() => {
+		let usesDarkTheme: any = localStorage.getItem("usesDarkTheme");
+		if (usesDarkTheme) {
+			usesDarkTheme = JSON.parse(usesDarkTheme);
+		} else {
+			usesDarkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+			localStorage.setItem("usesDarkTheme", JSON.stringify(usesDarkTheme));
+		}
+
+		document.documentElement.className = usesDarkTheme ? "dark" : "light";
+	}, []);
+
 	return (
 		<main className="root-container">
 			{notification.show && (
 				<Notification
 					type={notification.type!}
 					message={notification.message!}
-					isMobile={true}
+					isMobile
 				/>
 			)}
-			{authModal.show && <AuthModal isMobile={true} />}
+			{authModal.show && <AuthModal isMobile />}
 			<Suspense fallback={<FullscreenSpinner />}>
 				<Routes>
 					<Route path="/" element={<Home />} />

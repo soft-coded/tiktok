@@ -88,7 +88,11 @@ export default function EditProfile() {
 					if (!constants.pfpRegex.test(pfp.type))
 						throw new Error("Only JPG and PNG files allowed");
 					if (pfp.size > constants.pfpSizeLimit)
-						throw new Error("Profile photo should be less than 2 MB");
+						throw new Error(
+							`Profile photo should be less than ${Math.round(
+								constants.pfpSizeLimit / 1048576
+							)} MB`
+						);
 
 					formData.append("changePfp", "update");
 					// keep the photo last or the backend will not receive the correct data

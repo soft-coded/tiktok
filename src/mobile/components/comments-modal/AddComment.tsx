@@ -98,7 +98,7 @@ export default function AddComment({
 				onChange={formik.handleChange}
 				onBlur={formik.handleBlur}
 				error={formik.errors.comment}
-				isMobile={true}
+				isMobile
 			/>
 			<button
 				type="submit"

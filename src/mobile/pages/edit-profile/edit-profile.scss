@@ -7,13 +7,28 @@ $pfp-size: 120px;
 	overflow: auto;
 
 	header {
+		display: flex;
 		height: $header-height;
 		line-height: $header-height;
 		font-size: 17px;
 		font-weight: 600;
+		padding: 0 18px;
 		border-bottom: 2px solid var(--clr-border);
 		text-align: center;
 		margin-bottom: 20px;
+
+		> div {
+			width: 24px;
+		}
+
+		h4 {
+			flex: 1 1 0%;
+			padding: 0 12px;
+		}
+
+		.fa-save {
+			color: var(--clr-primary);
+		}
 	}
 
 	.content {
@@ -83,8 +98,21 @@ $pfp-size: 120px;
 			max-width: 60%;
 		}
 
-		span {
+		.passwords {
+			flex-direction: column;
+		}
+
+		span,
+		.edit {
 			color: var(--clr-primary);
+		}
+
+		.error-container {
+			font-size: 0.7rem;
+		}
+
+		#pfp-input {
+			display: none;
 		}
 	}
 
@@ -96,5 +124,10 @@ $pfp-size: 120px;
 		a {
 			text-decoration: underline;
 		}
+	}
+
+	.spinner {
+		--wrapper-padding: 70% 0 0 0;
+		--circle-size: 12px;
 	}
 }

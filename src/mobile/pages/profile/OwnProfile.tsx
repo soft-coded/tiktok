@@ -6,7 +6,7 @@ export default function OwnProfile() {
 	const { isAuthenticated: isAuthed } = useAppSelector(state => state.auth);
 
 	return isAuthed ? (
-		<Profile isOwn={true} />
+		<Profile isOwn />
 	) : (
 		<UnauthedPage
 			header="Profile"
