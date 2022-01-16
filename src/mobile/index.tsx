@@ -12,6 +12,7 @@ const Profile = lazy(() => import("./pages/profile"));
 const OwnProfile = lazy(() => import("./pages/profile/OwnProfile"));
 const Video = lazy(() => import("./pages/video"));
 const EditProfile = lazy(() => import("./pages/edit-profile"));
+const Upload = lazy(() => import("./pages/upload"));
 
 export default function MobileLayout() {
 	const { notification, authModal } = useAppSelector(state => state);
@@ -46,6 +47,7 @@ export default function MobileLayout() {
 					<Route path="/video/:videoId" element={<Video />} />
 					<Route element={<PrivateRoute />}>
 						<Route path="/edit-profile" element={<EditProfile />} />
+						<Route path="/upload" element={<Upload />} />
 					</Route>
 				</Routes>
 			</Suspense>
