@@ -248,7 +248,7 @@ export default function VideoModal(props: ModalProps) {
 											isFollowing={props.vidDynamics.isFollowing}
 											onClick={props.handleFollow}
 											toFollow={props.uploader!.username!}
-											hideUnfollow={true}
+											hideUnfollow
 										/>
 									</div>
 								)

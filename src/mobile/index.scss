@@ -2,7 +2,6 @@
 
 :root {
 	--navbar-height: 49px;
-	--navbar-border: 1px solid #696969;
 }
 
 :root.light {
@@ -13,6 +12,7 @@
 
 :root.dark {
 	--clr-navbar-bg: #000;
+	--navbar-border: 1px solid #696969;
 }
 
 html,

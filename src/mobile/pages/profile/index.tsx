@@ -7,7 +7,7 @@ import { UserData } from "../../../common/types";
 import constants from "../../../common/constants";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { errorNotification } from "../../helpers/error-notification";
-import { getLikedVideos, getUser } from "../../../common/api/user";
+import { followUser, getLikedVideos, getUser } from "../../../common/api/user";
 import LoadingSpinner from "../../../common/components/loading-spinner";
 import { joinClasses } from "../../../common/utils";
 import ProfileVideo from "../../components/profile-video";
@@ -16,6 +16,11 @@ import { notificationActions } from "../../../common/store/slices/notification-s
 interface Props {
 	isOwn?: boolean;
 }
+
+type FollowData = {
+	isFollowing: boolean | undefined;
+	totalFollowers: number;
+};
 
 export default function Profile({ isOwn }: Props) {
 	const { username } = useParams();
@@ -26,6 +31,10 @@ export default function Profile({ isOwn }: Props) {
 		"uploaded"
 	);
 	const [likedVideos, setLikedVideos] = useState<string[] | null>(null);
+	const [followData, setFollowData] = useState<FollowData>({
+		isFollowing: false,
+		totalFollowers: 0
+	});
 
 	useEffect(() => {
 		errorNotification(
@@ -33,6 +42,10 @@ export default function Profile({ isOwn }: Props) {
 				const res = await getUser(isOwn ? loggedInAs! : username!, loggedInAs);
 				delete res.data.success;
 				setUser(res.data);
+				setFollowData({
+					isFollowing: res.data.isFollowing || false,
+					totalFollowers: res.data.followers
+				});
 			},
 			dispatch,
 			null,
@@ -60,6 +73,30 @@ export default function Profile({ isOwn }: Props) {
 		}
 		setVideosType("uploaded");
 	}, [videosType, fetchLikedVids, likedVideos]);
+
+	const handleFollow = useCallback(() => {
+		errorNotification(
+			async () => {
+				if (!loggedInAs) throw new Error("Log in to continue");
+				const res = await followUser(username!, loggedInAs);
+				setFollowData(prev => ({
+					isFollowing: res.data.followed,
+					totalFollowers: prev.totalFollowers + (res.data.followed ? 1 : -1)
+				}));
+				dispatch(
+					notificationActions.showNotification({
+						type: "success",
+						message: res.data.followed
+							? "You started following " + username
+							: "You unfollowed " + username
+					})
+				);
+			},
+			dispatch,
+			null,
+			"Couldn't follow " + username + ":"
+		);
+	}, [dispatch, loggedInAs, username]);
 
 	function shareProfile() {
 		errorNotification(
@@ -114,8 +151,10 @@ export default function Profile({ isOwn }: Props) {
 									<span>Following</span>
 								</li>
 								<li className="show-divider">
-									<strong>{user.followers}</strong>
-									<span>{user.followers === 1 ? "Follower" : "Followers"}</span>
+									<strong>{followData.totalFollowers}</strong>
+									<span>
+										{followData.totalFollowers === 1 ? "Follower" : "Followers"}
+									</span>
 								</li>
 								<li>
 									<strong>{user.totalLikes}</strong>
@@ -123,10 +162,15 @@ export default function Profile({ isOwn }: Props) {
 								</li>
 							</ul>
 							{!isOwn &&
-								(user.isFollowing ? (
-									<button className="secondary-button">Following</button>
+								loggedInAs !== username &&
+								(followData.isFollowing ? (
+									<button className="secondary-button" onClick={handleFollow}>
+										Following
+									</button>
 								) : (
-									<button className="primary-button">Follow</button>
+									<button className="primary-button" onClick={handleFollow}>
+										Follow
+									</button>
 								))}
 							<p className="break-word description">{user.description}</p>
 						</div>

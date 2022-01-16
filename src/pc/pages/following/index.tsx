@@ -104,7 +104,7 @@ export default function Following() {
 							className="infinite-scroll-div"
 						>
 							{videos.map((vid, i) => (
-								<VideoCard key={i} {...vid} isFollowing={true} />
+								<VideoCard key={i} {...vid} isFollowing />
 							))}
 						</InfiniteScroll>
 					)}

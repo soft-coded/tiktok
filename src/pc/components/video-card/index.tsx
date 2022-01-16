@@ -150,7 +150,7 @@ export default function VideoCard(props: VideoData) {
 								isFollowing={vidDynamics.isFollowing}
 								toFollow={props.uploader!.username!}
 								onClick={handleFollow}
-								hideUnfollow={true}
+								hideUnfollow
 							/>
 						</div>
 					)}

@@ -32,21 +32,14 @@ export default function FollowButton(props: Props) {
 				await dispatch(fetchFollowing(loggedInAs)).unwrap();
 				setIsFollowing(res.data.followed);
 				if (onClick) onClick(res.data.followed);
-				if (res.data.followed) {
-					dispatch(
-						notificationActions.showNotification({
-							type: "success",
-							message: "You started following " + toFollow
-						})
-					);
-				} else {
-					dispatch(
-						notificationActions.showNotification({
-							type: "success",
-							message: "You unfollowed " + toFollow
-						})
-					);
-				}
+				dispatch(
+					notificationActions.showNotification({
+						type: "success",
+						message: res.data.followed
+							? "You started following " + toFollow
+							: "You unfollowed " + toFollow
+					})
+				);
 			} catch (err: any) {
 				dispatch(
 					notificationActions.showNotification({
