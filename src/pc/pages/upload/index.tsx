@@ -65,7 +65,6 @@ export default function UploadPage() {
 				formData.append("video", videoFile);
 
 				const res = await createVideo(formData);
-				setIsLoading(false);
 				navigate("/video/" + res.data.videoId);
 			} catch (err: any) {
 				setIsLoading(false);

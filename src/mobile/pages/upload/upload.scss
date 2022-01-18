@@ -35,6 +35,11 @@ $header-height: 44px;
 		font-size: 0.9rem;
 		font-weight: 500;
 
+		&.playing {
+			padding: 0;
+			overflow: hidden;
+		}
+
 		i {
 			color: var(--clr-primary);
 			font-size: 1.5rem;
@@ -88,7 +93,7 @@ $header-height: 44px;
 			gap: 2px;
 
 			span {
-				font-size: 0.7rem;
+				font-size: 0.65rem;
 				line-height: 0.9rem;
 				color: rgba(var(--clr-secondary-values), 0.7);
 			}
@@ -98,5 +103,25 @@ $header-height: 44px;
 			font-size: 0.9rem;
 			font-weight: 500;
 		}
+
+		.error-container {
+			font-size: 0.65rem;
+		}
+	}
+
+	#video {
+		display: none;
+	}
+
+	.player {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+		background-color: #000;
+	}
+
+	.spinner {
+		--circle-size: 12px;
+		--wrapper-padding: 4px;
 	}
 }
