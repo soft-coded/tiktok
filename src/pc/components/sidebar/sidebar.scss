@@ -116,6 +116,7 @@ $bg-transition: background-color 0.25s ease-out;
 
 	.following {
 		border-top: 2px solid var(--clr-border);
+		border-bottom: 2px solid var(--clr-border);
 	}
 
 	.spinner {
@@ -126,5 +127,16 @@ $bg-transition: background-color 0.25s ease-out;
 		font-size: 0.8rem;
 		color: rgba(var(--clr-secondary-values), 0.75);
 		font-weight: 300;
+	}
+
+	.made-with {
+		margin-top: 20px;
+		font-size: 0.75rem;
+		text-align: center;
+		color: rgba(var(--clr-secondary-values), 0.7);
+
+		a {
+			text-decoration: underline;
+		}
 	}
 }

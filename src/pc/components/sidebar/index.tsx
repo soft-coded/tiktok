@@ -171,6 +171,16 @@ export default function Sidebar() {
 						</div>
 					</div>
 				)}
+				<div className="made-with">
+					<p>Made with ❤️ by Shrutanten</p>
+					<a
+						href="https://github.com/soft-coded"
+						target="_blank"
+						rel="noreferrer"
+					>
+						github: @soft-coded
+					</a>
+				</div>
 			</aside>
 		</div>
 	);
