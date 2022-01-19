@@ -95,6 +95,33 @@ $like-anim-timing: 0.35s ease-in-out;
 					}
 				}
 			}
+
+			.options-btn {
+				position: relative;
+				pointer-events: auto;
+
+				.fa-ellipsis-h {
+					font-size: 1.5rem;
+				}
+
+				.options-dd {
+					top: 0;
+					right: 120%;
+					bottom: unset;
+					color: #000;
+					width: unset;
+					font-size: 0.85rem;
+					font-weight: 400;
+					z-index: 10;
+
+					p {
+						display: flex;
+						align-items: baseline;
+						gap: 8px;
+						padding: 6px 16px;
+					}
+				}
+			}
 		}
 
 		.video-info-wrapper {

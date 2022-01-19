@@ -1,14 +1,16 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 
 import "./video.scss";
 import LoadingSpinner from "../../../common/components/loading-spinner";
 import CommentsModal from "../comments-modal";
+import Dropdown from "../../../common/components/dropdown";
 import { VideoData } from "../../../common/types";
 import constants from "../../../common/constants";
 import { errorNotification } from "../../helpers/error-notification";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { notificationActions } from "../../../common/store/slices/notification-slice";
-import { likeVideo, share } from "../../../common/api/video";
+import { deleteVideo, likeVideo, share } from "../../../common/api/video";
 import { joinClasses } from "../../../common/utils";
 
 type LikesInfo = {
@@ -17,10 +19,13 @@ type LikesInfo = {
 };
 
 export default function Video(props: VideoData) {
+	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
-	const { isAuthenticated: isAuthed, username } = useAppSelector(
-		state => state.auth
-	);
+	const {
+		isAuthenticated: isAuthed,
+		username,
+		token
+	} = useAppSelector(state => state.auth);
 	const cancelClickRef = useRef(false);
 	const videoRef = useRef<HTMLVideoElement>(null);
 	const albumRef = useRef<HTMLDivElement>(null);
@@ -33,6 +38,7 @@ export default function Video(props: VideoData) {
 		hasLiked: props.hasLiked || false,
 		likesNum: props.likes as number
 	});
+	const [showOptions, setShowOptions] = useState(false);
 
 	useEffect(() => {
 		if (!videoRef.current) return;
@@ -146,7 +152,27 @@ export default function Video(props: VideoData) {
 			null,
 			"Couldn't copy video link:"
 		);
-	}, [dispatch, props.videoId]);
+		if (showOptions) setShowOptions(false);
+	}, [dispatch, props.videoId, showOptions]);
+
+	const handleDelete = useCallback(() => {
+		errorNotification(
+			async () => {
+				await deleteVideo(props.videoId!, username!, token!);
+				dispatch(
+					notificationActions.showNotification({
+						type: "success",
+						message: "Video deleted"
+					})
+				);
+				navigate("/profile", { replace: true });
+			},
+			dispatch,
+			null,
+			"Couldn't delete video:"
+		);
+		if (showOptions) setShowOptions(false);
+	}, [dispatch, props.videoId, username, token, showOptions, navigate]);
 
 	return (
 		<div className="video-component-container">
@@ -193,9 +219,33 @@ export default function Video(props: VideoData) {
 							/>
 							<span>{props.comments}</span>
 						</div>
-						<div>
-							<i className="fas fa-share" onClick={handleShare} />
-							<span>{props.shares}</span>
+						<div className="options-btn">
+							{username === props.uploader!.username ? (
+								<>
+									<i
+										className="fas fa-ellipsis-h"
+										onClick={() => setShowOptions(true)}
+									/>
+									{showOptions && (
+										<Dropdown
+											className="options-dd"
+											setShowDropdown={setShowOptions}
+										>
+											<p onClick={handleShare}>
+												<i className="fas fa-share" /> Share
+											</p>
+											<p onClick={handleDelete}>
+												<i className="fas fa-trash-alt" /> Delete
+											</p>
+										</Dropdown>
+									)}
+								</>
+							) : (
+								<>
+									<i className="fas fa-share" onClick={handleShare} />
+									<span>{props.shares}</span>
+								</>
+							)}
 						</div>
 					</div>
 				</aside>
