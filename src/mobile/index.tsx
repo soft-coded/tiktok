@@ -8,6 +8,7 @@ import { useAppSelector } from "../common/store";
 import AuthModal from "../common/components/auth-modal";
 import PrivateRoute from "../common/components/private-route";
 const Home = lazy(() => import("./pages/home"));
+const Following = lazy(() => import("./pages/following"));
 const Profile = lazy(() => import("./pages/profile"));
 const OwnProfile = lazy(() => import("./pages/profile/OwnProfile"));
 const Video = lazy(() => import("./pages/video"));
@@ -47,6 +48,7 @@ export default function MobileLayout() {
 					<Route path="/video/:videoId" element={<Video />} />
 					<Route element={<PrivateRoute />}>
 						<Route path="/edit-profile" element={<EditProfile />} />
+						<Route path="/following" element={<Following />} />
 						<Route path="/upload" element={<Upload />} />
 					</Route>
 				</Routes>

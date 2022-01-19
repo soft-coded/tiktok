@@ -11,9 +11,13 @@ import { VideoData } from "../../../common/types";
 import LoadingSpinner from "../../../common/components/loading-spinner";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { errorNotification } from "../../helpers/error-notification";
-import { getFeed } from "../../../common/api/feed";
+import { getFeed, getFollowingVids } from "../../../common/api/feed";
 
-export default function HomePage() {
+interface Props {
+	showFollowing?: boolean;
+}
+
+export default function HomePage({ showFollowing }: Props) {
 	const dispatch = useAppDispatch();
 	const { username } = useAppSelector(state => state.auth);
 	const [feed, setFeed] = useState<VideoData[] | null>(null);
@@ -21,10 +25,15 @@ export default function HomePage() {
 
 	useEffect(() => {
 		errorNotification(async () => {
-			const res = await getFeed(username);
+			let res: any;
+			if (showFollowing) {
+				res = await getFollowingVids(username!);
+			} else {
+				res = await getFeed(username);
+			}
 			setFeed(res.data.videos);
 		}, dispatch);
-	}, [dispatch, username]);
+	}, [dispatch, username, showFollowing]);
 
 	return (
 		<PageWithNavbar containerClassName="homepage-container">
