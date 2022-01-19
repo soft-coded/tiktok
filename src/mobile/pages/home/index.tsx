@@ -5,6 +5,7 @@ import PageWithNavbar from "../../components/page-with-navbar";
 import "./home.scss";
 import Swiper from "../../components/swiper";
 import Video from "../../components/video";
+import Drawer from "../../components/drawer";
 import { joinClasses } from "../../../common/utils";
 import { VideoData } from "../../../common/types";
 import LoadingSpinner from "../../../common/components/loading-spinner";
@@ -16,6 +17,7 @@ export default function HomePage() {
 	const dispatch = useAppDispatch();
 	const { username } = useAppSelector(state => state.auth);
 	const [feed, setFeed] = useState<VideoData[] | null>(null);
+	const [showDrawer, setShowDrawer] = useState(false);
 
 	useEffect(() => {
 		errorNotification(async () => {
@@ -28,7 +30,8 @@ export default function HomePage() {
 		<PageWithNavbar containerClassName="homepage-container">
 			<header>
 				<button className="menu-btn">
-					<i className="fas fa-bars" />
+					<i className="fas fa-bars" onClick={() => setShowDrawer(true)} />
+					{showDrawer && <Drawer setShowDrawer={setShowDrawer} />}
 				</button>
 				<nav>
 					<NavLink

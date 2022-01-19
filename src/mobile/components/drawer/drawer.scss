@@ -1,0 +1,99 @@
+$transition: 0.3s ease;
+
+.drawer-backdrop {
+	z-index: 5;
+	opacity: 0;
+	transition: opacity $transition;
+
+	&.show {
+		opacity: 1;
+	}
+
+	&.hide {
+		opacity: 0;
+	}
+}
+
+.app-drawer {
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	z-index: 6;
+	width: 285px;
+	height: calc(100vh - var(--navbar-height));
+	background: var(--clr-background);
+	color: var(--clr-text);
+	pointer-events: auto;
+	overflow: auto;
+	transform: translateX(-100%);
+	transition: transform $transition;
+
+	&.reveal {
+		transform: translateX(0);
+	}
+
+	&.hide {
+		transform: translateX(-100%);
+	}
+
+	.drawer-header {
+		display: flex;
+		justify-content: center;
+		padding: 12px;
+		margin-bottom: 12px;
+
+		.image-container {
+			height: 50px;
+			width: 171px;
+		}
+	}
+
+	.accounts {
+		text-align: left;
+		margin: 0 16px;
+		padding-bottom: 8px;
+		border-bottom: 2px solid var(--clr-border);
+
+		h5 {
+			font-size: 0.83rem;
+			color: rgba(var(--clr-secondary-values), 0.7);
+			margin-bottom: 8px;
+		}
+	}
+
+	.following {
+		margin-top: 16px;
+		border: none;
+	}
+
+	.account-box {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		height: 48px;
+
+		.rounded-photo {
+			width: 32px;
+			height: 32px;
+			flex-shrink: 0;
+		}
+
+		h4 {
+			font-size: 0.9rem;
+			font-weight: 600;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+		}
+	}
+
+	.no-following {
+		font-size: 0.75rem;
+		color: rgba(var(--clr-secondary-values), 0.6);
+	}
+
+	.spinner {
+		--circle-size: 16px;
+	}
+}
