@@ -14,6 +14,7 @@ const OwnProfile = lazy(() => import("./pages/profile/OwnProfile"));
 const Video = lazy(() => import("./pages/video"));
 const EditProfile = lazy(() => import("./pages/edit-profile"));
 const Upload = lazy(() => import("./pages/upload"));
+const Notifications = lazy(() => import("./pages/notifications"));
 
 export default function MobileLayout() {
 	const { notification, authModal } = useAppSelector(state => state);
@@ -43,6 +44,7 @@ export default function MobileLayout() {
 			<Suspense fallback={<FullscreenSpinner />}>
 				<Routes>
 					<Route path="/" element={<Home />} />
+					<Route path="/notifications" element={<Notifications />} />
 					<Route path="/profile" element={<OwnProfile />} />
 					<Route path="/user/:username" element={<Profile />} />
 					<Route path="/video/:videoId" element={<Video />} />

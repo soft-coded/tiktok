@@ -1,0 +1,53 @@
+$pfp-size: 48px;
+
+.notif-box {
+	display: flex;
+	gap: 12px;
+	padding: 12px;
+
+	&.unread {
+		background: rgba(var(--clr-secondary-values), 0.05);
+	}
+
+	.pfp {
+		width: $pfp-size;
+		height: $pfp-size;
+		flex-shrink: 0;
+	}
+
+	.content {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		font-size: 0.9rem;
+		line-height: 0.9rem;
+		width: 100%;
+
+		.username {
+			font-weight: 600;
+		}
+
+		p {
+			color: rgba(var(--clr-secondary-values), 0.7);
+			line-height: 1.1rem;
+			font-size: 0.85rem;
+			hyphens: none;
+		}
+
+		span {
+			color: rgba(var(--clr-secondary-values), 0.6);
+			font-size: 0.75rem;
+		}
+	}
+
+	.video-container {
+		width: 42px;
+		height: 56px;
+		flex-shrink: 0;
+
+		video {
+			width: 100%;
+			height: 100%;
+		}
+	}
+}

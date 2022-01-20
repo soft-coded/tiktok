@@ -95,7 +95,10 @@ export default function UserNotifications({ setShowDropdown }: Props) {
 						title={notif.message}
 						onClick={() => handleRedirect(notif)}
 					>
-						<Link to={"/user/" + notif.by.username}>
+						<Link
+							to={"/user/" + notif.by.username}
+							onClick={e => e.stopPropagation()}
+						>
 							<div
 								className={joinClasses(
 									"rounded-photo",
@@ -109,7 +112,10 @@ export default function UserNotifications({ setShowDropdown }: Props) {
 							</div>
 						</Link>
 						<div className={classes["content"]}>
-							<Link to={"/user/" + notif.by.username}>
+							<Link
+								to={"/user/" + notif.by.username}
+								onClick={e => e.stopPropagation()}
+							>
 								<h4>{notif.by.username}</h4>
 							</Link>
 							<p className="clamp-text">{notif.message}</p>
