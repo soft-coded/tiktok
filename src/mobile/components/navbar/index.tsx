@@ -1,9 +1,27 @@
+import { useEffect } from "react";
 import { NavLink, Link } from "react-router-dom";
 
 import "./navbar.scss";
 import { joinClasses } from "../../../common/utils";
+import { useAppDispatch, useAppSelector } from "../../../common/store";
+import { fetchNewNotifs } from "../../store/slices/navbar-slice";
 
 export default function Navbar() {
+	const dispatch = useAppDispatch();
+	const {
+		username,
+		token,
+		isAuthenticated: isAuthed
+	} = useAppSelector(state => state.auth);
+	const hasNewNotifs = useAppSelector(
+		state => state.mobile.navbar.hasNewNotifs
+	);
+
+	useEffect(() => {
+		if (!isAuthed) return;
+		dispatch(fetchNewNotifs({ username: username!, token: token! }));
+	}, [dispatch, isAuthed, username, token]);
+
 	return (
 		<nav className="navbar-container">
 			<NavLink
@@ -34,7 +52,7 @@ export default function Navbar() {
 					joinClasses("icon-container", isActive && "active")
 				}
 			>
-				<i className="fas fa-bell" />
+				<i className="fas fa-bell">{hasNewNotifs && <span />}</i>
 			</NavLink>
 			<NavLink
 				to="/profile"

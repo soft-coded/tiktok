@@ -32,6 +32,20 @@ $icon-container-size: 40px;
 		}
 	}
 
+	.fa-bell {
+		position: relative;
+
+		span {
+			position: absolute;
+			top: -2px;
+			right: -2px;
+			width: 6px;
+			height: 6px;
+			border-radius: 50%;
+			background-color: red;
+		}
+	}
+
 	.image-container {
 		width: 75px;
 		height: 100%;

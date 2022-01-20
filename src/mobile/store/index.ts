@@ -1,3 +1,5 @@
 import { combineReducers } from "@reduxjs/toolkit";
 
-export default combineReducers({});
+import navbarReducer from "./slices/navbar-slice";
+
+export default combineReducers({ navbar: navbarReducer });

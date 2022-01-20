@@ -9,6 +9,9 @@ import { errorNotification } from "../../helpers/error-notification";
 import { UserNotification } from "../../../common/types";
 import { getCustom, readAllNotifs } from "../../../common/api/user";
 import LoadingSpinner from "../../../common/components/loading-spinner";
+import { navbarActions } from "../../store/slices/navbar-slice";
+
+let hadNewNotifs: boolean;
 
 export default function Notifications() {
 	const dispatch = useAppDispatch();
@@ -17,6 +20,9 @@ export default function Notifications() {
 		isAuthenticated: isAuthed,
 		token
 	} = useAppSelector(state => state.auth);
+	const hasNewNotifs = useAppSelector(
+		state => state.mobile.navbar.hasNewNotifs
+	);
 	const [notifs, setNotifs] = useState<UserNotification[] | null>(null);
 
 	const fetchNotifs = useCallback(() => {
@@ -32,18 +38,22 @@ export default function Notifications() {
 	}, [dispatch, username]);
 
 	useEffect(() => {
+		if (!isAuthed) return;
 		fetchNotifs();
-	}, [fetchNotifs]);
+	}, [fetchNotifs, isAuthed]);
 
 	useEffect(() => {
 		if (!isAuthed) return;
+		hadNewNotifs = hasNewNotifs;
+		if (hasNewNotifs) dispatch(navbarActions.hasReadNotifs());
 
 		return () => {
+			if (!hadNewNotifs) return;
 			readAllNotifs(username!, token!).catch(err =>
-				console.error("Couldn't read all notifications.", err)
+				console.error("Couldn't read all notifications", err)
 			);
 		};
-	}, [isAuthed, username, token]);
+	}, [isAuthed, username, token, hasNewNotifs, dispatch]);
 
 	return isAuthed ? (
 		<PageWithNavbar containerClassName="notifications-page">
@@ -51,8 +61,17 @@ export default function Notifications() {
 			<div className="content">
 				{!notifs ? (
 					<LoadingSpinner />
+				) : notifs.length === 0 ? (
+					<div className="no-notifs">No notifications</div>
 				) : (
-					notifs.map((notif, i) => <NotificationBox key={i} {...notif} />)
+					notifs.map((notif, i) => (
+						<NotificationBox
+							key={i}
+							{...notif}
+							setNotifs={setNotifs}
+							fetchNotifs={fetchNotifs}
+						/>
+					))
 				)}
 			</div>
 		</PageWithNavbar>

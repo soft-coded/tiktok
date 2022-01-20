@@ -46,6 +46,10 @@ $transition: 0.3s ease;
 		.image-container {
 			height: 50px;
 			width: 171px;
+
+			img {
+				filter: var(--logo-filter, none);
+			}
 		}
 	}
 

@@ -14,6 +14,14 @@ $header-height: 44px;
 		padding: 0 18px;
 		text-align: center;
 		border-bottom: 2px solid var(--clr-border);
-		margin-bottom: 8px;
+	}
+
+	.content {
+		padding-top: 8px;
+	}
+
+	.no-notifs {
+		text-align: center;
+		color: rgba(var(--clr-secondary-values), 0.5);
 	}
 }

@@ -6,7 +6,7 @@ $pfp-size: 48px;
 	padding: 12px;
 
 	&.unread {
-		background: rgba(var(--clr-secondary-values), 0.05);
+		background: rgba(var(--clr-secondary-values), 0.07);
 	}
 
 	.pfp {
@@ -37,6 +37,17 @@ $pfp-size: 48px;
 		span {
 			color: rgba(var(--clr-secondary-values), 0.6);
 			font-size: 0.75rem;
+		}
+	}
+
+	.box-end {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+
+		i {
+			font-size: 1rem;
+			color: rgba(var(--clr-secondary-values), 0.5);
 		}
 	}
 
