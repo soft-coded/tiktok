@@ -158,6 +158,20 @@ $like-anim-timing: 0.35s ease-in-out;
 				font-size: 0.9rem;
 			}
 
+			.tags {
+				display: flex;
+				gap: 4px;
+
+				a {
+					font-weight: 500;
+					pointer-events: auto;
+
+					&:active {
+						text-decoration: underline;
+					}
+				}
+			}
+
 			.views {
 				display: flex;
 				gap: 6px;

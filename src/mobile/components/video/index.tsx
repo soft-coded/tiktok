@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "./video.scss";
 import LoadingSpinner from "../../../common/components/loading-spinner";
@@ -259,6 +259,13 @@ export default function Video(props: VideoData) {
 								@{props.uploader!.username}
 							</a>
 							<p className="break-word">{props.caption}</p>
+							<p className="tags">
+								{props.tags!.map((tag, i) => (
+									<Link to={"/search?query=" + tag} key={i}>
+										#{tag}
+									</Link>
+								))}
+							</p>
 							<p className="views">
 								<i className="fas fa-eye" />
 								<span>{props.views}</span>

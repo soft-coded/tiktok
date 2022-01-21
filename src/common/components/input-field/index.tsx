@@ -17,6 +17,7 @@ interface InputProps {
 	error?: string | false;
 	autoComplete?: string;
 	isMobile?: boolean;
+	autoFocus?: boolean;
 }
 
 function Input(
@@ -33,7 +34,8 @@ function Input(
 		name,
 		error,
 		autoComplete,
-		isMobile
+		isMobile,
+		autoFocus
 	}: InputProps,
 	ref: ForwardedRef<HTMLInputElement>
 ) {
@@ -63,6 +65,7 @@ function Input(
 					value={value}
 					name={name}
 					autoComplete={autoComplete}
+					autoFocus={autoFocus}
 				/>
 			</div>
 			{error && (
