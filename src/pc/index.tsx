@@ -1,5 +1,5 @@
 import { useEffect, Suspense, lazy } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 
 import "./index.scss";
 import { useAppSelector } from "../common/store";
@@ -41,6 +41,8 @@ export default function PCLayout() {
 					<Route path="/user/:username" element={<Profile />} />
 					<Route path="/video/:videoId" element={<Video />} />
 					<Route path="/search" element={<Search />} />
+					<Route path="/profile" element={<Navigate to="/" />} />
+					<Route path="/notifications" element={<Navigate to="/" />} />
 					<Route element={<PrivateRoute />}>
 						<Route path="/upload" element={<Upload />} />
 						<Route path="/edit-profile" element={<EditProfile />} />
