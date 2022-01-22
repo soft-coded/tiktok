@@ -5,6 +5,7 @@ import PageWithNavbar from "../../components/page-with-navbar";
 import "./search.scss";
 import SearchBar from "../../components/search-bar";
 import SearchedVideo from "../../components/searched-video";
+import SearchedAccount from "../../components/searched-account";
 import { errorNotification } from "../../helpers/error-notification";
 import { useAppDispatch } from "../../../common/store";
 import { UserData, VideoData } from "../../../common/types";
@@ -27,6 +28,8 @@ export default function Search() {
 		if (!query) return;
 		errorNotification(
 			async () => {
+				if (send === "videos") setVideos(null);
+				else setAccounts(null);
 				const res = await search(query, send);
 				if (send === "videos") setVideos(res.data.videos);
 				else setAccounts(res.data.accounts);
@@ -39,7 +42,7 @@ export default function Search() {
 			"Couldn't load results:"
 		);
 	}, [dispatch, query, send]);
-	console.log(videos);
+
 	return (
 		<PageWithNavbar containerClassName="search-page">
 			<header>
@@ -47,19 +50,53 @@ export default function Search() {
 			</header>
 			{query && (
 				<div className="content">
-					{!videos ? (
-						<LoadingSpinner />
+					<div className="buttons">
+						<button
+							className={send === "videos" ? "active" : undefined}
+							onClick={() => setSend("videos")}
+						>
+							Videos
+						</button>
+						<button
+							className={send === "accounts" ? "active" : undefined}
+							onClick={() => setSend("accounts")}
+						>
+							Accounts
+						</button>
+					</div>
+					{send === "videos" ? (
+						!videos ? (
+							<LoadingSpinner className="spinner" />
+						) : (
+							<>
+								{videos.length === 0 ? (
+									<div className="no-results">
+										No videos match your query "{query}".
+									</div>
+								) : (
+									<div className="vid-results">
+										{videos.map((vid, i) => (
+											<SearchedVideo key={i} {...vid} />
+										))}
+									</div>
+								)}
+							</>
+						)
+					) : !accounts ? (
+						<LoadingSpinner className="spinner" />
 					) : (
 						<>
-							<div className="buttons">
-								<button className="active">Videos</button>
-								<button>Accounts</button>
-							</div>
-							<div className="results">
-								{videos.map((vid, i) => (
-									<SearchedVideo key={i} {...vid} />
-								))}
-							</div>
+							{accounts.length === 0 ? (
+								<div className="no-results">
+									No accounts match your query "{query}".
+								</div>
+							) : (
+								<div className="acc-results">
+									{accounts.map((acc, i) => (
+										<SearchedAccount key={i} {...acc} />
+									))}
+								</div>
+							)}
 						</>
 					)}
 				</div>

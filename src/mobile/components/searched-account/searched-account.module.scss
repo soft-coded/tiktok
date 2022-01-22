@@ -1,0 +1,39 @@
+$pfp-size: 56px;
+
+.account {
+	display: flex;
+	gap: 12px;
+	padding: 0 8px;
+
+	.pfp {
+		width: $pfp-size;
+		height: $pfp-size;
+	}
+
+	.content {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		font-size: 0.9rem;
+		line-height: 1rem;
+		color: rgba(var(--clr-secondary-values), 0.7);
+
+		h4 {
+			font-weight: 600;
+			color: var(--clr-text);
+		}
+
+		h5 {
+			font-size: 0.83rem;
+			font-weight: 500;
+
+			span {
+				font-weight: 400;
+			}
+		}
+
+		p {
+			font-size: 0.8rem;
+		}
+	}
+}
