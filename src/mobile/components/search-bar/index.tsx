@@ -8,24 +8,27 @@ import constants from "../../../common/constants";
 interface Props {
 	autoFocus: boolean;
 	query: string;
+	setQuery: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const validationSchema = yup.object().shape({
 	query: yup.string().required("").max(constants.searchQueryMaxLen, "")
 });
 
-export default function SearchBar({ autoFocus, query }: Props) {
+export default function SearchBar({ autoFocus, query, setQuery }: Props) {
 	const formik = useFormik({
 		initialValues: { query },
-		enableReinitialize: true,
 		validationSchema,
-		onSubmit: () => {}
+		onSubmit: values => {
+			setQuery(values.query);
+		}
 	});
 
 	return (
 		<form className={classes["search-bar"]} onSubmit={formik.handleSubmit}>
 			<Input
 				isMobile
+				placeholder="Search for videos and accounts"
 				autoFocus={autoFocus}
 				className={classes["input"]}
 				name="query"

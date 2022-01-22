@@ -2,8 +2,33 @@
 	overflow-y: auto;
 	background-color: var(--clr-background);
 	color: var(--clr-text);
+	padding-bottom: 12px;
 
-	// header {
-	// 	border-bottom: 2px solid var(--clr-border);
-	// }
+	.content {
+		padding: 12px 6px;
+
+		.buttons {
+			display: flex;
+			align-items: center;
+			justify-content: space-evenly;
+			font-size: 0.85rem;
+			color: rgba(var(--clr-secondary-values), 0.7);
+			font-weight: 500;
+
+			button {
+				padding: 0 8px;
+
+				&.active {
+					box-shadow: 0 1.5px 0 0 rgba(var(--clr-secondary-values), 0.4);
+				}
+			}
+		}
+
+		.results {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap: 6px;
+			margin-top: 12px;
+		}
+	}
 }

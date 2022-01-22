@@ -107,7 +107,7 @@ export default function Header() {
 							</Link>
 							<div className={classes["inbox"]} title="Inbox">
 								<i
-									className={joinClasses("fas fa-envelope", classes["icon"])}
+									className={joinClasses("fas fa-bell", classes["icon"])}
 									onClick={() => setShowNotifs(true)}
 								/>
 								{hasNotifs && <span className={classes["dot"]} />}
