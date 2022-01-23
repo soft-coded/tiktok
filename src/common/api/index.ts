@@ -2,12 +2,6 @@ import axios from "axios";
 
 export const baseURL =
 	process.env.REACT_APP_SERVER_URL || "http://localhost:5000";
-console.log(
-	"LOGGING SERVER URL HERE LOOK HERE ->",
-	process.env.SERVER_URL,
-	" and process.env: ",
-	process.env
-);
 const timeout = 10000; // 10s
 
 export const apiClient = axios.create({
