@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
 
 import PageWithNavbar from "../../components/page-with-navbar";
@@ -17,13 +17,12 @@ interface Props {
 	showFollowing?: boolean;
 }
 
-let hasNext = true;
-
 export default function HomePage({ showFollowing }: Props) {
 	const dispatch = useAppDispatch();
 	const { username } = useAppSelector(state => state.auth);
 	const [feed, setFeed] = useState<VideoData[] | null>(null);
 	const [showDrawer, setShowDrawer] = useState(false);
+	const hasNext = useRef(true);
 
 	useEffect(() => {
 		errorNotification(
@@ -43,7 +42,7 @@ export default function HomePage({ showFollowing }: Props) {
 	}, [dispatch, username, showFollowing]);
 
 	async function fetchNext() {
-		if (!hasNext) return;
+		if (!hasNext.current) return;
 		let res: any;
 		try {
 			if (showFollowing) {
@@ -55,7 +54,7 @@ export default function HomePage({ showFollowing }: Props) {
 			console.error("Couldn't fetch more videos.", err);
 		}
 		if (res.data.videos.length < 1) {
-			hasNext = false;
+			hasNext.current = false;
 			return;
 		}
 		setFeed(prev => [...prev!, ...res.data.videos]);
