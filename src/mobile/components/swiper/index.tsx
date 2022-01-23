@@ -17,6 +17,7 @@ interface Props {
 	slideClassName?: string;
 	slideProps?: SwiperSlideProps;
 	slides: ReactNode[];
+	fetchNext?: () => void;
 }
 
 export default function SwiperComponent({
@@ -24,19 +25,25 @@ export default function SwiperComponent({
 	slideClassName,
 	slides,
 	containerProps,
-	slideProps
+	slideProps,
+	fetchNext
 }: Props) {
-	const handleSlideChange = useCallback((swiper: SwiperType) => {
-		const prevVideo = document.querySelector<HTMLVideoElement>(
-			"#slide-" + swiper.previousIndex + " video"
-		)!;
-		const curVideo = document.querySelector<HTMLVideoElement>(
-			"#slide-" + swiper.activeIndex + " video"
-		)!;
+	const handleSlideChange = useCallback(
+		(swiper: SwiperType) => {
+			const prevVideo = document.querySelector<HTMLVideoElement>(
+				"#slide-" + swiper.previousIndex + " video"
+			)!;
+			const curVideo = document.querySelector<HTMLVideoElement>(
+				"#slide-" + swiper.activeIndex + " video"
+			)!;
 
-		if (!prevVideo.paused) prevVideo.pause();
-		curVideo.play();
-	}, []);
+			if (!prevVideo.paused) prevVideo.pause();
+			curVideo.play();
+
+			if (swiper.activeIndex >= slides.length - 2) fetchNext?.();
+		},
+		[fetchNext, slides.length]
+	);
 
 	return (
 		<Swiper

@@ -17,6 +17,8 @@ interface Props {
 	showFollowing?: boolean;
 }
 
+let hasNext = true;
+
 export default function HomePage({ showFollowing }: Props) {
 	const dispatch = useAppDispatch();
 	const { username } = useAppSelector(state => state.auth);
@@ -24,16 +26,40 @@ export default function HomePage({ showFollowing }: Props) {
 	const [showDrawer, setShowDrawer] = useState(false);
 
 	useEffect(() => {
-		errorNotification(async () => {
-			let res: any;
-			if (showFollowing) {
-				res = await getFollowingVids(username!);
-			} else {
-				res = await getFeed(username);
-			}
-			setFeed(res.data.videos);
-		}, dispatch);
+		errorNotification(
+			async () => {
+				let res: any;
+				if (showFollowing) {
+					res = await getFollowingVids(username!);
+				} else {
+					res = await getFeed(username);
+				}
+				setFeed(res.data.videos);
+			},
+			dispatch,
+			() => setFeed([]),
+			"Couldn't load videos:"
+		);
 	}, [dispatch, username, showFollowing]);
+
+	async function fetchNext() {
+		if (!hasNext) return;
+		let res: any;
+		try {
+			if (showFollowing) {
+				res = await getFollowingVids(username!, feed!.length);
+			} else {
+				res = await getFeed(username, feed!.length);
+			}
+		} catch (err: any) {
+			console.error("Couldn't fetch more videos.", err);
+		}
+		if (res.data.videos.length < 1) {
+			hasNext = false;
+			return;
+		}
+		setFeed(prev => [...prev!, ...res.data.videos]);
+	}
 
 	return (
 		<PageWithNavbar containerClassName="homepage-container">
@@ -70,6 +96,7 @@ export default function HomePage({ showFollowing }: Props) {
 					slides={feed.map(vid => (
 						<Video {...vid} />
 					))}
+					fetchNext={fetchNext}
 				/>
 			)}
 		</PageWithNavbar>

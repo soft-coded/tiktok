@@ -11,7 +11,7 @@ import { errorNotification } from "../../helpers/error-notification";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { notificationActions } from "../../../common/store/slices/notification-slice";
 import { deleteVideo, likeVideo, share } from "../../../common/api/video";
-import { joinClasses } from "../../../common/utils";
+import { joinClasses, convertToDate } from "../../../common/utils";
 
 type LikesInfo = {
 	hasLiked: boolean;
@@ -266,6 +266,7 @@ export default function Video(props: VideoData) {
 									</Link>
 								))}
 							</p>
+							<p className="date">{convertToDate(props.createdAt!)}</p>
 							<p className="views">
 								<i className="fas fa-eye" />
 								<span>{props.views}</span>
