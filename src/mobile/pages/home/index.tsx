@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { NavLink } from "react-router-dom";
 
 import PageWithNavbar from "../../components/page-with-navbar";
@@ -41,24 +41,22 @@ export default function HomePage({ showFollowing }: Props) {
 		);
 	}, [dispatch, username, showFollowing]);
 
-	async function fetchNext() {
+	const fetchNext = useCallback(async () => {
 		if (!hasNext.current) return;
 		let res: any;
 		try {
-			if (showFollowing) {
-				res = await getFollowingVids(username!, feed!.length);
-			} else {
-				res = await getFeed(username, feed!.length);
+			if (showFollowing) res = await getFollowingVids(username!, feed!.length);
+			else res = await getFeed(username, feed!.length);
+
+			if (res.data.videos.length < 1) {
+				hasNext.current = false;
+				return;
 			}
+			setFeed(prev => [...prev!, ...res.data.videos]);
 		} catch (err: any) {
 			console.error("Couldn't fetch more videos.", err);
 		}
-		if (res.data.videos.length < 1) {
-			hasNext.current = false;
-			return;
-		}
-		setFeed(prev => [...prev!, ...res.data.videos]);
-	}
+	}, [feed, username, showFollowing]);
 
 	return (
 		<PageWithNavbar containerClassName="homepage-container">
