@@ -1,6 +1,7 @@
 import axios from "axios";
 
-export const baseURL = process.env.SERVER_URL || "http://localhost:5000";
+export const baseURL =
+	process.env.REACT_APP_SERVER_URL || "http://localhost:5000";
 console.log(
 	"LOGGING SERVER URL HERE LOOK HERE ->",
 	process.env.SERVER_URL,
