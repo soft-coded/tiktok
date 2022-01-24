@@ -25,7 +25,7 @@ export default function Notification({
 	useEffect(() => {
 		if (!notifRef.current) return;
 		const classList = notifRef.current.classList;
-		setTimeout(() => classList.add(classes["reveal"]), 1);
+		setTimeout(() => classList.add(classes["reveal"]), 10);
 
 		const hideTimeout = setTimeout(() => {
 			classList.remove(classes["reveal"]);
