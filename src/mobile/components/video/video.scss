@@ -1,6 +1,6 @@
 $pfp-size: 49px;
 $album-icon-size: 48px;
-$music-span-width: 200px;
+$music-span-width: 190px;
 $like-anim-timing: 0.35s ease-in-out;
 
 .video-component-container {
@@ -200,6 +200,9 @@ $like-anim-timing: 0.35s ease-in-out;
 				span {
 					padding-right: 12px;
 					width: $music-span-width;
+					overflow: hidden;
+					white-space: nowrap;
+					text-overflow: ellipsis;
 				}
 			}
 		}

@@ -18,11 +18,18 @@
 html,
 body {
 	overflow: hidden;
+	height: 100%; // 100vh causes problems
+}
+
+#root {
+	height: 100%;
 }
 
 .root-container {
+	display: flex;
+	flex-direction: column;
 	width: 100vw;
-	height: 100vh;
+	height: 100%;
 }
 
 .fade-out {
