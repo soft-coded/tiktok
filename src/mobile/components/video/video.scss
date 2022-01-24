@@ -23,7 +23,7 @@ $like-anim-timing: 0.35s ease-in-out;
 		.spinner-cont {
 			position: absolute;
 			inset: 0;
-			z-index: 6;
+			z-index: 2;
 			display: flex;
 			align-items: center;
 			justify-content: center;
@@ -54,7 +54,7 @@ $like-anim-timing: 0.35s ease-in-out;
 			position: absolute;
 			right: 10px;
 			bottom: 110px;
-			z-index: 2;
+			z-index: 3;
 			height: 300px;
 
 			.rounded-photo {
