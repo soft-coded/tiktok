@@ -48,7 +48,7 @@ export default function Sidebar() {
 				dispatch(
 					notificationActions.showNotification({
 						type: "error",
-						message: "Couldn't fetch suggested accounts: " + err.message
+						message: err.message
 					})
 				);
 			}
