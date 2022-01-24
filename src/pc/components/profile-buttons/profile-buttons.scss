@@ -11,7 +11,7 @@
 			color: rgba(var(--clr-secondary-values), 0.5);
 
 			&.active {
-				color: #000000;
+				color: inherit;
 			}
 		}
 	}
