@@ -7,6 +7,7 @@ Tiktok, but in Re... yeah you read the title.
 _TLDR: Please don't sue me._
 
 ## FEATURES
+* ✅ Browse in light (🤮) or dark (😎) theme (clearly no bias here)
 * ✅ Make an account (innovation at it's peak 💯)
 * ✅ Upload and like videos
 * ✅ Comment on videos and reply to comments (top level)
@@ -18,24 +19,27 @@ _TLDR: Please don't sue me._
 * ✅ Search for videos or users
 * ✅ View user profiles???? (does this count?)
 
-I am open to suggestions for more features. You can suggest some in the issues tab of this repository.
+I am open to suggestions for more features. You can suggest some [here](https://github.com/soft-coded/tiktok/issues/new?assignees=&labels=&template=feature_request.md&title=).
 
 ## TOOLS USED
 * Typescript React
 * Redux toolkit
 * SCSS and its modules
 * Font-awesome icons (only the free ones, sorry font-awesome)
-* Node js for backend
+* Node js for backend. [Backend repository](https://github.com/soft-coded/tiktok-server)
 
 ## DEPLOYMENT
-* [Currently deployed on netlify here.](https://sc-react-tiktok.netlify.app/)
+* [Currently deployed on netlify.](https://sc-react-tiktok.netlify.app/)
 * Links will be added here if I change/deploy the website anywhere else.
 
 ## ISSUES
 * Back button does not close comments modal
   * This is not a solvable issue. The real Tiktok website also has this problem. This is because the back button does not fire any event, so it extremely difficult to know when it is pressed. For the time being, just use the dedicated close button or click outside the comments modal.
 
-Let me know if you find any other bugs/issues.
+[Let me know](https://github.com/soft-coded/tiktok/issues/new?assignees=&labels=&template=bug_report.md&title=) if you find any other bugs/issues.
+
+## CONTACT
+For any legal troubles, any other information, or just dropping a hello, you can contact me at <a href="mailto:shrutanten.work@gmail.com">shrutanten.work@gmail.com</a>.
 
 ## Q'N'A
 ### "Why Tiktok?"
