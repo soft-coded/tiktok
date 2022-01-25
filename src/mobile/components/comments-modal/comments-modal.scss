@@ -80,6 +80,20 @@ $transition-timings: 0.2s ease-out;
 		align-items: center;
 		justify-content: center;
 		font-weight: 600;
+		padding: 0 12px;
+
+		p {
+			flex: 1 1 0%;
+			text-align: center;
+		}
+
+		span {
+			width: 20px;
+
+			i {
+				font-size: 1.2rem;
+			}
+		}
 	}
 
 	.comments-container {

@@ -61,12 +61,6 @@ export default function CommentsModal({
 		fetchComments();
 	}, [fetchComments]);
 
-	useEffect(() => {
-		if (!modalRef.current || !backdropRef.current) return;
-		modalRef.current.classList.add("reveal");
-		backdropRef.current.classList.add("show");
-	}, []);
-
 	const handleModalClose = useCallback(() => {
 		modalRef.current!.classList.remove("reveal");
 		modalRef.current!.classList.add("hide");
@@ -78,6 +72,12 @@ export default function CommentsModal({
 			setShowComments(false);
 		}, animationTime);
 	}, [setShowComments]);
+
+	useEffect(() => {
+		if (!modalRef.current || !backdropRef.current) return;
+		modalRef.current.classList.add("reveal");
+		backdropRef.current.classList.add("show");
+	}, []);
 
 	return createPortal(
 		<>
@@ -113,7 +113,13 @@ export default function CommentsModal({
 				) : (
 					<>
 						<header>
-							{totalComments} {totalComments === 1 ? "comment" : "comments"}
+							<span />
+							<p>
+								{totalComments} {totalComments === 1 ? "comment" : "comments"}
+							</p>
+							<span>
+								<i className="fas fa-close" onClick={handleModalClose} />
+							</span>
 						</header>
 						<div className="comments-container">
 							{!comments ? (
