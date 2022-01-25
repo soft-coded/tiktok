@@ -16,6 +16,7 @@ $button-height: 42px;
 	color: var(--clr-text);
 	border-radius: 8px;
 	padding: 16px 42px;
+	overflow: auto;
 
 	&.mobile {
 		inset: 0;
@@ -43,7 +44,7 @@ $button-height: 42px;
 		display: flex;
 		flex-direction: column;
 		gap: 10px;
-		margin-top: 24px;
+		margin: 24px 0;
 		width: 100%;
 
 		h3 {
@@ -58,11 +59,10 @@ $button-height: 42px;
 	}
 
 	.switch-state {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		padding: 24px;
+		background-color: inherit;
+		margin-top: auto;
+		width: 100%;
+		padding: 16px 0 4px;
 		font-size: 0.9rem;
 		border-top: 2px solid var(--clr-border);
 
