@@ -25,7 +25,12 @@ export default function SuggestionCard(props: CardProps) {
 				<div className={classes["video-container"]}>
 					<video
 						ref={videoRef}
-						src={constants.videoLink + "/" + (props.videos as any).uploaded[0]}
+						src={
+							constants.videoLink +
+							"/" +
+							(props.videos as any).uploaded[0] +
+							"#t=0.1"
+						}
 						loop
 						playsInline
 						muted

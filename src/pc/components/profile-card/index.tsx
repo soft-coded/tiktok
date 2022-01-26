@@ -25,7 +25,7 @@ export default function ProfileCard({ videoId }: { videoId: string }) {
 			)}
 			<div className="video-container">
 				<video
-					src={constants.videoLink + "/" + videoId}
+					src={constants.videoLink + "/" + videoId + "#t=0.1"}
 					playsInline
 					muted
 					loop

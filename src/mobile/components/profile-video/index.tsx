@@ -72,7 +72,7 @@ export default function ProfileVideo({ video }: Props) {
 		<div ref={containerRef} className={classes["video"]}>
 			<video
 				ref={videoRef}
-				src={constants.videoLink + "/" + video}
+				src={constants.videoLink + "/" + video + "#t=0.1"}
 				preload="metadata"
 				loop
 				playsInline
