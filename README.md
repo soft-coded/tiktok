@@ -36,6 +36,9 @@ I am open to suggestions for more features. You can suggest some [here](https://
 * Back button does not close comments modal
   * This is not a solvable issue. The real Tiktok website also has this problem. This is because the back button does not fire any event, so it extremely difficult to know when it is pressed. For the time being, just use the dedicated close button or click outside the comments modal.
 
+* Swipe animation is laggy on iOS
+  * This is actually [an issue with iOS itself.](https://github.com/nolimits4web/swiper/issues/4493)
+
 [Let me know](https://github.com/soft-coded/tiktok/issues/new?assignees=&labels=&template=bug_report.md&title=) if you find any other bugs/issues.
 
 ## CONTACT
