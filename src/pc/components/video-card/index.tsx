@@ -1,5 +1,6 @@
 import React, { useState, Suspense, lazy, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
+import copy from "copy-to-clipboard";
 
 import "./video-card.scss";
 import useVideoDynamics, { videoDynamicsActions } from "./useVideoDynamics";
@@ -64,16 +65,14 @@ export default function VideoCard(props: VideoData) {
 
 	const handleShare = useCallback(async () => {
 		try {
-			await share(props.videoId!);
-			await navigator.clipboard.writeText(
-				window.location.origin + "/video/" + props.videoId
-			);
+			copy(window.location.origin + "/video/" + props.videoId);
 			dispatch(
 				notificationActions.showNotification({
 					type: "success",
 					message: "Video link copied to clipboard"
 				})
 			);
+			await share(props.videoId!);
 		} catch (err: any) {
 			dispatch(
 				notificationActions.showNotification({

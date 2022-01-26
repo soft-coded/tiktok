@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useParams, Link } from "react-router-dom";
+import copy from "copy-to-clipboard";
 
 import "./profile.scss";
 import PageWithNavbar from "../../components/page-with-navbar";
@@ -101,9 +102,7 @@ export default function Profile({ isOwn }: Props) {
 	function shareProfile() {
 		errorNotification(
 			async () => {
-				await navigator.clipboard.writeText(
-					window.location.origin + "/user/" + username
-				);
+				copy(window.location.origin + "/user/" + username);
 				dispatch(
 					notificationActions.showNotification({
 						type: "success",

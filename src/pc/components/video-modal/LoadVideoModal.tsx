@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import copy from "copy-to-clipboard";
 
 import "./video-modal.scss";
 import Modal from ".";
@@ -83,16 +84,14 @@ export default function LoadVideoModal({ videoId, setShowModal }: ModalProps) {
 
 	const handleShare = useCallback(async () => {
 		try {
-			await share(videoId);
-			await navigator.clipboard.writeText(
-				window.location.origin + "/video/" + videoId
-			);
+			copy(window.location.origin + "/video/" + videoId);
 			dispatch(
 				notificationActions.showNotification({
 					type: "success",
 					message: "Video link copied to clipboard"
 				})
 			);
+			await share(videoId);
 		} catch (err: any) {
 			dispatch(
 				notificationActions.showNotification({

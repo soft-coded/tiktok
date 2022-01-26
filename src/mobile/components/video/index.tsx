@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import copy from "copy-to-clipboard";
 
 import "./video.scss";
 import LoadingSpinner from "../../../common/components/loading-spinner";
@@ -145,16 +146,14 @@ export default function Video(props: VideoData) {
 	const handleShare = useCallback(() => {
 		errorNotification(
 			async () => {
-				await share(props.videoId!);
-				await navigator.clipboard.writeText(
-					window.location.origin + "/video/" + props.videoId
-				);
+				copy(window.location.origin + "/video/" + props.videoId);
 				dispatch(
 					notificationActions.showNotification({
 						type: "success",
 						message: "Video link copied to clipboard"
 					})
 				);
+				await share(props.videoId!);
 			},
 			dispatch,
 			null,
