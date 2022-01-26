@@ -18,6 +18,8 @@ type LikesInfo = {
 	likesNum: number;
 };
 
+const isSafari = /iPhone|Mac OS|iPad|iPod/.test(navigator.userAgent);
+
 export default function Video(props: VideoData) {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
@@ -32,7 +34,7 @@ export default function Video(props: VideoData) {
 	const musicRef = useRef<HTMLDivElement>(null);
 	const infoDivRef = useRef<HTMLDivElement>(null);
 	const [isPlaying, setIsPlaying] = useState(false);
-	const [showSpinner, setShowSpinner] = useState(true);
+	const [showSpinner, setShowSpinner] = useState(!isSafari); // don't show spinner on load in Safari
 	const [showComments, setShowComments] = useState(false);
 	const [likesInfo, setLikesInfo] = useState<LikesInfo>({
 		hasLiked: props.hasLiked || false,
@@ -69,7 +71,8 @@ export default function Video(props: VideoData) {
 			e.preventDefault();
 		}
 
-		vid.addEventListener("loadeddata", toggleSpinnerOff);
+		// Safari doesn't fire this event until user hits play
+		if (!isSafari) vid.addEventListener("loadeddata", toggleSpinnerOff);
 		vid.addEventListener("waiting", toggleSpinnerOn);
 		vid.addEventListener("playing", toggleSpinnerOff);
 		vid.addEventListener("play", handlePlay);
@@ -78,7 +81,7 @@ export default function Video(props: VideoData) {
 		vid.addEventListener("contextmenu", disableContextMenu);
 
 		return () => {
-			vid.removeEventListener("loadeddata", toggleSpinnerOff);
+			if (!isSafari) vid.removeEventListener("loadeddata", toggleSpinnerOff);
 			vid.removeEventListener("waiting", toggleSpinnerOn);
 			vid.removeEventListener("playing", toggleSpinnerOff);
 			vid.removeEventListener("play", handlePlay);

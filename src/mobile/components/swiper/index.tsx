@@ -20,6 +20,8 @@ interface Props {
 	fetchNext?: () => void;
 }
 
+const isSafari = /iPhone|Mac OS|iPad|iPod/.test(navigator.userAgent);
+
 export default function SwiperComponent({
 	containerClassName,
 	slideClassName,
@@ -38,7 +40,7 @@ export default function SwiperComponent({
 			)!;
 
 			if (!prevVideo.paused) prevVideo.pause();
-			curVideo.play();
+			if (!isSafari) curVideo.play();
 
 			if (swiper.activeIndex >= slides.length - 2) fetchNext?.();
 		},
