@@ -13,7 +13,7 @@ export default function VideoCard(props: VideoData) {
 		>
 			<div className={classes["video-container"]}>
 				<video
-					src={constants.videoLink + "/" + props.videoId}
+					src={constants.videoLink + "/" + props.videoId + "#t=0.1"}
 					loop
 					muted
 					onMouseOver={e => (e.target as HTMLVideoElement).play()}

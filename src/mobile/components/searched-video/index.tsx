@@ -53,7 +53,7 @@ export default function SearchedVideo(props: VideoData) {
 			<div className={classes["vid-container"]}>
 				<video
 					ref={videoRef}
-					src={constants.videoLink + "/" + props.videoId}
+					src={constants.videoLink + "/" + props.videoId + "#t=0.1"}
 					muted
 					loop
 				/>

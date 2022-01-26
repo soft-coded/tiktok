@@ -19,8 +19,6 @@ type LikesInfo = {
 	likesNum: number;
 };
 
-const isSafari = /iPhone|Mac OS|iPad|iPod/.test(navigator.userAgent);
-
 export default function Video(props: VideoData) {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
@@ -35,7 +33,7 @@ export default function Video(props: VideoData) {
 	const musicRef = useRef<HTMLDivElement>(null);
 	const infoDivRef = useRef<HTMLDivElement>(null);
 	const [isPlaying, setIsPlaying] = useState(false);
-	const [showSpinner, setShowSpinner] = useState(!isSafari); // don't show spinner on load in Safari
+	const [showSpinner, setShowSpinner] = useState(true);
 	const [showComments, setShowComments] = useState(false);
 	const [likesInfo, setLikesInfo] = useState<LikesInfo>({
 		hasLiked: props.hasLiked || false,
@@ -47,9 +45,6 @@ export default function Video(props: VideoData) {
 		if (!videoRef.current) return;
 		const vid = videoRef.current;
 
-		function handleFirstClick() {
-			toggleSpinnerOn();
-		}
 		function toggleSpinnerOn() {
 			setShowSpinner(true);
 		}
@@ -81,8 +76,6 @@ export default function Video(props: VideoData) {
 		vid.addEventListener("play", handlePlay);
 		vid.addEventListener("pause", handlePause);
 		vid.addEventListener("click", handleClick);
-		if (isSafari)
-			vid.addEventListener("click", handleFirstClick, { once: true });
 		vid.addEventListener("contextmenu", disableContextMenu);
 
 		return () => {
@@ -92,7 +85,6 @@ export default function Video(props: VideoData) {
 			vid.removeEventListener("play", handlePlay);
 			vid.removeEventListener("pause", handlePause);
 			vid.removeEventListener("click", handleClick);
-			if (isSafari) vid.removeEventListener("click", handleFirstClick);
 			vid.removeEventListener("contextmenu", disableContextMenu);
 		};
 	}, []);
@@ -186,7 +178,7 @@ export default function Video(props: VideoData) {
 			<div className="video-container">
 				<video
 					ref={videoRef}
-					src={constants.videoLink + "/" + props.videoId}
+					src={constants.videoLink + "/" + props.videoId + "#t=0.1"}
 					playsInline
 					loop
 					preload="metadata"

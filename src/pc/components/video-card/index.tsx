@@ -169,7 +169,7 @@ export default function VideoCard(props: VideoData) {
 				<div className="card-video">
 					<VideoTag
 						className="video-container"
-						src={constants.videoLink + "/" + props.videoId}
+						src={constants.videoLink + "/" + props.videoId + "#t=0.1"}
 						muted
 						controls
 						onClick={handleModalOpen}
