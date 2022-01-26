@@ -74,9 +74,11 @@ export default function CommentsModal({
 	}, [setShowComments]);
 
 	useEffect(() => {
-		if (!modalRef.current || !backdropRef.current) return;
-		modalRef.current.classList.add("reveal");
-		backdropRef.current.classList.add("show");
+		setTimeout(() => {
+			if (!modalRef.current || !backdropRef.current) return;
+			modalRef.current.classList.add("reveal");
+			backdropRef.current.classList.add("show");
+		}, 10);
 	}, []);
 
 	return createPortal(

@@ -42,7 +42,7 @@ export default function SwiperComponent({
 			if (!prevVideo.paused) prevVideo.pause();
 			if (!isSafari) curVideo.play();
 
-			if (swiper.activeIndex >= slides.length - 2) fetchNext?.();
+			if (swiper.activeIndex === slides.length - 1) fetchNext?.();
 		},
 		[fetchNext, slides.length]
 	);
