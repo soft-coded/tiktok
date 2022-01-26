@@ -71,8 +71,7 @@ export default function Video(props: VideoData) {
 			e.preventDefault();
 		}
 
-		// Safari doesn't fire this event until user hits play
-		if (!isSafari) vid.addEventListener("loadeddata", toggleSpinnerOff);
+		vid.addEventListener("loadeddata", toggleSpinnerOff);
 		vid.addEventListener("waiting", toggleSpinnerOn);
 		vid.addEventListener("playing", toggleSpinnerOff);
 		vid.addEventListener("play", handlePlay);
@@ -81,7 +80,7 @@ export default function Video(props: VideoData) {
 		vid.addEventListener("contextmenu", disableContextMenu);
 
 		return () => {
-			if (!isSafari) vid.removeEventListener("loadeddata", toggleSpinnerOff);
+			vid.removeEventListener("loadeddata", toggleSpinnerOff);
 			vid.removeEventListener("waiting", toggleSpinnerOn);
 			vid.removeEventListener("playing", toggleSpinnerOff);
 			vid.removeEventListener("play", handlePlay);
