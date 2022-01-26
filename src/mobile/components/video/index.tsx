@@ -46,6 +46,9 @@ export default function Video(props: VideoData) {
 		if (!videoRef.current) return;
 		const vid = videoRef.current;
 
+		function handleFirstClick() {
+			toggleSpinnerOn();
+		}
 		function toggleSpinnerOn() {
 			setShowSpinner(true);
 		}
@@ -77,6 +80,8 @@ export default function Video(props: VideoData) {
 		vid.addEventListener("play", handlePlay);
 		vid.addEventListener("pause", handlePause);
 		vid.addEventListener("click", handleClick);
+		if (isSafari)
+			vid.addEventListener("click", handleFirstClick, { once: true });
 		vid.addEventListener("contextmenu", disableContextMenu);
 
 		return () => {
@@ -86,6 +91,7 @@ export default function Video(props: VideoData) {
 			vid.removeEventListener("play", handlePlay);
 			vid.removeEventListener("pause", handlePause);
 			vid.removeEventListener("click", handleClick);
+			if (isSafari) vid.removeEventListener("click", handleFirstClick);
 			vid.removeEventListener("contextmenu", disableContextMenu);
 		};
 	}, []);
