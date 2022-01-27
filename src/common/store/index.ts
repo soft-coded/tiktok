@@ -1,7 +1,7 @@
 import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 
-import authReducer from "./slices/auth";
+import authReducer from "./slices/auth-slice";
 import notificationReducer from "./slices/notification-slice";
 import authModalReducer from "./slices/auth-modal-slice";
 import PCReducer from "../../pc/store";

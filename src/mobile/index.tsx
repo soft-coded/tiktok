@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 
 import "./index.scss";
@@ -7,6 +7,7 @@ import FullscreenSpinner from "../common/components/fullscreen-spinner";
 import { useAppSelector } from "../common/store";
 import AuthModal from "../common/components/auth-modal";
 import PrivateRoute from "../common/components/private-route";
+import LegalNotice from "../common/components/legal-notice";
 const Home = lazy(() => import("./pages/home"));
 const Following = lazy(() => import("./pages/following"));
 const Profile = lazy(() => import("./pages/profile"));
@@ -19,6 +20,7 @@ const Search = lazy(() => import("./pages/search"));
 
 export default function MobileLayout() {
 	const { notification, authModal } = useAppSelector(state => state);
+	const [showNotice, setShowNotice] = useState(false);
 
 	useEffect(() => {
 		let usesDarkTheme: any = localStorage.getItem("usesDarkTheme");
@@ -32,6 +34,13 @@ export default function MobileLayout() {
 		document.documentElement.className = usesDarkTheme ? "dark" : "light";
 	}, []);
 
+	useEffect(() => {
+		let hasSeenNotice: any = localStorage.getItem("hasSeenNotice");
+		if (hasSeenNotice && JSON.parse(hasSeenNotice)) return;
+		setShowNotice(true);
+		localStorage.setItem("hasSeenNotice", JSON.stringify(true));
+	}, []);
+
 	return (
 		<main className="root-container">
 			{notification.show && (
@@ -42,6 +51,7 @@ export default function MobileLayout() {
 				/>
 			)}
 			{authModal.show && <AuthModal isMobile />}
+			{showNotice && <LegalNotice setShowNotice={setShowNotice} isMobile />}
 			<Suspense fallback={<FullscreenSpinner />}>
 				<Routes>
 					<Route path="/" element={<Home />} />

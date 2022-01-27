@@ -5,7 +5,7 @@ import { FormProps } from ".";
 import Input from "../input-field";
 import { useAppDispatch, useAppSelector } from "../../store";
 import LoadingSpinner from "../loading-spinner";
-import { loginThunk } from "../../store/slices/auth";
+import { loginThunk } from "../../store/slices/auth-slice";
 import { notificationActions } from "../../store/slices/notification-slice";
 import constants from "../../constants";
 

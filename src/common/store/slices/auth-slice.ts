@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import * as authApi from "../../../common/api/auth";
+import * as authApi from "../../api/auth";
 import { LoginData, SignupData } from "../../types";
 
 interface InitState {

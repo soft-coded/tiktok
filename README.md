@@ -39,6 +39,9 @@ I am open to suggestions for more features. You can suggest some [here](https://
 * Swipe animation is laggy on iOS
   * This is actually [an issue with iOS itself.](https://github.com/nolimits4web/swiper/issues/4493)
 
+* "Following" page repeats videos
+  * This stems in the lack of a recommendation algorithm and I'm afraid I cannot code one due to my extreme lack of machine learning skills. If I find an implementation I'll add it, otherwise you'll have to look past this one.
+
 [Let me know](https://github.com/soft-coded/tiktok/issues/new?assignees=&labels=&template=bug_report.md&title=) if you find any other bugs/issues.
 
 ## CONTACT

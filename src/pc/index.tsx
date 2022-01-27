@@ -1,4 +1,4 @@
-import { useEffect, Suspense, lazy } from "react";
+import { useEffect, Suspense, lazy, useState } from "react";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 
 import "./index.scss";
@@ -8,6 +8,7 @@ import Header from "./components/header";
 import Notification from "../common/components/notification";
 import AuthModal from "../common/components/auth-modal";
 import PrivateRoute from "../common/components/private-route";
+import LegalNotice from "../common/components/legal-notice";
 const Home = lazy(() => import("./pages/home"));
 const Following = lazy(() => import("./pages/following"));
 const Profile = lazy(() => import("./pages/profile"));
@@ -19,14 +20,23 @@ const Search = lazy(() => import("./pages/search"));
 export default function PCLayout() {
 	const { pathname } = useLocation();
 	const { notification, authModal } = useAppSelector(state => state);
+	const [showNotice, setShowNotice] = useState(false);
 
 	useEffect(() => {
 		window.scrollTo(0, 0);
 	}, [pathname]);
 
+	useEffect(() => {
+		let hasSeenNotice: any = localStorage.getItem("hasSeenNotice");
+		if (hasSeenNotice && JSON.parse(hasSeenNotice)) return;
+		setShowNotice(true);
+		localStorage.setItem("hasSeenNotice", JSON.stringify(true));
+	}, []);
+
 	return (
 		<main className="page-container">
 			<Header />
+			{showNotice && <LegalNotice setShowNotice={setShowNotice} />}
 			{authModal.show && <AuthModal />}
 			{notification.show && (
 				<Notification
@@ -49,6 +59,7 @@ export default function PCLayout() {
 					</Route>
 				</Routes>
 			</Suspense>
+			<div id="portal" />
 		</main>
 	);
 }

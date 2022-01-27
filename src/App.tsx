@@ -1,7 +1,7 @@
 import { useEffect, Suspense, lazy } from "react";
 
 import "./common/styles.scss";
-import { authActions } from "./common/store/slices/auth";
+import { authActions } from "./common/store/slices/auth-slice";
 import { useAppDispatch, useAppSelector } from "./common/store";
 import FullscreenSpinner from "./common/components/fullscreen-spinner";
 import constants from "./common/constants";

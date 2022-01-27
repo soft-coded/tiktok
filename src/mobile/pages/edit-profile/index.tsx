@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { getCustom, updateUser } from "../../../common/api/user";
 import constants from "../../../common/constants";
 import { joinClasses } from "../../../common/utils";
-import { authActions } from "../../../common/store/slices/auth";
+import { authActions } from "../../../common/store/slices/auth-slice";
 import { useMemo } from "react";
 import LoadingSpinner from "../../../common/components/loading-spinner";
 

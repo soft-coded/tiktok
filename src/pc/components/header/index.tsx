@@ -8,7 +8,7 @@ import Dropdown from "../../../common/components/dropdown";
 import UserNotifications from "./UserNotifications";
 import { useAppDispatch, useAppSelector } from "../../../common/store";
 import { authModalActions } from "../../../common/store/slices/auth-modal-slice";
-import { authActions } from "../../../common/store/slices/auth";
+import { authActions } from "../../../common/store/slices/auth-slice";
 import { joinClasses } from "../../../common/utils";
 import { hasNewNotifs, readAllNotifs } from "../../../common/api/user";
 import constants from "../../../common/constants";
