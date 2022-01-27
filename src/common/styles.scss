@@ -50,7 +50,11 @@ $default-fonts: "Poppins", Arial, Tahoma, sans-serif, "Segoe UI Emoji",
 	--clr-scrollbar-thumb: rgba(var(--clr-primary-values), 0.85);
 	--clr-scrollbar-track: rgb(65, 65, 65);
 
+	--clr-bg-elevation-1: #272728;
+	--clr-bg-elevation-2: #303030;
+
 	--logo-filter: invert(1);
+	--shadows: none;
 }
 
 html,

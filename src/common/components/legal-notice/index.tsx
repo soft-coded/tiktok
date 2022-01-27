@@ -29,8 +29,8 @@ export default function LegalNotice({ setShowNotice, isMobile }: Props) {
 					</a>
 					for legal stuff.
 					<br />
-					<br /> TikTok, TikTok logo and basically everything used here are
-					trademarks of ByteDance.
+					<br /> TikTok, TikTok logo and basically everything used here is a
+					trademark of ByteDance.
 				</>
 			}
 			containerClassName="legal-notice"

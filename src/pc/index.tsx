@@ -27,10 +27,10 @@ export default function PCLayout() {
 	}, [pathname]);
 
 	useEffect(() => {
-		let hasSeenNotice: any = localStorage.getItem("hasSeenNotice");
-		if (hasSeenNotice && JSON.parse(hasSeenNotice)) return;
+		let hasSeenNotice = localStorage.getItem("hasSeenNotice");
+		if (hasSeenNotice) return;
 		setShowNotice(true);
-		localStorage.setItem("hasSeenNotice", JSON.stringify(true));
+		localStorage.setItem("hasSeenNotice", "true");
 	}, []);
 
 	return (

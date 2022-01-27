@@ -12,11 +12,11 @@
 	transform: translate(-50%, -50%);
 	z-index: 12;
 	text-align: center;
-	background-color: var(--clr-background);
+	background-color: var(--clr-bg-elevation-1, var(--clr-background));
 	color: var(--clr-text);
 	border-radius: 8px;
 	padding: 16px 20px 20px;
-	box-shadow: 0 0 20px 5px var(--clr-shadow);
+	box-shadow: var(--shadows, 0 0 20px 5px var(--clr-shadow));
 
 	&.mobile {
 		width: 90%;
