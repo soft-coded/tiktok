@@ -12,7 +12,7 @@ $button-height: 42px;
 	align-items: center;
 	height: 90vh;
 	width: $modal-width;
-	background: var(--clr-background);
+	background: var(--clr-bg-elevation-1, var(--clr-background));
 	color: var(--clr-text);
 	border-radius: 8px;
 	padding: 16px 42px;

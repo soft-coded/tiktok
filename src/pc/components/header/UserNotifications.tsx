@@ -141,7 +141,10 @@ export default function UserNotifications({ setShowDropdown }: Props) {
 						<div className={classes["delete-btn"]} title="Delete notification">
 							<i
 								className="fas fa-close"
-								onClick={() => delNotif(notif._id!)}
+								onClick={e => {
+									e.stopPropagation();
+									delNotif(notif._id!);
+								}}
 							/>
 						</div>
 					</div>
