@@ -6,6 +6,38 @@ Tiktok, but in Re... yeah you read the title.
 
 _TLDR: Please don't sue me._
 
+Disclaimer has also been added to the website:
+
+![Don't sue me notice](./gallery/notice.png)
+
+## LIVE
+[Check out the live version now 🚀💥💯](https://sc-react-tiktok.netlify.app/)
+
+## PHOTOS
+![homepage](./gallery/homepage.png#gh-dark-mode-only)
+
+![homepage light](./gallery/homepage_light.png#gh-light-mode-only)
+
+![pc video](./gallery/video.png#gh-dark-mode-only)
+
+![pc video light](./gallery/video_light.png#gh-light-mode-only)
+
+<p align="center">
+  <img src="./gallery/mobile_home.png#gh-dark-mode-only" alt="mobile homepage">
+</p>
+
+<p align="center">
+  <img src="./gallery/mobile_home_light.png#gh-light-mode-only" alt="mobile homepage light">
+</p>
+
+<p align="center">
+  <img src="./gallery/mobile_profile.png#gh-dark-mode-only" alt="mobile profile">
+</p>
+
+<p align="center">
+  <img src="./gallery/mobile_profile_light.png#gh-light-mode-only" alt="mobile homepage light">
+</p>
+
 ## FEATURES
 * ✅ Browse in light (🤮) or dark (😎) theme (clearly no bias here)
 * ✅ Make an account (innovation at it's peak 💯)
