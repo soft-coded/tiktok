@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const baseURL =
 	process.env.REACT_APP_SERVER_URL || "http://localhost:5000";
-const timeout = 30000; // 30s
+const timeout = 15000; // 15s
 
 export const apiClient = axios.create({
 	baseURL,

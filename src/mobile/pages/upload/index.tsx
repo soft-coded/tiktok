@@ -12,6 +12,7 @@ import { createVideo } from "../../../common/api/video";
 import { errorNotification } from "../../helpers/error-notification";
 import { joinClasses } from "../../../common/utils";
 import LoadingSpinner from "../../../common/components/loading-spinner";
+import { notificationActions } from "../../../common/store/slices/notification-slice";
 
 const validationSchema = yup.object().shape({
 	caption: yup
@@ -66,6 +67,12 @@ export default function Upload() {
 					// keep the file last or the server does not get the correct data
 					formData.append("video", videoFile);
 
+					dispatch(
+						notificationActions.showNotification({
+							type: "success",
+							message: "Uploading and compressing. This may take a while"
+						})
+					);
 					const res = await createVideo(formData);
 					navigate("/video/" + res.data.videoId);
 				},

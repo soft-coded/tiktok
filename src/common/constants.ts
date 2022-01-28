@@ -8,9 +8,9 @@ export default {
 	passwordMinLen: 6,
 	nameMaxLen: 30,
 	descriptionMaxLen: 300,
-	videoSizeLimit: 20971520,
+	videoSizeLimit: 41943040, // 40MB
 	pfpRegex: /jpg|jpeg|png/i,
-	pfpSizeLimit: 2097152,
+	pfpSizeLimit: 2097152, // 2MB
 	musicMaxLen: 30,
 	captionMaxLen: 150,
 	tagsMaxLen: 200,

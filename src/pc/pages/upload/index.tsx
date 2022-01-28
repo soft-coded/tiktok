@@ -64,6 +64,12 @@ export default function UploadPage() {
 				// keep the file last or the server does not get the correct data
 				formData.append("video", videoFile);
 
+				dispatch(
+					notificationActions.showNotification({
+						type: "success",
+						message: "Uploading and compressing. This may take a while"
+					})
+				);
 				const res = await createVideo(formData);
 				navigate("/video/" + res.data.videoId);
 			} catch (err: any) {
