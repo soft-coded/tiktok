@@ -121,7 +121,13 @@ export default function UploadPage() {
 					</label>
 					<form className="description-portion" onSubmit={formik.handleSubmit}>
 						<div className="form-group">
-							<label htmlFor="caption">Caption</label>
+							<h5>
+								<label htmlFor="caption">Caption</label>
+								<span>
+									Currently does not support @ mentions (and won't till I figure
+									out how mentions work 🙂).
+								</span>
+							</h5>
 							<Input
 								id="caption"
 								className="input"
@@ -132,11 +138,16 @@ export default function UploadPage() {
 								autoComplete="off"
 							/>
 						</div>
-						<div
-							className="form-group"
-							title="Space separated list of words.&#10;Hashtag (#) can be omitted.&#10;Used for recommendations (eventually they will be)"
-						>
-							<label htmlFor="tags">Tags</label>
+						<div className="form-group">
+							<h5>
+								<label htmlFor="tags">Tags</label>
+								<span>
+									Space separated list of words (# can be omitted). Used while
+									searching for videos and (eventually) for recommendations.
+									<br />
+									Example: "#Tag1 Tag2"
+								</span>
+							</h5>
 							<Input
 								id="tags"
 								className="input"
@@ -151,7 +162,15 @@ export default function UploadPage() {
 							className="form-group"
 							title="Music used in the video, if any. (Please don't copy strike me)"
 						>
-							<label htmlFor="music">Music</label>
+							<h5>
+								<label htmlFor="music">Music</label>
+								<span>
+									TikTok (the real one) identifies music used in the video
+									automatically, but no such feature exists here so you gotta
+									type it manually 😊. Can also be left blank. <br /> Example:
+									Rick Astley - Never gonna give you up
+								</span>
+							</h5>
 							<Input
 								id="music"
 								className="input"
