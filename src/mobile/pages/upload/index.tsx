@@ -70,7 +70,7 @@ export default function Upload() {
 					dispatch(
 						notificationActions.showNotification({
 							type: "success",
-							message: "Uploading and compressing. This may take a while"
+							message: "Uploading and compressing. This may take 2-5 minutes"
 						})
 					);
 					const res = await createVideo(formData);
