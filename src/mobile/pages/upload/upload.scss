@@ -53,8 +53,12 @@ $header-height: 44px;
 			border: none;
 			align-self: center;
 			background: none;
-			color: rgba(var(--clr-secondary-values), 0.6);
 			font-weight: 400;
+			color: var(--clr-text);
+
+			&:disabled {
+				color: rgba(var(--clr-secondary-values), 0.6);
+			}
 		}
 	}
 
@@ -128,7 +132,6 @@ $header-height: 44px;
 			}
 
 			.cancel-button {
-				border: 1px solid var(--clr-text);
 				border-radius: 4px;
 			}
 		}

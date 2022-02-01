@@ -61,6 +61,7 @@ export default function UploadPage() {
 		if (socket) {
 			socket.emit("cancelCompression");
 			socket.disconnect();
+			socket = null;
 		}
 		setShowProgressBox(false);
 		setIsLoading(false);
@@ -137,7 +138,11 @@ export default function UploadPage() {
 								<span>{compressionProgress.eta} left</span>
 							)}
 						</h5>
-						<button className="secondary-button" onClick={cancelFn}>
+						<button
+							className="secondary-button"
+							onClick={cancelFn}
+							disabled={!socket}
+						>
 							Cancel
 						</button>
 					</div>
