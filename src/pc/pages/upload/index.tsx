@@ -1,7 +1,8 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { Socket } from "socket.io-client";
 
 import "./upload-page.scss";
 import Container from "../../components/container";
@@ -29,15 +30,49 @@ const validationSchema = yup.object().shape({
 		.max(constants.tagsMaxLen, `At most ${constants.tagsMaxLen} characters`)
 });
 
+let socket: Socket | null = null;
+
 export default function UploadPage() {
-	const [isLoading, setIsLoading] = useState(false);
-	const [videoFile, setVideoFile] = useState<File>();
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
+	const [isLoading, setIsLoading] = useState(false);
+	const [videoFile, setVideoFile] = useState<File>();
+	const [uploadProgress, setUploadProgress] = useState(0);
+	const [compressionProgress, setCompressionProgress] = useState({
+		percent: 0,
+		eta: ""
+	});
+	const [showProgressBox, setShowProgressBox] = useState(false);
 	const { username, token } = useAppSelector(state => state.auth);
 	const videoURL = useMemo(
 		() => (videoFile ? URL.createObjectURL(videoFile) : undefined),
 		[videoFile]
+	);
+
+	const progressFn = useCallback(
+		(type: "upload" | "compress", progress: any) => {
+			if (type === "upload") setUploadProgress(progress);
+			else setCompressionProgress(progress);
+		},
+		[]
+	);
+
+	const cancelFn = useCallback(() => {
+		if (socket) {
+			socket.emit("cancelCompression");
+			socket.disconnect();
+		}
+		setShowProgressBox(false);
+		setIsLoading(false);
+		setUploadProgress(0);
+		setCompressionProgress({ percent: 0, eta: "" });
+	}, []);
+
+	const completeFn = useCallback(
+		(videoId: string) => {
+			navigate("/video/" + videoId);
+		},
+		[navigate]
 	);
 
 	const formik = useFormik({
@@ -64,14 +99,16 @@ export default function UploadPage() {
 				// keep the file last or the server does not get the correct data
 				formData.append("video", videoFile);
 
-				dispatch(
-					notificationActions.showNotification({
-						type: "success",
-						message: "Uploading and compressing. This may take 2-5 minutes"
-					})
+				setShowProgressBox(true);
+				socket = await createVideo(
+					formData,
+					{
+						...values,
+						username: username!
+					},
+					progressFn,
+					completeFn
 				);
-				const res = await createVideo(formData);
-				navigate("/video/" + res.data.videoId);
 			} catch (err: any) {
 				setIsLoading(false);
 				dispatch(
@@ -86,6 +123,26 @@ export default function UploadPage() {
 
 	return (
 		<Container className="upload-page-container">
+			{showProgressBox && (
+				<>
+					<div className="backdrop box-backdrop" />
+					<div className="progress-box">
+						<h3>Progress</h3>
+						<h5>
+							Uploaded: <p>{uploadProgress}%</p>
+						</h5>
+						<h5>
+							Compressed: <p>{compressionProgress.percent}%</p>
+							{compressionProgress.eta && (
+								<span>{compressionProgress.eta} left</span>
+							)}
+						</h5>
+						<button className="secondary-button" onClick={cancelFn}>
+							Cancel
+						</button>
+					</div>
+				</>
+			)}
 			<div className="card">
 				<header>
 					<h1>Upload video</h1>

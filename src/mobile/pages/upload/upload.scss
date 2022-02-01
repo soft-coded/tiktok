@@ -6,6 +6,58 @@ $header-height: 44px;
 	overflow: auto;
 	padding-bottom: 20px;
 
+	.box-backdrop {
+		z-index: 11;
+	}
+
+	.progress-box {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		width: 90%;
+		transform: translate(-50%, -50%);
+		z-index: 12;
+		background: var(--clr-bg-elevation-2, var(--clr-background));
+		box-shadow: var(--shadows, 0 0 5px 5px var(--clr-shadow));
+		border-radius: 8px;
+		padding: 16px 20px;
+		text-align: center;
+
+		h3 {
+			font-weight: 500;
+			font-size: 1.3rem;
+			margin-bottom: 8px;
+		}
+
+		h5 {
+			font-size: inherit;
+			display: flex;
+			align-items: baseline;
+			gap: 5px;
+		}
+
+		p {
+			font-weight: 600;
+			font-size: 1.2rem;
+		}
+
+		span {
+			font-size: 0.7rem;
+		}
+
+		button {
+			margin-top: 4px;
+			border: none;
+			align-self: center;
+			background: none;
+			color: rgba(var(--clr-secondary-values), 0.6);
+			font-weight: 400;
+		}
+	}
+
 	header {
 		height: $header-height;
 		line-height: $header-height;

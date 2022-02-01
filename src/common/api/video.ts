@@ -1,15 +1,48 @@
-import { apiClient } from ".";
+import io from "socket.io-client";
+
+import { apiClient, baseURL } from ".";
 import { VideoQuery } from "../types";
 
 const videoURL = "/video";
 
-export const createVideo = (data: FormData) =>
-	apiClient.post(videoURL + "/create", data, {
-		headers: {
-			"Content-Type": "multipart/form-data"
-		},
-		timeout: 0
+interface NonFormData {
+	caption: string;
+	music: string;
+	tags: string;
+	username: string;
+	filename?: string;
+}
+
+export async function createVideo(
+	formData: FormData,
+	nonFormData: NonFormData,
+	progressFn: (type: "upload" | "compress", e?: any) => void,
+	completeFn: (videoId: string) => void
+) {
+	nonFormData.filename = (
+		await apiClient.post(videoURL + "/create", formData, {
+			headers: {
+				"Content-Type": "multipart/form-data"
+			},
+			timeout: 0,
+			onUploadProgress: e =>
+				progressFn("upload", Math.round((e.loaded * 100) / e.total))
+		})
+	).data.filename;
+
+	const socket = io(baseURL);
+
+	socket.emit("finaliseFile", nonFormData);
+	socket.on("compressionProgress", compData =>
+		progressFn("compress", compData)
+	);
+	socket.on("compressionComplete", compData => {
+		completeFn(compData.videoId);
+		socket.disconnect();
 	});
+
+	return socket;
+}
 
 const params: VideoQuery = {
 	uploader: "1",

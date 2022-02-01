@@ -1,7 +1,8 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { Socket } from "socket.io-client";
 
 import PageWithNavbar from "../../components/page-with-navbar";
 import "./upload.scss";
@@ -12,7 +13,6 @@ import { createVideo } from "../../../common/api/video";
 import { errorNotification } from "../../helpers/error-notification";
 import { joinClasses } from "../../../common/utils";
 import LoadingSpinner from "../../../common/components/loading-spinner";
-import { notificationActions } from "../../../common/store/slices/notification-slice";
 
 const validationSchema = yup.object().shape({
 	caption: yup
@@ -31,15 +31,49 @@ const validationSchema = yup.object().shape({
 		.max(constants.tagsMaxLen, `At most ${constants.tagsMaxLen} characters`)
 });
 
+let socket: Socket | null = null;
+
 export default function Upload() {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
 	const [videoFile, setVideoFile] = useState<File>();
 	const [isLoading, setIsLoading] = useState(false);
+	const [uploadProgress, setUploadProgress] = useState(0);
+	const [compressionProgress, setCompressionProgress] = useState({
+		percent: 0,
+		eta: ""
+	});
+	const [showProgressBox, setShowProgressBox] = useState(false);
 	const { username, token } = useAppSelector(state => state.auth);
 	const videoURL = useMemo(
 		() => (videoFile ? URL.createObjectURL(videoFile) : undefined),
 		[videoFile]
+	);
+
+	const progressFn = useCallback(
+		(type: "upload" | "compress", progress: any) => {
+			if (type === "upload") setUploadProgress(progress);
+			else setCompressionProgress(progress);
+		},
+		[]
+	);
+
+	const cancelFn = useCallback(() => {
+		if (socket) {
+			socket.emit("cancelCompression");
+			socket.disconnect();
+		}
+		setShowProgressBox(false);
+		setIsLoading(false);
+		setUploadProgress(0);
+		setCompressionProgress({ percent: 0, eta: "" });
+	}, []);
+
+	const completeFn = useCallback(
+		(videoId: string) => {
+			navigate("/video/" + videoId);
+		},
+		[navigate]
 	);
 
 	const formik = useFormik({
@@ -67,14 +101,16 @@ export default function Upload() {
 					// keep the file last or the server does not get the correct data
 					formData.append("video", videoFile);
 
-					dispatch(
-						notificationActions.showNotification({
-							type: "success",
-							message: "Uploading and compressing. This may take 2-5 minutes"
-						})
+					setShowProgressBox(true);
+					socket = await createVideo(
+						formData,
+						{
+							...values,
+							username: username!
+						},
+						progressFn,
+						completeFn
 					);
-					const res = await createVideo(formData);
-					navigate("/video/" + res.data.videoId);
 				},
 				dispatch,
 				() => setIsLoading(false)
@@ -84,6 +120,26 @@ export default function Upload() {
 
 	return (
 		<PageWithNavbar containerClassName="upload-page">
+			{showProgressBox && (
+				<>
+					<div className="backdrop box-backdrop" />
+					<div className="progress-box">
+						<h3>Progress</h3>
+						<h5>
+							Uploaded: <p>{uploadProgress}%</p>
+						</h5>
+						<h5>
+							Compressed: <p>{compressionProgress.percent}%</p>
+							{compressionProgress.eta && (
+								<span>{compressionProgress.eta} left</span>
+							)}
+						</h5>
+						<button className="secondary-button" onClick={cancelFn}>
+							Cancel
+						</button>
+					</div>
+				</>
+			)}
 			<header>Upload</header>
 			<form className="content" onSubmit={formik.handleSubmit}>
 				<label htmlFor="video">
