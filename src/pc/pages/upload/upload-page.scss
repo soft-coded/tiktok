@@ -3,10 +3,10 @@ $preview-width: 260px;
 
 .upload-page-container {
 	.card {
-		background: var(--clr-background);
+		background: var(--clr-bg-elevation-1, var(--clr-background));
+		box-shadow: var(--shadows, var(--clr-shadow) 0px 2px 8px);
 		border-radius: 8px;
 		margin-top: 16px;
-		box-shadow: var(--clr-shadow) 0px 2px 8px;
 		padding: 24px 56px 80px;
 		margin-bottom: 24px;
 
