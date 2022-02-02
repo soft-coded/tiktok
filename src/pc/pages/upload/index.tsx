@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -30,11 +30,10 @@ const validationSchema = yup.object().shape({
 		.max(constants.tagsMaxLen, `At most ${constants.tagsMaxLen} characters`)
 });
 
-let socket: Socket | null = null;
-
 export default function UploadPage() {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
+	const socketRef = useRef<Socket | null>(null);
 	const [isLoading, setIsLoading] = useState(false);
 	const [videoFile, setVideoFile] = useState<File>();
 	const [uploadProgress, setUploadProgress] = useState(0);
@@ -58,10 +57,10 @@ export default function UploadPage() {
 	);
 
 	const cancelFn = useCallback(() => {
-		if (socket) {
-			socket.emit("cancelCompression");
-			socket.disconnect();
-			socket = null;
+		if (socketRef.current) {
+			socketRef.current.emit("cancelCompression");
+			socketRef.current.disconnect();
+			socketRef.current = null;
 		}
 		setShowProgressBox(false);
 		setIsLoading(false);
@@ -101,7 +100,7 @@ export default function UploadPage() {
 				formData.append("video", videoFile);
 
 				setShowProgressBox(true);
-				socket = await createVideo(
+				socketRef.current = await createVideo(
 					formData,
 					{
 						...values,
@@ -141,7 +140,7 @@ export default function UploadPage() {
 						<button
 							className="secondary-button"
 							onClick={cancelFn}
-							disabled={!socket}
+							disabled={!socketRef.current}
 						>
 							Cancel
 						</button>
