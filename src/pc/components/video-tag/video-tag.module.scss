@@ -44,6 +44,7 @@ $fit-thumb-in-slider: -8px;
 
 		.button {
 			pointer-events: all;
+			text-shadow: 0 0 5px #000;
 		}
 
 		.center-btn {
@@ -84,6 +85,7 @@ $fit-thumb-in-slider: -8px;
 					background: $background-filled-slider;
 					height: $slider-height;
 					pointer-events: none;
+					box-shadow: 0 0 1px 1px #000;
 				}
 
 				&::-webkit-slider-thumb {
@@ -101,6 +103,7 @@ $fit-thumb-in-slider: -8px;
 					width: $slider-width;
 					height: $slider-height;
 					background: $background-slider;
+					box-shadow: 0 0 1px 1px #000;
 				}
 
 				&::-moz-range-thumb {
@@ -128,6 +131,7 @@ $fit-thumb-in-slider: -8px;
 					height: $slider-height;
 					margin-top: 10px;
 					width: $slider-width;
+					box-shadow: 0 0 1px 1px #000;
 				}
 
 				&::-ms-thumb {

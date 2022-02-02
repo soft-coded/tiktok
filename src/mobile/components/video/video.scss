@@ -45,6 +45,7 @@ $like-anim-timing: 0.35s ease-in-out;
 			left: 50%;
 			font-size: 3.5rem;
 			transform: translate(-50%, -50%);
+			text-shadow: 0 0 3px #000;
 		}
 
 		aside {
@@ -70,6 +71,7 @@ $like-anim-timing: 0.35s ease-in-out;
 				gap: 16px;
 				margin-top: 24px;
 				font-size: 2.1rem;
+				text-shadow: 0 0 3px #000;
 
 				> div {
 					display: flex;
