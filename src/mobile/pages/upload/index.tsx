@@ -13,6 +13,7 @@ import { createVideo } from "../../../common/api/video";
 import { errorNotification } from "../../helpers/error-notification";
 import { joinClasses } from "../../../common/utils";
 import LoadingSpinner from "../../../common/components/loading-spinner";
+import { notificationActions } from "../../../common/store/slices/notification-slice";
 
 const validationSchema = yup.object().shape({
 	caption: yup
@@ -69,6 +70,19 @@ export default function Upload() {
 		setCompressionProgress({ percent: 0, eta: "" });
 	}, []);
 
+	const errFn = useCallback(
+		(err: Error) => {
+			dispatch(
+				notificationActions.showNotification({
+					type: "error",
+					message: "Compression error: " + err.message
+				})
+			);
+			cancelFn();
+		},
+		[dispatch, cancelFn]
+	);
+
 	const completeFn = useCallback(
 		(videoId: string) => {
 			navigate("/video/" + videoId);
@@ -109,7 +123,8 @@ export default function Upload() {
 							username: username!
 						},
 						progressFn,
-						completeFn
+						completeFn,
+						errFn
 					);
 				},
 				dispatch,

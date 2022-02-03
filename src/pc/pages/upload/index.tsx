@@ -75,6 +75,19 @@ export default function UploadPage() {
 		[navigate]
 	);
 
+	const errFn = useCallback(
+		(err: Error) => {
+			dispatch(
+				notificationActions.showNotification({
+					type: "error",
+					message: "Compression error: " + err.message
+				})
+			);
+			cancelFn();
+		},
+		[dispatch, cancelFn]
+	);
+
 	const formik = useFormik({
 		initialValues: {
 			caption: "",
@@ -107,7 +120,8 @@ export default function UploadPage() {
 						username: username!
 					},
 					progressFn,
-					completeFn
+					completeFn,
+					errFn
 				);
 			} catch (err: any) {
 				setIsLoading(false);

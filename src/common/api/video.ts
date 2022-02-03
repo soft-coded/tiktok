@@ -17,7 +17,8 @@ export async function createVideo(
 	formData: FormData,
 	nonFormData: NonFormData,
 	progressFn: (type: "upload" | "compress", e?: any) => void,
-	completeFn: (videoId: string) => void
+	completeFn: (videoId: string) => void,
+	errFn: (err: Error) => void
 ) {
 	nonFormData.filename = (
 		await apiClient.post(videoURL + "/create", formData, {
@@ -38,6 +39,10 @@ export async function createVideo(
 	);
 	socket.on("compressionComplete", compData => {
 		completeFn(compData.videoId);
+		socket.disconnect();
+	});
+	socket.on("compressionError", err => {
+		errFn(err);
 		socket.disconnect();
 	});
 
