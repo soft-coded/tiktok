@@ -88,10 +88,10 @@ export default function NotificationBox(props: Props) {
 								"/" +
 								(props.type === "likedVideo" ? props.refId : props.meta.videoId)
 							}
-							autoPlay
-							muted
-							loop
-							playsInline
+							// autoPlay
+							// muted
+							// loop
+							// playsInline
 						/>
 					</div>
 				)}

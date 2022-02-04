@@ -131,9 +131,9 @@ export default function UserNotifications({ setShowDropdown }: Props) {
 											? notif.refId
 											: notif.meta!.videoId)
 									}
-									loop
-									autoPlay
-									muted
+									// loop
+									// autoPlay
+									// muted
 									playsInline
 								/>
 							</div>
