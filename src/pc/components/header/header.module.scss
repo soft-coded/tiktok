@@ -163,6 +163,7 @@ $notification-dd-width: 376px;
 		z-index: 12;
 		width: $notification-dd-width;
 		height: $notification-dd-height;
+		overflow: auto;
 
 		h1 {
 			font-size: 1.3rem;
