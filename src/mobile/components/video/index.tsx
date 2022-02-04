@@ -194,12 +194,15 @@ export default function Video(props: VideoData) {
 			<div className="video-content" ref={infoDivRef}>
 				{!showSpinner && !isPlaying && <i className="fas fa-play play-btn" />}
 				<aside>
-					<div className="rounded-photo">
+					<Link
+						to={"/user/" + props.uploader!.username}
+						className="rounded-photo"
+					>
 						<img
 							src={constants.pfpLink + "/" + props.uploader!.username}
 							alt={props.uploader!.name}
 						/>
-					</div>
+					</Link>
 					<div className="action-btns">
 						<div>
 							<i

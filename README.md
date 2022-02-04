@@ -74,6 +74,9 @@ I am open to suggestions for more features. You can suggest some [here](https://
 * "Following" page repeats videos
   * This stems in the lack of a recommendation algorithm and I'm afraid I cannot code one due to my extreme lack of machine learning skills. If I find an implementation I'll add it, otherwise you'll have to look past this one.
 
+* The videos load slowly.
+  * The server has 1 GB RAM. I honestly think it's incredible that it is able to load videos at all.
+
 [Let me know](https://github.com/soft-coded/tiktok/issues/new?assignees=&labels=&template=bug_report.md&title=) if you find any other bugs/issues.
 
 ## CONTACT
