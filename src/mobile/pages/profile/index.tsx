@@ -26,7 +26,7 @@ type FollowData = {
 export default function Profile({ isOwn }: Props) {
 	const { username } = useParams();
 	const dispatch = useAppDispatch();
-	const loggedInAs = useAppSelector(state => state.auth.username);
+	const { username: loggedInAs, token } = useAppSelector(state => state.auth);
 	const [user, setUser] = useState<UserData | null>();
 	const [videosType, setVideosType] = useState<"uploaded" | "liked">(
 		"uploaded"
@@ -79,7 +79,7 @@ export default function Profile({ isOwn }: Props) {
 		errorNotification(
 			async () => {
 				if (!loggedInAs) throw new Error("Log in to continue");
-				const res = await followUser(username!, loggedInAs);
+				const res = await followUser(username!, loggedInAs, token!);
 				setFollowData(prev => ({
 					isFollowing: res.data.followed,
 					totalFollowers: prev.totalFollowers + (res.data.followed ? 1 : -1)
@@ -97,7 +97,7 @@ export default function Profile({ isOwn }: Props) {
 			null,
 			"Couldn't follow " + username + ":"
 		);
-	}, [dispatch, loggedInAs, username]);
+	}, [dispatch, loggedInAs, username, token]);
 
 	function shareProfile() {
 		errorNotification(

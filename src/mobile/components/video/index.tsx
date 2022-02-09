@@ -123,7 +123,7 @@ export default function Video(props: VideoData) {
 		errorNotification(
 			async () => {
 				if (!isAuthed) throw new Error("Log in to continue");
-				const res = await likeVideo(username!, props.videoId!);
+				const res = await likeVideo(username!, props.videoId!, token!);
 				setLikesInfo(prev => ({
 					hasLiked: res.data.liked,
 					likesNum: prev.likesNum + (res.data.liked ? 1 : -1)
@@ -133,7 +133,7 @@ export default function Video(props: VideoData) {
 			null,
 			"Couldn't like video:"
 		);
-	}, [isAuthed, dispatch, username, props.videoId]);
+	}, [isAuthed, dispatch, username, props.videoId, token]);
 
 	const handleShare = useCallback(() => {
 		errorNotification(

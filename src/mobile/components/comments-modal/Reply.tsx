@@ -36,7 +36,8 @@ export default function Reply(props: Props) {
 					props.videoId,
 					props.commentId!,
 					props.replyId!,
-					username!
+					username!,
+					token!
 				);
 				setLikesInfo(prev => ({
 					hasLiked: res.data.liked,

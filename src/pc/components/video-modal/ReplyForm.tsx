@@ -29,7 +29,7 @@ interface Props {
 }
 
 export default function ReplyForm(props: Props) {
-	const username = useAppSelector(state => state.auth.username);
+	const { username, token } = useAppSelector(state => state.auth);
 	const dispatch = useAppDispatch();
 
 	const formik = useFormik({
@@ -39,7 +39,7 @@ export default function ReplyForm(props: Props) {
 		validationSchema,
 		onSubmit: async ({ comment }) => {
 			try {
-				await reply(comment, props.commentId, props.videoId, username!);
+				await reply(comment, props.commentId, props.videoId, username!, token!);
 				dispatch(
 					notificationActions.showNotification({
 						type: "success",

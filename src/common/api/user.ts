@@ -30,8 +30,11 @@ export const getCustom = (params: UserQuery, username: string) =>
 export const getLikedVideos = (username: string) =>
 	apiClient.get(userURL + "/" + username, { params: { videos: "liked" } });
 
-export const followUser = (toFollow: string, loggedInAs: string | null) =>
-	apiClient.post(userURL + "/follow", { toFollow, loggedInAs });
+export const followUser = (
+	toFollow: string,
+	loggedInAs: string | null,
+	token: string
+) => apiClient.post(userURL + "/follow", { toFollow, loggedInAs, token });
 
 export const updateUser = (username: string, data: any) =>
 	apiClient.patch(userURL + "/" + username, data);

@@ -15,7 +15,7 @@ interface Props {
 }
 
 export default function FollowButton(props: Props) {
-	const loggedInAs = useAppSelector(state => state.auth.username);
+	const { username: loggedInAs, token } = useAppSelector(state => state.auth);
 	const [isFollowing, setIsFollowing] = useState(props.isFollowing);
 	const dispatch = useAppDispatch();
 	const { toFollow, onClick } = props;
@@ -28,7 +28,7 @@ export default function FollowButton(props: Props) {
 		async (e: MouseEvent) => {
 			try {
 				if (!loggedInAs) throw new Error("Log in to follow " + toFollow);
-				const res = await followUser(toFollow, loggedInAs);
+				const res = await followUser(toFollow, loggedInAs, token!);
 				await dispatch(fetchFollowing(loggedInAs)).unwrap();
 				setIsFollowing(res.data.followed);
 				if (onClick) onClick(res.data.followed);
@@ -51,7 +51,7 @@ export default function FollowButton(props: Props) {
 			e.stopPropagation();
 			e.preventDefault();
 		},
-		[toFollow, loggedInAs, onClick, dispatch]
+		[toFollow, loggedInAs, onClick, dispatch, token]
 	);
 
 	return isFollowing ? (

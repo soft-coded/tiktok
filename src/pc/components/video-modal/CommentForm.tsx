@@ -32,14 +32,14 @@ export default function AddComment({
 	fetchCommentsNum,
 	setComments
 }: Props) {
-	const username = useAppSelector(state => state.auth.username);
+	const { username, token } = useAppSelector(state => state.auth);
 	const dispatch = useAppDispatch();
 	const formik = useFormik({
 		initialValues: { comment: "" },
 		validationSchema,
 		onSubmit: async ({ comment }) => {
 			try {
-				await postComment(username!, comment, videoId);
+				await postComment(username!, comment, videoId, token!);
 				dispatch(
 					notificationActions.showNotification({
 						type: "success",

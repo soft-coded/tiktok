@@ -76,21 +76,29 @@ export const deleteVideo = (id: string, username: string, token: string) =>
 		data: { username, token }
 	});
 
-export const likeVideo = (username: string, id: string) =>
-	apiClient.post(videoURL + "/like", { username, videoId: id });
+export const likeVideo = (username: string, id: string, token: string) =>
+	apiClient.post(videoURL + "/like", { username, videoId: id, token });
 
 export const postComment = (
 	username: string,
 	comment: string,
-	videoId: string
-) => apiClient.post(videoURL + "/comment", { username, comment, videoId });
+	videoId: string,
+	token: string
+) =>
+	apiClient.post(videoURL + "/comment", { username, comment, videoId, token });
 
 export const likeComment = (
 	videoId: string,
 	commentId: string,
-	username: string
+	username: string,
+	token: string
 ) =>
-	apiClient.post(videoURL + "/likeComment", { videoId, commentId, username });
+	apiClient.post(videoURL + "/likeComment", {
+		videoId,
+		commentId,
+		username,
+		token
+	});
 
 export const deleteComment = (
 	commentId: string,
@@ -106,13 +114,15 @@ export const reply = (
 	comment: string,
 	commentId: string,
 	videoId: string,
-	username: string
+	username: string,
+	token: string
 ) =>
 	apiClient.post(videoURL + "/reply", {
 		comment,
 		commentId,
 		videoId,
-		username
+		username,
+		token
 	});
 
 export const deleteReply = (
@@ -139,13 +149,15 @@ export const likeReply = (
 	videoId: string,
 	commentId: string,
 	replyId: string,
-	username: string
+	username: string,
+	token: string
 ) =>
 	apiClient.post(videoURL + "/likeReply", {
 		videoId,
 		commentId,
 		replyId,
-		username
+		username,
+		token
 	});
 
 export const share = (videoId: string) =>

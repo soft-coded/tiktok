@@ -38,7 +38,7 @@ export default function AddComment({
 	setReplyTo
 }: Props) {
 	const dispatch = useAppDispatch();
-	const username = useAppSelector(state => state.auth.username!);
+	const { username, token } = useAppSelector(state => state.auth);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const formik = useFormik({
 		initialValues: {
@@ -49,7 +49,7 @@ export default function AddComment({
 			errorNotification(
 				async () => {
 					if (replyTo) {
-						await reply(comment, replyTo.commentId, videoId, username);
+						await reply(comment, replyTo.commentId, videoId, username!, token!);
 						dispatch(
 							notificationActions.showNotification({
 								type: "success",
@@ -64,7 +64,7 @@ export default function AddComment({
 						setReplyTo(null);
 						return;
 					}
-					await postComment(username, comment, videoId);
+					await postComment(username!, comment, videoId, token!);
 					dispatch(
 						notificationActions.showNotification({
 							type: "success",

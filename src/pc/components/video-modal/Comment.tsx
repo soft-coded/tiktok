@@ -51,7 +51,12 @@ export default function Comment(props: Props) {
 	}
 
 	async function likeComm() {
-		const res = await likeComment(props.videoId, props.commentId!, username!);
+		const res = await likeComment(
+			props.videoId,
+			props.commentId!,
+			username!,
+			token!
+		);
 		if (res.data.liked)
 			setLikeStats(prev => ({ likesNum: prev.likesNum + 1, hasLiked: true }));
 		else

@@ -69,7 +69,8 @@ export default function Comment(props: Props) {
 				const res = await likeComment(
 					props.videoId,
 					props.commentId!,
-					username!
+					username!,
+					token!
 				);
 				setLikesInfo(prev => ({
 					hasLiked: res.data.liked,
