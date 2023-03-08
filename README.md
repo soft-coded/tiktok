@@ -6,6 +6,15 @@ Tiktok, but in Re... yeah you read the title.
 ## ANNOUNCEMENT
 Thank you all for your love and support for the website. It is no longer live, becuase it was simply costing me too much to keep it up by now. Check out the videos below to see how the website looked on PC as well as mobile.
 
+## Videos
+https://user-images.githubusercontent.com/68508049/223750707-2c5da4f3-d4d2-4a3e-8ea4-6bbd758cc409.mp4
+
+https://user-images.githubusercontent.com/68508049/223750725-b40005c0-156e-4d88-8d48-b7ce7e23b502.mp4
+
+https://user-images.githubusercontent.com/68508049/223750730-8e03231b-f389-4067-8cd7-7f6a122483bb.mp4
+
+
+
 ## DISCLAIMER
 **This web app is absolutely not linked to the actual TikTok company or ByteDance in any way. Tiktok, Tiktok logo, the website and basically everything I used here is a registered trademark/copyright/any other legal ownership thing of ByteDance/Tiktok.** This is just a project that I decided to build on my own because it looked like it would be fun. I do not have any plans to make this a commercial app or anything of that sort. Just something to put on my CV.
 
