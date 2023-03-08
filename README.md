@@ -3,6 +3,9 @@ Tiktok, but in Re... yeah you read the title.
 
 ![Tiktok + react](./gallery/tiktok+react.png)
 
+## ANNOUNCEMENT
+Thank you all for your love and support for the website. It is no longer live, becuase it was simply costing me too much to keep it up by now. Check out the videos below to see how the website looked on PC as well as mobile.
+
 ## DISCLAIMER
 **This web app is absolutely not linked to the actual TikTok company or ByteDance in any way. Tiktok, Tiktok logo, the website and basically everything I used here is a registered trademark/copyright/any other legal ownership thing of ByteDance/Tiktok.** This is just a project that I decided to build on my own because it looked like it would be fun. I do not have any plans to make this a commercial app or anything of that sort. Just something to put on my CV.
 
@@ -11,9 +14,6 @@ _TLDR: Please don't sue me._
 Disclaimer has also been added to the website:
 
 ![Don't sue me notice](./gallery/notice.png)
-
-## LIVE
-[Check out the live version now 🚀💥💯](https://sc-react-tiktok.netlify.app/)
 
 ## PHOTOS
 ![homepage](./gallery/homepage.png#gh-dark-mode-only)
